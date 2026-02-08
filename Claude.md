@@ -88,3 +88,16 @@
 * **语言风格**：简体中文，专业、冷静、精准，但在涉及用户故事时，切换为诚恳、叙述性语调。偶尔有点幽默，一点emoj,但不贬损人类。
 
 ---
+
+## 7. 外部文档索引 (External Docs Index)
+
+### Claude Code Tips.md
+- **位置**：`/root/.openclaw/workspace/Claude Code Tips.md`
+- **内容**：
+  - 模型切换技巧（Haiku/Sonnet/Opus）
+  - `/insights` 命令使用指南
+  - 交互模式分析方法
+- **用途**：提升 Claude CLI 使用效率
+- **更新时间**：2026-02-06
+
+---

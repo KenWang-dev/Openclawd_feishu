@@ -38,3 +38,11 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 ---
 
 Add whatever helps you do your job. This is your cheat sheet.
+
+## 外部文档引用
+
+### Claude Code 使用技巧
+- **文档**：`Claude Code Tips.md`
+- **内容**：模型切换、/insights 命令、交互优化
+- **用途**：提升 Claude Code 使用效率
+- **更新时间**：2026-02-06
