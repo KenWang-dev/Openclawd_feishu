@@ -1,0 +1,2 @@
+[NOTICE] /root/.openclaw/workspace/MEMORY.md - 19KB - 6770tokens
+[NOTICE] /root/.openclaw/workspace/check-weekly.sh - 10KB - 3553tokens

@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "part_number": "STM32F103C8T6",
+    "description": "STM32 32位微控制器",
+    "category": "芯片",
+    "min_stock": 10,
+    "price_threshold": 0.05,
+    "enabled": true
+  },
+  {
+    "id": 2,
+    "part_number": "ESP32-S3-WROOM-1",
+    "description": "ESP32-S3 WiFi模块",
+    "category": "模块",
+    "min_stock": 10,
+    "price_threshold": 0.05,
+    "enabled": true
+  },
+  {
+    "id": 3,
+    "part_number": "CH340G",
+    "description": "USB转串口芯片",
+    "category": "芯片",
+    "min_stock": 50,
+    "price_threshold": 0.05,
+    "enabled": true
+  }
+]

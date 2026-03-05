@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "agent-browser": {
+      "version": "0.2.0",
+      "installedAt": 1770188576250
+    },
+    "self-improving": {
+      "version": "1.1.0",
+      "installedAt": 1771928957586
+    },
+    "github": {
+      "version": "1.0.0",
+      "installedAt": 1772200080835
+    },
+    "openclaw-github-assistant": {
+      "version": "2.0.1",
+      "installedAt": 1772200504244
+    },
+    "sonoscli": {
+      "version": "1.0.0",
+      "installedAt": 1772200983148
+    },
+    "find-skills": {
+      "version": "0.1.0",
+      "installedAt": 1772201342419
+    }
+  }
+}
