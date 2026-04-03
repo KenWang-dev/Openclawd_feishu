@@ -1,8 +1,6 @@
 ---
-name: multi-search-engine
+name: "multi-search-engine"
 description: "Multi search engine integration with 17 engines (8 CN + 9 Global). Supports advanced search operators, time filters, site search, privacy engines, and WolframAlpha knowledge queries. No API keys required."
-version: "2.0.1"
-author: gpyangyoujun
 ---
 
 # Multi Search Engine v2.0.1
@@ -100,6 +98,12 @@ web_fetch({"url": "https://www.wolframalpha.com/input?i=100+USD+to+CNY"})
 - Conversion: `100 USD to CNY`
 - Stocks: `AAPL stock`
 - Weather: `weather in Beijing`
+
+## Documentation
+
+- `references/advanced-search.md` - Domestic search guide
+- `references/international-search.md` - International search guide
+- `CHANGELOG.md` - Version history
 
 ## License
 

@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 
+import fs from 'fs';
+import path from 'path';
+import { getApiKey, recordUsage } from './key-pool.mjs';
+
+console.log("Getting API key...");
+
 function usage() {
   console.error(`Usage: search.mjs "query" [-n 5] [--deep] [--topic general|news] [--days 7]`);
   process.exit(2);
@@ -39,13 +45,14 @@ for (let i = 1; i < args.length; i++) {
   usage();
 }
 
-const apiKey = (process.env.TAVILY_API_KEY ?? "").trim();
+// 使用 Key 池获取 API Key
+const apiKey = getApiKey();
 if (!apiKey) {
-  console.error("Missing TAVILY_API_KEY");
+  console.error("No Tavily API Key available");
   process.exit(1);
 }
 
-const body = {
+let body = {
   api_key: apiKey,
   query: query,
   search_depth: searchDepth,
@@ -59,20 +66,59 @@ if (topic === "news" && days) {
   body.days = days;
 }
 
-const resp = await fetch("https://api.tavily.com/search", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(body),
-});
+let data = await doSearch(body);
 
-if (!resp.ok) {
-  const text = await resp.text().catch(() => "");
-  throw new Error(`Tavily Search failed (${resp.status}): ${text}`);
+// 如果遇到配额限制(432)，自动切换 Key 重试
+async function doSearch(reqBody) {
+  const resp = await fetch("https://api.tavily.com/search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(reqBody),
+  });
+
+  // 记录使用次数
+  recordUsage();
+
+  // 如果遇到配额限制，自动切换 Key 重试
+  if (resp.status === 432) {
+    const text = await resp.text().catch(() => "");
+    console.error(`[Key Pool] Key 配额用尽 (432)，切换到下一个 Key 重试...`);
+    
+    // 切换到下一个 Key
+    const state = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'key-pool.json'), 'utf-8'));
+    state.currentIndex = (state.currentIndex + 1) % state.keys.length;
+    state.usageCount = 0;
+    fs.writeFileSync(path.join(process.cwd(), 'key-pool.json'), JSON.stringify(state, null, 2));
+    
+    // 使用新 Key 重试
+    const newApiKey = state.keys[state.currentIndex];
+    reqBody.api_key = newApiKey;
+    
+    const retryResp = await fetch("https://api.tavily.com/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reqBody),
+    });
+    
+    recordUsage();
+    
+    if (!retryResp.ok) {
+      const retryText = await retryResp.text().catch(() => "");
+      throw new Error(`Tavily Search failed after retry (${retryResp.status}): ${retryText}`);
+    }
+    
+    return await retryResp.json();
+  }
+  
+  if (!resp.ok) {
+    const text = await resp.text().catch(() => "");
+    throw new Error(`Tavily Search failed (${resp.status}): ${text}`);
+  }
+  
+  return await resp.json();
 }
-
-const data = await resp.json();
 
 // Print AI-generated answer if available
 if (data.answer) {

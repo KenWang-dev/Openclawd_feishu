@@ -39,7 +39,17 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 
 Add whatever helps you do your job. This is your cheat sheet.
 
-## 外部文档引用
+### 🔥 火眼金睛（图像识别自检）
+
+**问题**：2026-03-12 把红色机器人龙虾认成绿色蜥蜴
+**教训**：图像描述必须先说主体（龙虾🦞），再看细节
+
+**自检流程**：
+1. 先说主体（动物/物体）+ 颜色
+2. 再描述特征
+3. 不要先入为主
+
+**强制校验**：描述图像后，列出 3 个可能选项让用户确认
 
 ### Claude Code 使用技巧
 - **文档**：`Claude Code Tips.md`

@@ -24,6 +24,30 @@
     "find-skills": {
       "version": "0.1.0",
       "installedAt": 1772201342419
+    },
+    "data-analyzer": {
+      "version": "1.1.0",
+      "installedAt": 1775109053758
+    },
+    "1688-sourcing-agent": {
+      "version": "1.0.0",
+      "installedAt": 1775109063011
+    },
+    "mova-supply-chain-risk": {
+      "version": "1.2.0",
+      "installedAt": 1775109067157
+    },
+    "chipchain": {
+      "version": "1.0.9",
+      "installedAt": 1775109074290
+    },
+    "ifly-pdf-image-ocr": {
+      "version": "1.0.0",
+      "installedAt": 1775109079748
+    },
+    "multi-search-engine": {
+      "version": "2.0.1",
+      "installedAt": 1775109473781
     }
   }
 }
