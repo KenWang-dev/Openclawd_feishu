@@ -1,7 +1,7 @@
 # Skills Index
 
-> 自动生成，勿手动编辑。运行 `bash skills/skill-registry/register.sh` 更新。
-> 生成时间: 2026-04-03 16:49:37 CST
+> 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
+> 生成时间: 2026-04-03 21:14:58 CST
 > Skill 总数: 114
 
 ## SCM 采购体系
@@ -349,5 +349,5 @@ tavily-best-practices/SKILL.md|tavily-best-practices|Build p |
 
 1. AI 启动时读取此文件，获得所有可用 skill 的路径和触发场景
 2. 路径为相对于 `skills/` 的路径，完整路径需拼上 `$WORKSPACE/skills/`
-3. 新增/删除 skill 后，运行 `bash skills/skill-registry/register.sh` 更新
+3. 新增/删除 skill 后，运行 `bash skills/skill-catalog/register.sh` 更新
 4. Git hooks 会在 commit/pull 时自动触发更新
