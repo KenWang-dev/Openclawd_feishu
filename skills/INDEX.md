@@ -1,8 +1,8 @@
 # Skills Index
 
 > 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
-> 生成时间: 2026-04-03 21:31:07 CST
-> Skill 总数: 114
+> 生成时间: 2026-04-06 07:22:29 CST
+> Skill 总数: 116
 
 ## SCM 采购体系
 
@@ -95,6 +95,11 @@
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | daily-diary | daily-diary/SKILL.md |  |
+## 可视化
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| Data Analysis | data-analysis/SKILL.md | Data analysis and visualization. Query databases, generate r |
 ## 项目管理
 
 | Skill | 路径 | 触发场景 |
@@ -337,6 +342,11 @@ tavily-best-practices/SKILL.md|tavily-best-practices|Build p |
 |-------|------|----------|
 | wechat-article-full-workflow | wechat-article-full-workflow/SKILL.md |  |
 | wechat-article-workflow | wechat-article-workflow/SKILL.md | Complete 7-stage workflow for creating professional procurem |
+## 项目管理
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| Word / DOCX | word-docx/SKILL.md | Create, inspect, and edit Microsoft Word documents and DOCX  |
 ## 其他
 
 | Skill | 路径 | 触发场景 |

@@ -70,7 +70,7 @@ categorize() {
         *专家*|*expert*) echo "专家系统"; return ;;
         *chip*|*半导体*|*半导*) echo "供应链"; return ;;
         *d3*|*visualization*) echo "可视化"; return ;;
-        *skill*|*registry*|*index*|*vetter*|*creator*|*usage*) echo "Skill 管理"; return ;;
+        *skill*|*catalog*|*index*|*vetter*|*creator*|*usage*) echo "Skill 管理"; return ;;
     esac
     
     # 3. 兜底
