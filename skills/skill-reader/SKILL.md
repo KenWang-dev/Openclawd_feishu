@@ -1,11 +1,11 @@
 ---
 name: skill-reader
-version: "2026040601"
+version: "1.0.0"
 description: "深入解读任意 Skill 的使用方法。输入 Skill 名称、安装地址或 SKILL.md 文档，输出结构化的使用说明：主要功能、使用场景、核心命令、安装依赖、API Key 需求、版本号、注意事项等。Triggers: skill reader, 读skill, 解读skill, skill怎么用, skill guide, skill manual, skill usage, 如何使用skill."
 ---
 
 # Skill Reader - Skill 使用说明书生成器
-> 版本：2026040601
+> 版本：1.0.0（2026040601）
 
 像买电器看说明书一样——你不需要懂电路，只需要知道按哪个键、出什么效果。
 
