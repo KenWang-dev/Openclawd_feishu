@@ -1,0 +1,25 @@
+/* 创意/设计 - Creative
+ * 大胆配色、视觉冲击、非对称布局
+ * 适用：创意提案、品牌手册、设计稿
+ */
+@page { size: A4; margin: 2cm 2.5cm; }
+
+body {
+  font-family: "Noto Sans CJK SC", "PingFang SC", sans-serif;
+  font-size: 11pt; line-height: 1.8; color: #1a1a1a;
+}
+h1 { font-size: 30pt; color: #e53e3e; border: none; text-align: right; margin-top: 15%; margin-bottom: 20px; letter-spacing: 4px; }
+h2 { font-size: 18pt; color: #e53e3e; border: none; margin-top: 30px; padding: 8px 20px; background: linear-gradient(90deg, #fff5f5, transparent); border-left: 6px solid #e53e3e; }
+h3 { font-size: 13pt; color: #c53030; margin-top: 20px; }
+blockquote { border: 2px solid #e53e3e; margin: 20px 0; padding: 16px 24px; background: #fff5f5; font-size: 13pt; font-style: italic; text-align: center; }
+table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 10pt; }
+th { background: #e53e3e; color: white; padding: 10px 14px; text-align: left; text-transform: uppercase; letter-spacing: 2px; }
+td { padding: 8px 14px; border: 1px solid #fed7d7; }
+tr:nth-child(even) { background: #fff5f5; }
+code { background: #1a1a1a; color: #fc8181; padding: 3px 8px; border-radius: 3px; font-family: "Fira Code", monospace; font-size: 10pt; }
+pre { background: #1a1a1a; color: #fc8181; padding: 18px; border-radius: 8px; font-size: 9.5pt; border-left: 4px solid #e53e3e; }
+pre code { background: none; color: inherit; }
+strong { color: #e53e3e; font-weight: 700; }
+hr { border: none; height: 4px; background: linear-gradient(90deg, #e53e3e, #f6ad55, #e53e3e); margin: 28px 0; border-radius: 2px; }
+ul, ol { padding-left: 20px; }
+li { margin: 6px 0; }

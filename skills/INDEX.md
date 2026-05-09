@@ -1,8 +1,8 @@
 # Skills Index
 
 > 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
-> 生成时间: 2026-04-25 16:37:11 CST
-> Skill 总数: 90
+> 生成时间: 2026-05-09 15:48:54 CST
+> Skill 总数: 92
 
 ## SCM 采购体系
 
@@ -120,7 +120,8 @@ model-router/SKILL.md|model-router|Automatically routes AI t |
 
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
-| p-video | p-video/SKILL.md | Generate videos with Pruna P-Video and WAN models via infere |
+| pdf-styles | pdf-styles/SKILL.md | Markdown/HTML 转 PDF 的专业排版引擎。根据文档�
+p-video/SKILL.md|p-video|Generate videos with Pruna P-Video  |
 | remotion-render | remotion-render/SKILL.md | Render videos from React/Remotion component code via inferen |
 ## SCM 采购体系
 
@@ -192,6 +193,15 @@ scm-skill/.claude/skills/purskill/p8@cost-execution/SKILL.md |
 |-------|------|----------|
 | skynet-W-boss-weekly | skynet-monitor-v2-archived/weekly/W-boss-weekly/SKILL.md |  |
 | skynet-W-director-weekly | skynet-monitor-v2-archived/weekly/W-director-weekly/SKILL.md |  |
+## 其他
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| stock-analysis | stock-analysis/SKILL.md | Analyze stocks and cryptocurrencies using Yahoo Finance data |
+## 系统运维
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
 | stock-deep-analysis | stock-deep-analysis/SKILL.md | A股深度分析工具。基于AKShare，支持实时行情�
 stock-watcher/SKILL.md|stock-watcher|Manage and monitor a pe |
 ## 研究搜索

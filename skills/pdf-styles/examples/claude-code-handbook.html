@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+@page {
+    size: A4;
+    margin: 2cm 2.5cm;
+}
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Helvetica Neue", Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.8;
+    color: #1a1a1a;
+    max-width: 100%;
+}
+h1 {
+    font-size: 22pt;
+    color: #1a1a2e;
+    border-bottom: 3px solid #e94560;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    page-break-before: auto;
+}
+h2 {
+    font-size: 16pt;
+    color: #16213e;
+    border-bottom: 2px solid #0f3460;
+    padding-bottom: 6px;
+    margin-top: 25px;
+}
+h3 {
+    font-size: 13pt;
+    color: #0f3460;
+    margin-top: 20px;
+}
+blockquote {
+    border-left: 4px solid #e94560;
+    margin: 12px 0;
+    padding: 8px 16px;
+    background: #fff5f5;
+    font-size: 10.5pt;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 10pt;
+}
+th {
+    background: #0f3460;
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+}
+td {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+}
+tr:nth-child(even) {
+    background: #f8f9fa;
+}
+code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+    font-size: 10pt;
+}
+pre {
+    background: #1a1a2e;
+    color: #e0e0e0;
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 9.5pt;
+    line-height: 1.6;
+}
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+}
+strong {
+    color: #e94560;
+}
+hr {
+    border: none;
+    border-top: 2px solid #e94560;
+    margin: 20px 0;
+}
+ul, ol {
+    padding-left: 20px;
+}
+li {
+    margin: 4px 0;
+}
+.toc {
+    background: #f0f4ff;
+    padding: 16px 24px;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+.toc ul {
+    list-style: none;
+    padding-left: 0;
+}
+.toc li {
+    margin: 6px 0;
+}
+.toc a {
+    text-decoration: none;
+    color: #0f3460;
+}
+</style>
+</head>
+<body>
+<h1 id="claude-code">Claude Code 从入门到精通自学手册</h1>
+<blockquote>
+<p><strong>版本</strong>: 2026年5月 | <strong>基于</strong>: Claude Code v2.x | <strong>原则</strong>: 第一性原理 × 帕累托法则 × MECE × 金字塔原理</p>
+</blockquote>
+<hr />
+<h2 id="claude-code_1">引言：为什么 Claude Code 值得系统学习</h2>
+<p>Claude Code 不是一个"更聪明的 Copilot"。它是 Anthropic 推出的<strong>终端级 AI 工程代理</strong>——能读取你的代码库、执行命令、编辑文件、运行测试、自主完成从规划到实现的全流程。</p>
+<p><strong>数据说话</strong>：
+- 2026年初，Claude Code 已占全球 GitHub 提交的 <strong>4%</strong>
+- Spotify 工程师自 2025年12月起不再手动写代码
+- Anthropic 内部每位工程师每天产出 <strong>10-30 个 PR</strong></p>
+<p><strong>核心定位</strong>：Claude Code 是 Agent，不是 Chat。它理解你的整个代码库，而非只看到你粘贴的那几行。</p>
+<hr />
+<h2 id="day-1">第一部分：快速上手（Day 1）</h2>
+<h3 id="11">1.1 安装与环境准备</h3>
+<p><strong>前置条件</strong>：
+- Node.js ≥ 18
+- 终端环境（macOS/Linux/WSL）</p>
+<pre><code class="language-bash"># 全局安装
+npm install -g @anthropic-ai/claude-code
+
+# 首次启动（自动引导登录）
+claude
+
+# 验证安装
+claude --version
+</code></pre>
+<p><strong>IDE 集成</strong>（可选但推荐）：
+- VS Code 扩展：在扩展市场搜索 "Claude Code" 安装
+- 支持在编辑器内直接交互，无需切换终端</p>
+<h3 id="12">1.2 账户与订阅</h3>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>价格</th>
+<th>适合人群</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free</td>
+<td>$0 / 有每日用量限制</td>
+<td>体验评估</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>$20/月</td>
+<td>个人开发者</td>
+</tr>
+<tr>
+<td>Max</td>
+<td>$100/月或$200/月</td>
+<td>重度用户</td>
+</tr>
+<tr>
+<td>Team</td>
+<td>$30/人/月</td>
+<td>团队协作</td>
+</tr>
+<tr>
+<td>Enterprise</td>
+<td>定制</td>
+<td>企业级合规</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>💡 帕累托提示</strong>：Pro 方案覆盖 80% 的个人使用场景，Max 适合全量依赖 Claude Code 工作的用户。</p>
+</blockquote>
+<h3 id="13">1.3 第一次对话：建立心智模型</h3>
+<p>在项目目录下启动 <code>claude</code>，输入你的第一条指令：</p>
+<pre><code>&gt; /init
+</code></pre>
+<p>这会自动分析项目结构并生成 <code>CLAUDE.md</code>——Claude Code 的核心配置文件。</p>
+<p><strong>关键心智转变</strong>：
+- ❌ 旧方式："我来写代码，你帮我审查"
+- ✅ 新方式："我要什么效果，你来实现，我来验证"</p>
+<hr />
+<h2 id="day-1-3">第二部分：核心能力掌握（Day 1-3）</h2>
+<h3 id="21-claudemd">2.1 CLAUDE.md：你的项目宪法</h3>
+<p>CLAUDE.md 是 Claude Code 每次会话自动读取的配置文件。它决定了 Claude 如何理解你的项目。</p>
+<p><strong>该写什么 vs 不该写什么</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>✅ 必须写</th>
+<th>❌ 不要写</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特殊的构建命令（Claude 猜不到的）</td>
+<td>语言默认规范（Claude 已经知道）</td>
+</tr>
+<tr>
+<td>项目特有的代码风格</td>
+<td>"写干净的代码"（废话）</td>
+</tr>
+<tr>
+<td>测试运行方式</td>
+<td>详细的 API 文档（放链接即可）</td>
+</tr>
+<tr>
+<td>Git 分支命名规则</td>
+<td>文件级别的代码描述</td>
+</tr>
+<tr>
+<td>已知的坑/非直觉行为</td>
+<td>频繁变动的内容</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实战示例</strong>：</p>
+<pre><code class="language-markdown"># CLAUDE.md
+# 构建与测试
+- 运行测试：pnpm test（不是 npm test）
+- 单个测试：pnpm test -- path/to/file.test.ts
+- 类型检查：pnpm typecheck
+
+# 代码风格
+- 使用 ES Modules（import/export），禁止 CommonJS
+- 优先解构导入
+- 中文注释，英文代码
+
+# 架构约定
+- API 路由在 src/routes/
+- 数据模型在 src/models/
+- 工具函数在 src/utils/
+- 禁止直接操作 DOM，使用 React 组件
+
+# 工作流
+- 改完代码先跑类型检查
+- commit 前确保测试通过
+- PR 标题格式：feat/fix/refactor: 描述
+</code></pre>
+<p><strong>进阶技巧</strong>：用 <code>@</code> 导入其他文件</p>
+<pre><code class="language-markdown"># 引用 README 了解项目全貌
+@README.md
+
+# 引用 Git 工作流规范
+@docs/git-conventions.md
+</code></pre>
+<blockquote>
+<p><strong>⚠️ 常见错误</strong>：CLAUDE.md 太长。每多一行，Claude 就可能忽略一行。保持精简，只写"去掉会让 Claude 犯错"的内容。</p>
+</blockquote>
+<h3 id="22">2.2 四阶段工作流（最核心的方法论）</h3>
+<p>这是官方推荐的工作模式，也是 Boris Cherny（Claude Code 之父）的日常实践：</p>
+<pre><code>探索(Plan Mode) → 规划(Plan Mode) → 实现(Edit Mode) → 提交(Git)
+</code></pre>
+<p><strong>Phase 1：探索</strong></p>
+<pre><code>&gt; 进入 Plan Mode
+&gt; 读取 src/auth/ 目录，理解我们的登录和会话管理机制
+</code></pre>
+<p>Claude 只读不写，回答你的问题。</p>
+<p><strong>Phase 2：规划</strong></p>
+<pre><code>&gt; 我要加 Google OAuth。哪些文件需要改？会话流程是什么？列一个计划。
+</code></pre>
+<p>按 <code>Ctrl+G</code> 可在编辑器中直接修改计划。</p>
+<p><strong>Phase 3：实现</strong></p>
+<pre><code>&gt; 按 Plan 实现 OAuth 流程。为回调处理器写测试，运行测试套件，修复所有失败。
+</code></pre>
+<p>切换到 Edit Mode，Claude 开始写代码。</p>
+<p><strong>Phase 4：提交</strong></p>
+<pre><code>&gt; commit 并开 PR
+</code></pre>
+<blockquote>
+<p><strong>💡 何时跳过规划</strong>：改动范围明确且很小（修 typo、加一行日志），直接做。如果你能用一句话描述 diff，就不需要规划。</p>
+</blockquote>
+<h3 id="23-prompt">2.3 Prompt 纪律：输入决定输出</h3>
+<table>
+<thead>
+<tr>
+<th>低效 Prompt</th>
+<th>高效 Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"修复登录 bug"</td>
+<td>"用户报告登录后 session 超时会失败。检查 src/auth/ 的认证流程，特别是 token 刷新。写一个失败的测试复现问题，然后修复。"</td>
+</tr>
+<tr>
+<td>"加个日历组件"</td>
+<td>"看 src/components/ 下现有组件的实现模式，参照 DatePicker 组件的风格实现日历组件。支持月份选择和年份翻页。不用外部库。"</td>
+</tr>
+<tr>
+<td>"写测试"</td>
+<td>"为 foo.py 写测试，覆盖用户登出的边界情况。不要用 mock。"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>提供验证手段</strong>（这是最高杠杆的做法）：
+- 给测试用例
+- 给期望输出
+- 给 UI 截图让 Claude 对比
+- 让 Claude 运行测试自我验证</p>
+<h3 id="24">2.4 上下文管理：最稀缺的资源</h3>
+<p><strong>核心约束</strong>：Claude 的上下文窗口会快速填满，性能随填充度下降。</p>
+<p><strong>管理策略</strong>：</p>
+<ol>
+<li><strong>用 <code>@</code> 引用文件</strong>而非在 prompt 中描述路径</li>
+<li><strong>用管道传数据</strong>：<code>cat error.log | claude</code></li>
+<li><strong>用 Subagent 做大量搜索</strong>（详见第三部分）</li>
+<li><strong>用 /compact 手动压缩上下文</strong></li>
+<li><strong>监控上下文使用</strong>：配置自定义状态栏</li>
+</ol>
+<pre><code class="language-json">// .claude/settings.json
+{
+  &quot;statusLine&quot;: {
+    &quot;command&quot;: &quot;echo \&quot;$CLAUDE_CONTEXT_USAGE% context used | $CLAUDE_TOTAL_TOKENS tokens\&quot;&quot;
+  }
+}
+</code></pre>
+<hr />
+<h2 id="week-1-2">第三部分：进阶能力（Week 1-2）</h2>
+<h3 id="31-hooks">3.1 Hooks：确定性系统控制</h3>
+<p>Hooks 是在特定生命周期事件触发的<strong>确定性脚本</strong>。与 prompt 不同，hooks 不会"理解偏差"——它要么执行，要么不执行。</p>
+<p><strong>5 种 Hook 类型</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>作用</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>command</td>
+<td>Shell 脚本</td>
+<td>阻止危险命令</td>
+</tr>
+<tr>
+<td>http</td>
+<td>HTTP POST 请求</td>
+<td>集中策略控制</td>
+</tr>
+<tr>
+<td>mcp_tool</td>
+<td>MCP 服务器工具</td>
+<td>调用外部安全扫描器</td>
+</tr>
+<tr>
+<td>prompt</td>
+<td>单轮 LLM 评估</td>
+<td>语义判断"这是不是密钥？"</td>
+</tr>
+<tr>
+<td>agent</td>
+<td>子代理多步验证</td>
+<td>复杂多步校验</td>
+</tr>
+</tbody>
+</table>
+<p><strong>25 个生命周期事件（按使用频率排序）</strong>：</p>
+<p><strong>可阻塞事件（能阻止执行）</strong>：
+- <code>UserPromptSubmit</code> — 提交 prompt 前
+- <code>PreToolUse</code> — 工具执行前（<strong>最重要的安全检查点</strong>）
+- <code>PermissionRequest</code> — 权限请求时
+- <code>Stop / SubagentStop</code> — 任务完成时
+- <code>PreCompact</code> — 上下文压缩前</p>
+<p><strong>信息性事件（仅记录/通知）</strong>：
+- <code>SessionStart / SessionEnd</code> — 会话生命周期
+- <code>PostToolUse / PostToolUseFailure</code> — 工具执行后
+- <code>SubagentStart</code> — 子代理启动</p>
+<p><strong>退出码含义</strong>：
+- <code>0</code> = 成功
+- <code>2</code> = 阻塞错误（stderr 反馈给 Claude，操作被阻止）
+- <code>1</code> 或其他 = 非阻塞错误（首行 stderr 显示，继续执行）</p>
+<p><strong>实战：阻止 rm -rf</strong></p>
+<pre><code class="language-bash">#!/bin/bash
+# .claude/hooks/block-dangerous.sh
+COMMAND=$(jq -r '.tool_input.command')
+if echo &quot;$COMMAND&quot; | grep -q 'rm -rf'; then
+  jq -n '{
+    hookSpecificOutput: {
+      hookEventName: &quot;PreToolUse&quot;,
+      permissionDecision: &quot;deny&quot;,
+      permissionDecisionReason: &quot;Destructive command blocked&quot;
+    }
+  }'
+  exit 2
+fi
+exit 0
+</code></pre>
+<pre><code class="language-json">// .claude/settings.json
+{
+  &quot;hooks&quot;: {
+    &quot;PreToolUse&quot;: [{
+      &quot;matcher&quot;: &quot;Bash(rm *)&quot;,
+      &quot;hooks&quot;: [{
+        &quot;type&quot;: &quot;command&quot;,
+        &quot;command&quot;: &quot;.claude/hooks/block-dangerous.sh&quot;
+      }]
+    }]
+  }
+}
+</code></pre>
+<p><strong>实战：文件修改后自动运行 lint</strong></p>
+<pre><code class="language-json">{
+  &quot;hooks&quot;: {
+    &quot;PostToolUse&quot;: [{
+      &quot;matcher&quot;: &quot;Write|Edit&quot;,
+      &quot;hooks&quot;: [{
+        &quot;type&quot;: &quot;command&quot;,
+        &quot;command&quot;: &quot;npx eslint $FILE_PATH --fix&quot;
+      }]
+    }]
+  }
+}
+</code></pre>
+<h3 id="32-subagents">3.2 Subagents：并行隔离的工作单元</h3>
+<p>Subagents 是独立上下文窗口中运行的 AI 实例。它的冗长输出（文件搜索、日志等）不会污染主会话——只有摘要返回。</p>
+<p><strong>3 个内置 Subagent</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>模型</th>
+<th>工具权限</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Explore</td>
+<td>Haiku</td>
+<td>只读</td>
+<td>快速代码库搜索和分析</td>
+</tr>
+<tr>
+<td>Plan</td>
+<td>继承</td>
+<td>只读</td>
+<td>为 Plan Mode 做研究</td>
+</tr>
+<tr>
+<td>General-purpose</td>
+<td>继承</td>
+<td>全部</td>
+<td>复杂多步任务</td>
+</tr>
+</tbody>
+</table>
+<p><strong>何时用 Subagent vs 主会话</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>用 Subagent</th>
+<th>用主会话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输出很冗长</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>需要工具限制（如只读审查）</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>并行研究独立主题</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>需要频繁来回迭代</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>多阶段共享大量上下文</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>创建自定义 Subagent</strong>：</p>
+<pre><code class="language-markdown">&lt;!-- .claude/agents/code-reviewer.md --&gt;
+---
+name: code-reviewer
+description: 高级代码审查专家。在修改代码后主动审查质量、安全性和可维护性。
+tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit
+model: sonnet
+---
+
+你是一名高级代码审查员。
+
+审查清单：
+1. 代码清晰可读
+2. 函数和变量命名良好
+3. 无重复代码
+4. 错误处理完备
+5. 无暴露的密钥或 API Key
+6. 输入验证已实现
+7. 测试覆盖充分
+
+按优先级组织反馈：
+- 严重问题（必须修复）
+- 警告（应该修复）
+- 建议（可以改进）
+</code></pre>
+<p><strong>调用方式</strong>：</p>
+<pre><code>&gt; 让 code-reviewer 审查认证模块的修改
+&gt; @code-reviewer (agent) 检查最近的 git diff
+</code></pre>
+<h3 id="33-skills">3.3 Skills：可复用的工作流封装</h3>
+<p>Skills 把重复使用的 prompt 模板打包成可调用的命令。</p>
+<p><strong>Skills vs CLAUDE.md 的区别</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>CLAUDE.md</th>
+<th>Skills</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>加载时机</td>
+<td>每次会话自动加载</td>
+<td>仅在被调用时加载</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>项目约定、永久上下文</td>
+<td>流程、规范、工作流</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>始终占用上下文</td>
+<td>用时才占用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>创建 Skill</strong>：</p>
+<pre><code class="language-bash">mkdir -p ~/.claude/skills/secure-review
+</code></pre>
+<pre><code class="language-markdown">&lt;!-- ~/.claude/skills/secure-review/SKILL.md --&gt;
+---
+name: secure-review
+description: 安全聚焦的代码审查。在审查认证、授权或数据处理代码时使用。
+context: fork
+agent: Explore
+disable-model-invocation: true
+---
+
+执行安全聚焦的代码审查：
+
+1. 检查硬编码的密钥、API Key 或凭证
+2. 验证输入验证和净化
+3. 审查认证和授权逻辑
+4. 检查 SQL 注入、XSS 和注入漏洞
+5. 验证错误处理不泄露敏感信息
+
+按严重级别报告发现，附具体文件引用。
+</code></pre>
+<p><strong>调用</strong>：<code>/secure-review</code> 或 Claude 根据描述自动调用。</p>
+<p><strong>动态上下文注入</strong>：用 <code>!</code> 语法在加载时执行命令</p>
+<pre><code class="language-markdown">## PR 上下文
+- PR diff: !`gh pr diff`
+- PR 评论: !`gh pr view --comments`
+- 变更文件: !`gh pr diff --name-only`
+</code></pre>
+<h3 id="34-mcp">3.4 MCP：连接外部工具世界</h3>
+<p>MCP（Model Context Protocol）让 Claude Code 能操作你项目外部的工具和服务。</p>
+<p><strong>配置方式</strong>（<code>.mcp.json</code>）：</p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;github&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;@anthropic-ai/mcp-github&quot;],
+      &quot;env&quot;: {
+        &quot;GITHUB_TOKEN&quot;: &quot;your-token&quot;
+      }
+    },
+    &quot;notion&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;@anthropic-ai/mcp-notion&quot;],
+      &quot;env&quot;: {
+        &quot;NOTION_API_KEY&quot;: &quot;your-key&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>高价值 MCP 连接</strong>（帕累托 Top 5）：</p>
+<table>
+<thead>
+<tr>
+<th>MCP Server</th>
+<th>连接服务</th>
+<th>核心价值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@anthropic-ai/mcp-github</td>
+<td>GitHub</td>
+<td>直接操作 Issue/PR/Code</td>
+</tr>
+<tr>
+<td>@anthropic-ai/mcp-notion</td>
+<td>Notion</td>
+<td>读写项目文档</td>
+</tr>
+<tr>
+<td>@anthropic-ai/mcp-slack</td>
+<td>Slack</td>
+<td>消息和频道管理</td>
+</tr>
+<tr>
+<td>sentry-mcp</td>
+<td>Sentry</td>
+<td>错误追踪分析</td>
+</tr>
+<tr>
+<td>@anthropic-ai/mcp-google-drive</td>
+<td>Google Drive</td>
+<td>文档操作</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实战示例</strong>：</p>
+<pre><code>&gt; 查看 Sentry 中最近的 10 个错误，分析哪些与我的最新提交相关
+&gt; 从 Notion 中拉取所有未完成 action items，按负责人汇总
+&gt; 为 JIRA issue ENG-4521 实现功能并创建 GitHub PR
+</code></pre>
+<hr />
+<h2 id="week-2-4">第四部分：高级工作流（Week 2-4）</h2>
+<h3 id="41-git-worktrees">4.1 Git Worktrees：并行开发不冲突</h3>
+<p>Git Worktrees 让你同时在多个分支上运行 Claude Code，互不干扰。</p>
+<pre><code>&gt; 进入 worktree 功能
+&gt; EnterWorktree: feature/auth
+# Claude 自动创建新 worktree 并切换
+
+&gt; EnterWorktree: feature/dashboard
+# 在另一个终端中运行，独立上下文
+</code></pre>
+<p><strong>子代理隔离</strong>：在 subagent 配置中设置 <code>isolation: worktree</code></p>
+<h3 id="42-autonomous-loops">4.2 自主循环（Autonomous Loops）</h3>
+<p><strong>安全条件</strong>：
+- ✅ 有明确的成功标准（测试通过、lint 通过）
+- ✅ 变更范围有限
+- ✅ 有版本控制兜底（随时可回滚）
+- ❌ 不确定的范围或没有验证手段的任务</p>
+<pre><code class="language-bash"># 让 Claude 自主循环直到所有测试通过
+&gt; /loop &quot;运行测试套件，修复所有失败，直到全部通过&quot;
+
+# 让 Claude 自主重构
+&gt; /loop &quot;重构 utils.ts，确保每个函数有测试，最终测试全绿&quot;
+</code></pre>
+<h3 id="43-auto-mode">4.3 Auto Mode：消除权限弹窗</h3>
+<p>按 <code>Shift+Tab</code> 或启动时 <code>--permission-mode auto</code>，Claude 在合理范围内自主决策，减少手动确认。</p>
+<p><strong>适合场景</strong>：
+- 你完全信任的项目
+- 有完善的 Hook 做安全网
+- 快速原型开发</p>
+<h3 id="44-claude-code-on-the-web">4.4 Claude Code on the Web</h3>
+<p>通过 <code>claude.ai/code</code> 在浏览器中使用 Claude Code，适合没有本地环境的场景。</p>
+<h3 id="45-agent-teams">4.5 Agent Teams（实验性）</h3>
+<p>多人协作的 Agent 团队，每个 Agent 扮演不同角色，通过结构化协议协调。</p>
+<pre><code class="language-bash">CLAUDE_CODE_ENABLE_AGENT_TEAMS=1 claude
+</code></pre>
+<h3 id="46-chrome">4.6 Chrome 扩展</h3>
+<p>让 Claude Code 在浏览器中测试 UI 变更，自动截图对比：</p>
+<pre><code>&gt; 安装 Chrome 扩展后，打开你的应用页面
+&gt; [截图] 实现这个设计。完成后截图对比差异
+</code></pre>
+<hr />
+<h2 id="_1">第五部分：实战案例（边学边练）</h2>
+<h3 id="1-todo-day-1">案例 1：从零搭建一个 TODO 应用（Day 1）</h3>
+<pre><code>&gt; 在当前目录创建一个 React + TypeScript TODO 应用
+&gt; 用 Plan Mode 先规划项目结构
+&gt; 包含：添加/删除/完成 TODO、本地存储持久化、筛选功能
+&gt; 实现后运行开发服务器验证
+</code></pre>
+<p><strong>学习重点</strong>：体验四阶段工作流、理解 CLAUDE.md 的价值。</p>
+<h3 id="2day-3">案例 2：重构遗留代码（Day 3）</h3>
+<pre><code>&gt; 读取 src/legacy/ 目录的代码
+&gt; 分析代码质量问题，给出重构计划
+&gt; 按计划逐步重构，每一步都运行测试确保不破坏功能
+</code></pre>
+<p><strong>学习重点</strong>：Plan Mode 的真正价值、上下文管理。</p>
+<h3 id="3-cicd-pipelineweek-1">案例 3：构建 CI/CD Pipeline（Week 1）</h3>
+<pre><code>&gt; 为这个项目创建 GitHub Actions workflow
+&gt; 包含：lint、test、build、deploy 三个 job
+&gt; PR 触发时只跑 lint 和 test
+&gt; main 分支 push 时完整部署
+</code></pre>
+<p><strong>学习重点</strong>：Subagent 并行研究、Hook 自动化。</p>
+<h3 id="4-mcp-week-2">案例 4：集成 MCP 打造全流程工作台（Week 2）</h3>
+<pre><code>&gt; 配置 MCP 连接 GitHub + Notion + Sentry
+&gt; 实现工作流：从 Notion 获取需求 → 在 GitHub 创建 Issue → 完成后自动更新 Notion 状态
+</code></pre>
+<p><strong>学习重点</strong>：MCP 配置和调试、跨服务自动化。</p>
+<hr />
+<h2 id="_2">第六部分：常见陷阱与避坑指南</h2>
+<h3 id="61-top-10">6.1 新手 Top 10 错误</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>错误</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>一次性给太大的任务</td>
+<td>拆成小步骤，逐步验证</td>
+</tr>
+<tr>
+<td>2</td>
+<td>不给验证标准</td>
+<td>始终提供测试/期望输出</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CLAUDE.md 太长</td>
+<td>只写必要规则，定期精简</td>
+</tr>
+<tr>
+<td>4</td>
+<td>不用 Plan Mode</td>
+<td>不确定时先规划再动手</td>
+</tr>
+<tr>
+<td>5</td>
+<td>让 Claude "随便改"</td>
+<td>明确指定文件、范围、风格</td>
+</tr>
+<tr>
+<td>6</td>
+<td>忽略上下文窗口</td>
+<td>监控使用率，及时 /compact</td>
+</tr>
+<tr>
+<td>7</td>
+<td>不审查 Claude 的代码</td>
+<td>每次提交前都要读一遍</td>
+</tr>
+<tr>
+<td>8</td>
+<td>一上来就全自主模式</td>
+<td>先手动模式建立信任</td>
+</tr>
+<tr>
+<td>9</td>
+<td>不写 Hook 安全网</td>
+<td>至少配 PreToolUse 阻止危险操作</td>
+</tr>
+<tr>
+<td>10</td>
+<td>不用版本控制</td>
+<td>每次 Claude 操作前确保有 git 状态</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62">6.2 过时内容标注</h3>
+<p>以下功能/模式在 2026 年已不推荐：</p>
+<ul>
+<li>❌ <strong>CLAUDE.md 中放长文档</strong> → 改用 Skills 按需加载</li>
+<li>❌ <strong>不用 /init 而手写 CLAUDE.md</strong> → 让 Claude 分析项目后生成</li>
+<li>❌ <strong>纯 chat 模式使用</strong> → 用 Agent 模式（默认）</li>
+<li>❌ <strong>不用 Git Worktree 并行开发</strong> → 这是 2026 年标准做法</li>
+</ul>
+<hr />
+<h2 id="8">第七部分：学习路线图（8 周计划）</h2>
+<table>
+<thead>
+<tr>
+<th>周次</th>
+<th>主题</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Week 1</strong></td>
+<td>安装配置 + 基础操作</td>
+<td>能独立用 Claude Code 完成小功能开发</td>
+</tr>
+<tr>
+<td><strong>Week 2</strong></td>
+<td>CLAUDE.md + 四阶段工作流</td>
+<td>建立规范工作流程，Prompt 纪律</td>
+</tr>
+<tr>
+<td><strong>Week 3</strong></td>
+<td>Plan Mode 深度实践</td>
+<td>复杂功能先规划再实现</td>
+</tr>
+<tr>
+<td><strong>Week 4</strong></td>
+<td>Hooks 基础</td>
+<td>配置安全网和自动化检查</td>
+</tr>
+<tr>
+<td><strong>Week 5</strong></td>
+<td>Subagents</td>
+<td>并行任务隔离，自定义代理</td>
+</tr>
+<tr>
+<td><strong>Week 6</strong></td>
+<td>Skills + MCP</td>
+<td>封装工作流，连接外部工具</td>
+</tr>
+<tr>
+<td><strong>Week 7</strong></td>
+<td>Git Worktrees + Auto Mode</td>
+<td>并行开发，高级工作流</td>
+</tr>
+<tr>
+<td><strong>Week 8</strong></td>
+<td>综合实战</td>
+<td>端到端项目：从需求到部署</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">附录</h2>
+<h3 id="a">A. 常用命令速查</h3>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>claude</code></td>
+<td>启动交互式会话</td>
+</tr>
+<tr>
+<td><code>claude "prompt"</code></td>
+<td>非交互式执行</td>
+</tr>
+<tr>
+<td><code>/init</code></td>
+<td>生成 CLAUDE.md</td>
+</tr>
+<tr>
+<td><code>/compact</code></td>
+<td>压缩上下文</td>
+</tr>
+<tr>
+<td><code>/plan</code></td>
+<td>切换到 Plan Mode</td>
+</tr>
+<tr>
+<td><code>/clear</code></td>
+<td>清空对话历史</td>
+</tr>
+<tr>
+<td><code>/cost</code></td>
+<td>查看当前会话 token 消耗</td>
+</tr>
+<tr>
+<td><code>/permissions</code></td>
+<td>管理权限设置</td>
+</tr>
+<tr>
+<td><code>/skills</code></td>
+<td>查看可用 Skills</td>
+</tr>
+<tr>
+<td><code>/model</code></td>
+<td>切换模型</td>
+</tr>
+<tr>
+<td><code>cat file | claude</code></td>
+<td>管道输入</td>
+</tr>
+</tbody>
+</table>
+<h3 id="b">B. 配置文件层级</h3>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>作用域</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/.claude/settings.json</code></td>
+<td>全局</td>
+<td>个人偏好</td>
+</tr>
+<tr>
+<td><code>~/.claude/skills/</code></td>
+<td>全局</td>
+<td>个人 Skills</td>
+</tr>
+<tr>
+<td><code>~/.claude/agents/</code></td>
+<td>全局</td>
+<td>个人 Subagents</td>
+</tr>
+<tr>
+<td><code>.claude/settings.json</code></td>
+<td>项目</td>
+<td>团队共享配置</td>
+</tr>
+<tr>
+<td><code>.claude/settings.local.json</code></td>
+<td>项目</td>
+<td>个人本地配置（不入 git）</td>
+</tr>
+<tr>
+<td><code>CLAUDE.md</code></td>
+<td>项目</td>
+<td>项目约定</td>
+</tr>
+<tr>
+<td><code>.claude/rules/</code></td>
+<td>项目</td>
+<td>规则文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="c">C. 推荐学习资源</h3>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>类型</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>官方文档</td>
+<td>官方</td>
+<td>code.claude.com/docs</td>
+</tr>
+<tr>
+<td>freeCodeCamp Handbook</td>
+<td>完整教程</td>
+<td>freecodecamp.org/news/claude-code-handbook</td>
+</tr>
+<tr>
+<td>Boris Cherny 工作流</td>
+<td>最佳实践</td>
+<td>twitter.com/bcherny</td>
+</tr>
+<tr>
+<td>菜鸟教程</td>
+<td>中文入门</td>
+<td>runoob.com/claude-code</td>
+</tr>
+<tr>
+<td>shanraisshan/best-practice</td>
+<td>GitHub 精华</td>
+<td>github.com/shanraisshan/claude-code-best-practice</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>本手册基于 2026 年 5 月公开资料整理。Claude Code 更新频繁，建议关注官方文档获取最新特性。</strong></p>
+<p>整理方法：第一性原理（理解 Agent 本质）→ 帕累托法则（20% 功能覆盖 80% 价值）→ MECE（不重不漏分类）→ 金字塔原理（结论先行、逐层展开）</p>
+</blockquote>
+</body>
+</html>

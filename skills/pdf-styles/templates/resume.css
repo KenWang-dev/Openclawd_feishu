@@ -1,0 +1,27 @@
+/* 简历 - Resume
+ * 双栏、紧凑、专业
+ * 适用：CV、简历、作品集
+ */
+@page { size: A4; margin: 1.5cm 1.8cm; }
+
+body {
+  font-family: "Noto Sans CJK SC", "PingFang SC", sans-serif;
+  font-size: 10pt; line-height: 1.6; color: #1a202c;
+}
+h1 { font-size: 28pt; color: #1a202c; border: none; margin-top: 0; margin-bottom: 4px; letter-spacing: 4px; }
+h2 { font-size: 13pt; color: #2b6cb0; border-bottom: 2px solid #2b6cb0; padding-bottom: 4px; margin-top: 20px; text-transform: uppercase; letter-spacing: 2px; }
+h3 { font-size: 11pt; color: #1a202c; margin-top: 14px; margin-bottom: 4px; }
+blockquote { display: none; }
+table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 9.5pt; }
+th { background: #edf2f7; color: #1a202c; padding: 4px 8px; text-align: left; font-weight: 600; }
+td { padding: 4px 8px; border: none; }
+code { background: #edf2f7; padding: 1px 4px; font-size: 9pt; }
+pre { background: #edf2f7; padding: 10px; border-radius: 4px; font-size: 9pt; }
+pre code { background: none; }
+strong { color: #1a202c; }
+hr { border: none; border-top: 1px solid #cbd5e0; margin: 12px 0; }
+ul, ol { padding-left: 16px; margin: 4px 0; }
+li { margin: 2px 0; }
+
+/* 联系信息行 */
+p:first-of-type { color: #718096; font-size: 10pt; margin-top: 0; }

@@ -1,0 +1,29 @@
+/* 数据报告 - Data Report
+ * 数据表格突出、指标卡片、图表区域
+ * 适用：数据分析、运营报告、监控报告
+ */
+@page { size: A4; margin: 2cm 2.5cm; }
+
+body {
+  font-family: "Noto Sans CJK SC", "PingFang SC", sans-serif;
+  font-size: 10.5pt; line-height: 1.7; color: #2d3748;
+}
+h1 { font-size: 22pt; color: #2b6cb0; border-bottom: 3px solid #4299e1; padding-bottom: 10px; }
+h2 { font-size: 14pt; color: #2b6cb0; margin-top: 22px; }
+h3 { font-size: 12pt; color: #4a5568; }
+blockquote { border-left: 4px solid #4299e1; margin: 12px 0; padding: 10px 16px; background: #ebf8ff; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 9.5pt; }
+th { background: #2b6cb0; color: white; padding: 8px 12px; text-align: left; font-size: 9pt; text-transform: uppercase; letter-spacing: 1px; }
+td { padding: 6px 12px; border: 1px solid #e2e8f0; text-align: right; }
+td:first-child { text-align: left; }
+tr:nth-child(even) { background: #f7fafc; }
+tr:hover { background: #ebf8ff; }
+code { background: #edf2f7; padding: 2px 5px; border-radius: 3px; font-size: 9.5pt; }
+pre { background: #2d3748; color: #e2e8f0; padding: 14px; border-radius: 4px; font-size: 9pt; }
+pre code { background: none; color: inherit; }
+strong { color: #2b6cb0; }
+em { color: #e53e3e; }
+hr { border: none; border-top: 2px solid #4299e1; margin: 18px 0; }
+
+/* 数据指标区 */
+blockquote em { font-size: 18pt; font-style: normal; color: #2b6cb0; font-weight: 700; }

@@ -1,0 +1,28 @@
+/* 知识图谱 - Knowledge Map
+ * 思维导图式、层次清晰、连接线
+ * 适用：知识整理、学习笔记、概念图
+ */
+@page { size: A4; margin: 2cm 2.5cm; }
+
+body {
+  font-family: "Noto Sans CJK SC", "PingFang SC", sans-serif;
+  font-size: 11pt; line-height: 1.8; color: #1a202c;
+}
+h1 { font-size: 22pt; color: #553c9a; border-bottom: 3px solid #805ad5; padding-bottom: 10px; }
+h2 { font-size: 15pt; color: #553c9a; border-left: 5px solid #805ad5; padding-left: 14px; margin-top: 26px; background: #faf5ff; padding: 8px 14px; }
+h3 { font-size: 12pt; color: #6b46c1; margin-top: 18px; }
+h4 { font-size: 11pt; color: #805ad5; margin-top: 14px; border-bottom: 1px dashed #d6bcfa; padding-bottom: 4px; }
+blockquote { border-left: 4px solid #805ad5; margin: 12px 0; padding: 10px 16px; background: #faf5ff; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10pt; }
+th { background: #553c9a; color: white; padding: 8px 12px; text-align: left; }
+td { padding: 6px 12px; border: 1px solid #e9d8fd; }
+tr:nth-child(even) { background: #faf5ff; }
+code { background: #edf2f7; padding: 2px 5px; border-radius: 3px; }
+pre { background: #2d2b55; color: #e9d8fd; padding: 16px; border-radius: 6px; font-size: 9.5pt; }
+pre code { background: none; color: inherit; }
+strong { color: #553c9a; }
+hr { border: none; border-top: 2px solid #805ad5; margin: 20px 0; }
+ul, ol { padding-left: 20px; }
+li { margin: 4px 0; }
+ul ul { list-style-type: circle; }
+ul ul ul { list-style-type: square; }

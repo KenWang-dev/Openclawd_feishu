@@ -1,0 +1,29 @@
+/* 产品手册 - Product Documentation
+ * 清新配色、图文混排、步骤式
+ * 适用：产品说明、用户手册、SOP
+ */
+@page { size: A4; margin: 2cm 2.5cm; }
+
+body {
+  font-family: "Noto Sans CJK SC", "PingFang SC", sans-serif;
+  font-size: 11pt; line-height: 1.9; color: #2d3748;
+}
+h1 { font-size: 24pt; color: #276749; border-bottom: 3px solid #48bb78; padding-bottom: 10px; }
+h2 { font-size: 15pt; color: #276749; margin-top: 26px; padding: 6px 14px; background: #f0fff4; border-left: 5px solid #48bb78; }
+h3 { font-size: 12pt; color: #2f855a; margin-top: 18px; }
+blockquote { border-left: 4px solid #48bb78; margin: 12px 0; padding: 10px 16px; background: #f0fff4; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10pt; }
+th { background: #276749; color: white; padding: 8px 12px; text-align: left; }
+td { padding: 6px 12px; border: 1px solid #c6f6d5; }
+tr:nth-child(even) { background: #f0fff4; }
+code { background: #f0fff4; padding: 2px 5px; border-radius: 3px; font-family: "Fira Code", monospace; font-size: 10pt; color: #276749; }
+pre { background: #1a4731; color: #c6f6d5; padding: 16px; border-radius: 6px; font-size: 9.5pt; }
+pre code { background: none; color: inherit; }
+strong { color: #276749; }
+hr { border: none; border-top: 2px solid #48bb78; margin: 20px 0; }
+ol { padding-left: 22px; }
+li { margin: 6px 0; }
+ol li::marker { font-weight: 700; color: #276749; }
+
+/* 注意/警告 */
+blockquote em { font-style: normal; font-weight: 700; color: #c53030; }
