@@ -1,8 +1,8 @@
 # Skills Index
 
 > 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
-> 生成时间: 2026-05-09 15:48:54 CST
-> Skill 总数: 92
+> 生成时间: 2026-07-17 08:42:54 CST
+> Skill 总数: 99
 
 ## SCM 采购体系
 
@@ -14,12 +14,26 @@
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | ai-avatar-video | ai-avatar-video/SKILL.md | Create AI avatar and talking head videos with OmniHuman, Fab |
+## Skill 管理
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| ai-shifu-course-creator | ai-shifu-course-creator/SKILL.md | Use when the user works with AI-Shifu (AI师傅) courses in  |
+## 媒体生成
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
 | ai-video-generation | ai-video-generation/SKILL.md | Generate AI videos with Google Veo, Seedance, Wan, Grok and  |
 ## SCM 采购体系
 
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | alter-p2p | alter-p2p/SKILL.md | 半导体元器件P2P（Pin-to-Pin）替代料全维度评� |
+## 研究搜索
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| anysearch | anysearch/SKILL.md | API key for higher rate limits. Anonymous access available w |
 ## 效率工具
 
 | Skill | 路径 | 触发场景 |
@@ -77,6 +91,11 @@ cognitive-engine/.claude/skills/target-analysis/SKILL.md|tar |
 |-------|------|----------|
 | expert-skill | expert-team/.claude/skills/expert-skill/SKILL.md | 采购超级外挂——专家团智能路由系统。当用
 expert-team/SKILL.md|expert-team|| |
+## 系统运维
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| follow-builders | follow-builders/SKILL.md | AI builders digest — monitors top AI builders on X and You |
 ## Claude 生态
 
 | Skill | 路径 | 触发场景 |
@@ -99,6 +118,20 @@ founder-cabinet/SKILL.md|founder-cabinet|| |
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | google-veo | google-veo/SKILL.md | Generate videos with Google Veo models via inference.sh CLI. |
+## 项目管理
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| handoff | handoff/SKILL.md | Create temporary handoff docs and propose/apply permanent kn |
+## 其他
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| ibcs | ibcs/SKILL.md | > |
+## 媒体生成
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
 | image-to-video | image-to-video/SKILL.md | Still-to-video conversion guide: model selection, motion pro |
 | infsh-cli | infsh-cli/SKILL.md | Run 150+ AI apps via inference.sh CLI - image generation, vi |
 | libtv-skill | libtv-skills/skills/libtv-skill/SKILL.md | agent-im 会话技能 - 通过 liblib.tv 的 AI 能力生成
@@ -123,6 +156,16 @@ model-router/SKILL.md|model-router|Automatically routes AI t |
 | pdf-styles | pdf-styles/SKILL.md | Markdown/HTML 转 PDF 的专业排版引擎。根据文档�
 p-video/SKILL.md|p-video|Generate videos with Pruna P-Video  |
 | remotion-render | remotion-render/SKILL.md | Render videos from React/Remotion component code via inferen |
+## 研究搜索
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| research-sources-mapper | research-sources-mapper/SKILL.md | 研究领域信息源图谱构建工具。输入任意研究 |
+## 其他
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| reverse-solve | reverse-solve/SKILL.md | 逆向解法 — 不走默认路，跳出问题框架找解� |
 ## SCM 采购体系
 
 | Skill | 路径 | 触发场景 |
