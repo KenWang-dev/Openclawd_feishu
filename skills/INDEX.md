@@ -1,8 +1,8 @@
 # Skills Index
 
 > 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
-> 生成时间: 2026-09-14 09:00:52 CST
-> Skill 总数: 104
+> 生成时间: 2026-09-14 20:01:20 CST
+> Skill 总数: 105
 
 ## SCM 采购体系
 
@@ -133,6 +133,7 @@ founder-cabinet/SKILL.md|founder-cabinet|| |
 
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
+| de-ai-ify | humanize-zh/SKILL.md | 将AI生成的机械化文本转换为自然、有人情味� |
 | ibcs | ibcs/SKILL.md | > |
 ## 媒体生成
 
