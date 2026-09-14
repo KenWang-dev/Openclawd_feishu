@@ -1,0 +1,14 @@
+{
+  "lastCheck": "2026-05-11T00:00:00Z",
+  "lastReleaseChecked": "2026.5.10-pre",
+  "installedVersion": "2026.2.25",
+  "notableItems": [
+    "2026.5.10-pre: Discord voice diagnostics, skill archive upload gate, compaction session fix, ACPX startup probe fix, OpenAI compat message key stripping",
+    "2026.5.5: Critical bug fixes for cross-platform deployments, Codex OAuth repair",
+    "2026.5.3: /side command, WhatsApp newsletter support, Discord message ordering, npm plugin auto-repair",
+    "Gizmodo: Meta reportedly building OpenClaw-like agent called 'Hatch'",
+    "VentureBeat: Supply chain security discussion around AI agent backdoors",
+    "Kilo: OpenClaw vs Hermes analysis from 1300+ Reddit comments",
+    "HN: Thread on 'OpenClaw Got Safer in Public' security improvements"
+  ]
+}

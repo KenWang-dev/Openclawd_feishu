@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2024-2027 全球手机产品迭代路线图</title>
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 8mm 6mm;
+  }
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page-break { page-break-before: always; }
+    .no-print { display: none; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    color: #222;
+    background: #fff;
+    padding: 10px;
+    line-height: 1.4;
+  }
+
+  h1 {
+    font-size: 22px;
+    text-align: center;
+    margin: 12px 0 6px;
+    color: #111;
+    letter-spacing: 1px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 14px;
+  }
+
+  /* ---- INTRO ---- */
+  .intro {
+    max-width: 1100px;
+    margin: 0 auto 16px;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid #415FFF;
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .intro strong { color: #111; }
+  .intro ul { margin: 6px 0 6px 20px; }
+
+  /* ---- LEGEND ---- */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: #fafafa;
+    border-radius: 6px;
+    font-size: 10px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .legend-swatch {
+    width: 28px;
+    height: 14px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+  .legend-swatch.released { opacity: 1; }
+  .legend-swatch.confirmed { opacity: 0.5; border: 1.5px dashed #555; background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px); }
+  .legend-swatch.rumored { opacity: 0.35; border: 1.5px dotted #999; }
+
+  /* ---- TIMELINE CONTAINER ---- */
+  .timeline-wrapper {
+    overflow-x: auto;
+    margin-bottom: 20px;
+  }
+  .timeline {
+    min-width: 1800px;
+    position: relative;
+  }
+
+  /* ---- TIMELINE HEADER (months) ---- */
+  .timeline-header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .brand-label-header {
+    width: 140px;
+    min-width: 140px;
+    padding: 4px 8px;
+    font-weight: 700;
+    font-size: 11px;
+    background: #fff;
+    border-bottom: 2px solid #333;
+    text-align: left;
+  }
+  .months-row {
+    display: flex;
+    flex: 1;
+  }
+  .months-row .month-cell {
+    width: 25px;
+    min-width: 25px;
+    text-align: center;
+    font-size: 8px;
+    padding: 3px 0;
+    background: #fff;
+    border-bottom: 2px solid #333;
+    color: #444;
+  }
+  .month-cell.q-start { border-left: 1.5px solid #bbb; }
+
+  /* ---- YEAR LABELS ---- */
+  .year-row {
+    display: flex;
+  }
+  .year-row .brand-label-header {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+  .year-cells {
+    display: flex;
+    flex: 1;
+  }
+  .year-cell {
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* ---- BRAND ROWS ---- */
+  .brand-row {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    min-height: 42px;
+    align-items: center;
+  }
+  .brand-row:nth-child(even) { background: #fafbfc; }
+  .brand-label {
+    width: 140px;
+    min-width: 140px;
+    padding: 4px 8px;
+    font-weight: 700;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-right: 1px solid #eee;
+    height: 100%;
+  }
+  .brand-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .timeline-cells {
+    display: flex;
+    flex: 1;
+    position: relative;
+    height: 100%;
+  }
+
+  /* ---- PRODUCT BARS ---- */
+  .product-bar {
+    position: absolute;
+    height: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7.5px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 4px;
+    cursor: default;
+    z-index: 2;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    transition: opacity 0.2s;
+  }
+  .product-bar:hover {
+    opacity: 0.85;
+    z-index: 20;
+    overflow: visible;
+    white-space: normal;
+    min-width: 120px;
+    height: auto;
+    padding: 4px 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    font-size: 8px;
+    line-height: 1.4;
+  }
+  .product-bar.confirmed {
+    opacity: 0.5;
+    border: 1.5px dashed rgba(255,255,255,0.7);
+  }
+  .product-bar.confirmed::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 3px;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,0.1) 3px,
+      rgba(255,255,255,0.1) 6px
+    );
+    pointer-events: none;
+  }
+  .product-bar.rumored {
+    opacity: 0.35;
+    border: 1.5px dotted rgba(255,255,255,0.6);
+  }
+
+  /* Row heights for brands with many products */
+  .brand-row.tall { min-height: 72px; align-items: flex-start; padding-top: 4px; }
+  .brand-row.taller { min-height: 92px; align-items: flex-start; padding-top: 4px; }
+  .brand-row.tallest { min-height: 112px; align-items: flex-start; padding-top: 4px; }
+
+  /* ---- SOC SECTION ---- */
+  h2 {
+    font-size: 16px;
+    margin: 20px 0 8px;
+    color: #111;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #415FFF;
+    display: inline-block;
+  }
+  .soc-intro {
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 12px;
+    max-width: 900px;
+  }
+
+  .soc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 9.5px;
+  }
+  .soc-table th {
+    background: #f0f1f3;
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 700;
+    border: 1px solid #ddd;
+    white-space: nowrap;
+  }
+  .soc-table td {
+    padding: 5px 8px;
+    border: 1px solid #e5e5e5;
+    vertical-align: middle;
+  }
+  .soc-table tr:nth-child(even) { background: #fafbfc; }
+  .soc-badge {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 8.5px;
+    font-weight: 600;
+    color: #fff;
+    margin-right: 3px;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer {
+    text-align: center;
+    font-size: 9px;
+    color: #999;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+
+  /* ---- TOOLTIP ---- */
+  .tooltip {
+    display: none;
+    position: absolute;
+    background: #222;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 9px;
+    z-index: 100;
+    pointer-events: none;
+    max-width: 280px;
+    line-height: 1.5;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  }
+</style>
+</head>
+<body>
+
+<h1>📱 2024–2027 全球手机产品迭代路线图</h1>
+<div class="subtitle">数据截至 2026-06-25 ｜ 来源：品牌官网、GSMArena、Bloomberg、MacRumors、Android Authority 等</div>
+
+<!-- ========== INTRO ========== -->
+<div class="intro">
+  <strong>说明：</strong>本路线图涵盖 2024 年 1 月至 2027 年 12 月全球主要智能手机品牌的产品迭代节奏。<br>
+  <ul>
+    <li><strong>实色色块</strong> = 已发布产品，显示从发布到（仍在售或已停售）的完整时间跨度</li>
+    <li><strong>半透明 + 虚线边框色块</strong> = 官方确认或权威媒体确认（confirmed）</li>
+    <li><strong>低透明度 + 点线边框色块</strong> = 传闻/泄露/预估（rumored）</li>
+    <li>色块内文字标注：<strong>机型名 · SoC平台</strong></li>
+    <li>鼠标悬停色块可查看完整信息</li>
+  </ul>
+  <strong>关键趋势：</strong>2025-26 年度 SoC 代际迁移（Snapdragon 8 Elite → Gen 5），硅碳电池 7000mAh+ 成旗舰标配，折叠屏形态创新（三星三折叠、Apple 首款折叠 iPhone），200MP 主摄普及。
+</div>
+
+<!-- ========== LEGEND ========== -->
+<div class="legend">
+  <span style="font-weight:700; margin-right:4px;">状态：</span>
+  <div class="legend-item"><span class="legend-swatch released" style="background:#555;"></span> 已发布</div>
+  <div class="legend-item"><span class="legend-swatch confirmed" style="background:#888;"></span> 官方确认/权威报道</div>
+  <div class="legend-item"><span class="legend-swatch rumored" style="background:#aaa;"></span> 传闻/预估</div>
+  <span style="margin: 0 8px; color:#ccc;">|</span>
+  <span style="font-weight:700; margin-right:4px;">品牌：</span>
+  <div class="legend-item"><span class="brand-dot" style="background:#A2AAAD;"></span>Apple</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#1428A0;"></span>Samsung</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#34A853;"></span>Google</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#FF6900;"></span>Xiaomi</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#1D953F;"></span>OPPO</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#F5010C;"></span>OnePlus</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#415FFF;"></span>vivo</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#CF0A2C;"></span>Huawei</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#0066FF;"></span>Honor</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#F5C518;"></span>Realme</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#333;"></span>Nothing</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#000080;"></span>Sony</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#5C2D91;"></span>Motorola</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#E60012;"></span>Nubia/ZTE</div>
+  <div class="legend-item"><span class="brand-dot" style="background:#E2231A;"></span>Lenovo</div>
+</div>
+
+<!-- ========== MAIN TIMELINE ========== -->
+<div class="timeline-wrapper">
+<div class="timeline">
+
+<!-- Year row -->
+<div class="year-row">
+  <div class="brand-label-header"></div>
+  <div class="year-cells" id="yearCells"></div>
+</div>
+
+<!-- Months row -->
+<div class="timeline-header">
+  <div class="brand-label-header">品牌</div>
+  <div class="months-row" id="monthsRow"></div>
+</div>
+
+<!-- Brand rows will be injected by JS -->
+<div id="brandRows"></div>
+
+</div>
+</div>
+
+<!-- ========== SoC TIMELINE ========== -->
+<div class="page-break"></div>
+<h2>🔀 各平台 SoC 迭代时间线</h2>
+<div class="soc-intro">
+  下图展示 2024-2027 年主要 SoC 平台的生命周期。色块宽度代表该平台在旗舰设备中的使用周期，箭头表示代际迭代方向。
+</div>
+
+<!-- SoC Visual Timeline -->
+<div class="timeline-wrapper">
+<div class="timeline" id="socTimeline"></div>
+</div>
+
+<!-- SoC Detail Table -->
+<h2>📊 SoC 平台详细信息</h2>
+<table class="soc-table">
+<thead>
+<tr>
+  <th>SoC 平台</th>
+  <th>厂商</th>
+  <th>制程</th>
+  <th>首发机型</th>
+  <th>首发时间</th>
+  <th>代表机型</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><span class="soc-badge" style="background:#888;">Apple</span>A18 Pro</td><td>Apple</td><td>3nm</td><td>iPhone 16 Pro</td><td>2024-09</td><td>iPhone 16 Pro/Pro Max</td></tr>
+<tr><td><span class="soc-badge" style="background:#888;">Apple</span>A18</td><td>Apple</td><td>3nm</td><td>iPhone 16</td><td>2024-09</td><td>iPhone 16/16 Plus, iPhone 16e</td></tr>
+<tr><td><span class="soc-badge" style="background:#888;">Apple</span>A19 Pro</td><td>Apple</td><td>3nm+</td><td>iPhone 17 Pro</td><td>2025-09</td><td>iPhone 17 Pro/Pro Max, iPhone Air</td></tr>
+<tr><td><span class="soc-badge" style="background:#888;">Apple</span>A19</td><td>Apple</td><td>3nm+</td><td>iPhone 17</td><td>2025-09</td><td>iPhone 17, iPhone 17e</td></tr>
+<tr><td><span class="soc-badge" style="background:#888;">Apple</span>A20 Pro</td><td>Apple</td><td>2nm</td><td>iPhone 18 Pro</td><td>2026-09（传闻）</td><td>iPhone 18 Pro/Pro Max, iPhone Fold</td></tr>
+<tr><td><span class="soc-badge" style="background:#888;">Apple</span>A20</td><td>Apple</td><td>2nm</td><td>iPhone 18</td><td>2027-03（传闻）</td><td>iPhone 18, iPhone 18e</td></tr>
+<tr style="background:#f0f5ff;"><td><span class="soc-badge" style="background:#1428A0;">QC</span>SD 8 Gen 3</td><td>Qualcomm</td><td>4nm</td><td>Galaxy S24 Ultra</td><td>2024-01</td><td>Galaxy S24系列, 小米14</td></tr>
+<tr style="background:#f0f5ff;"><td><span class="soc-badge" style="background:#1428A0;">QC</span>SD 8 Elite</td><td>Qualcomm</td><td>3nm</td><td>Galaxy S25 Ultra</td><td>2025-01</td><td>Galaxy S25系列, Z Fold 7, 小米15 Ultra, Find X8 Ultra, Pixel 10系列</td></tr>
+<tr style="background:#f0f5ff;"><td><span class="soc-badge" style="background:#1428A0;">QC</span>SD 8 Elite Gen 5</td><td>Qualcomm</td><td>3nm</td><td>Galaxy S26 / OnePlus 15</td><td>2026-01</td><td>Galaxy S26系列, OPPO Find X9 Ultra, Honor Magic 8, Realme GT 8 Pro, RedMagic 11 Pro</td></tr>
+<tr style="background:#f0f5ff;"><td><span class="soc-badge" style="background:#34A853;">Google</span>Tensor G4</td><td>Google/Samsung</td><td>4nm</td><td>Pixel 9</td><td>2024-08</td><td>Pixel 9系列</td></tr>
+<tr style="background:#f0f5ff;"><td><span class="soc-badge" style="background:#34A853;">Google</span>Tensor G5</td><td>Google/TSMC</td><td>3nm</td><td>Pixel 10</td><td>2025-08</td><td>Pixel 10系列</td></tr>
+<tr style="background:#f0f5ff;"><td><span class="soc-badge" style="background:#34A853;">Google</span>Tensor G6</td><td>Google</td><td>—</td><td>Pixel 11</td><td>2026-08（传闻）</td><td>Pixel 11系列</td></tr>
+<tr style="background:#fff5f0;"><td><span class="soc-badge" style="background:#FF6900;">MediaTek</span>Dimensity 9400</td><td>MediaTek</td><td>3nm</td><td>vivo X200</td><td>2024-10</td><td>vivo X200/X200 Pro</td></tr>
+<tr style="background:#fff5f0;"><td><span class="soc-badge" style="background:#CF0A2C;">Huawei</span>Kirin 9020</td><td>HiSilicon</td><td>7nm</td><td>Pura 80</td><td>2025-06</td><td>Pura 80系列</td></tr>
+<tr style="background:#fff5f0;"><td><span class="soc-badge" style="background:#CF0A2C;">Huawei</span>Kirin 9030</td><td>HiSilicon</td><td>—</td><td>Mate 80</td><td>2025-11</td><td>Mate 80系列</td></tr>
+<tr style="background:#fff5f0;"><td><span class="soc-badge" style="background:#CF0A2C;">Huawei</span>Kirin 9030 Pro</td><td>HiSilicon</td><td>—</td><td>Mate 80 Pro Max</td><td>2025-11</td><td>Mate 80 Pro/Pro Max</td></tr>
+<tr style="background:#f5f0ff;"><td><span class="soc-badge" style="background:#1428A0;">Samsung</span>Exynos 2500</td><td>Samsung</td><td>—</td><td>Galaxy Z Flip 7</td><td>2025-07</td><td>Galaxy Z Flip 7</td></tr>
+</tbody>
+</table>
+
+<div class="footer">
+  © 2026 手机产品路线图｜数据截至 2026-06-25｜所有"未确认"信息以品牌官方公告为准｜仅用于研究参考
+</div>
+
+<script>
+// ===== CONFIG =====
+const MONTH_W = 25; // px per month
+const START_YEAR = 2024;
+const START_MONTH = 1; // Jan
+const END_YEAR = 2027;
+const END_MONTH = 12;
+
+const BRANDS = [
+  { name: "Apple",      color: "#A2AAAD", textColor: "#fff" },
+  { name: "Samsung",    color: "#1428A0", textColor: "#fff" },
+  { name: "Google",     color: "#34A853", textColor: "#fff" },
+  { name: "Xiaomi",     color: "#FF6900", textColor: "#fff" },
+  { name: "OPPO",       color: "#1D953F", textColor: "#fff" },
+  { name: "OnePlus",    color: "#F5010C", textColor: "#fff" },
+  { name: "vivo",       color: "#415FFF", textColor: "#fff" },
+  { name: "Huawei",     color: "#CF0A2C", textColor: "#fff" },
+  { name: "Honor",      color: "#0066FF", textColor: "#fff" },
+  { name: "Realme",     color: "#F5C518", textColor: "#111" },
+  { name: "Nothing",    color: "#333333", textColor: "#fff" },
+  { name: "Sony",       color: "#000080", textColor: "#fff" },
+  { name: "Motorola",   color: "#5C2D91", textColor: "#fff" },
+  { name: "Nubia/ZTE",  color: "#E60012", textColor: "#fff" },
+  { name: "Lenovo",     color: "#E2231A", textColor: "#fff" },
+];
+
+// ===== PRODUCTS DATA =====
+// start/end: "YYYY-MM" format. "now" for still on sale.
+// status: "released" | "confirmed" | "rumored"
+// rowOffset: vertical offset within brand row (0, 1, 2...) for stacking
+const PRODUCTS = {
+  "Apple": [
+    { name: "iPhone 16 · A18",           platform: "A18",           status: "released",  start: "2024-09", end: "2025-09", rowOffset: 0 },
+    { name: "iPhone 16 Pro · A18 Pro",   platform: "A18 Pro",       status: "released",  start: "2024-09", end: "2025-09", rowOffset: 1 },
+    { name: "iPhone 16e · A18",          platform: "A18",           status: "released",  start: "2025-02", end: "now",    rowOffset: 0 },
+    { name: "iPhone 17 · A19",           platform: "A19",           status: "released",  start: "2025-09", end: "now",    rowOffset: 0 },
+    { name: "iPhone Air · A19 Pro",       platform: "A19 Pro",      status: "released",  start: "2025-09", end: "now",    rowOffset: 1 },
+    { name: "iPhone 17 Pro · A19 Pro",   platform: "A19 Pro",      status: "released",  start: "2025-09", end: "now",    rowOffset: 2 },
+    { name: "iPhone 17e · A19",          platform: "A19",           status: "released",  start: "2026-03", end: "now",    rowOffset: 0 },
+    { name: "iPhone 18 Pro · A20 Pro",   platform: "A20 Pro",       status: "confirmed", start: "2026-09", end: "now",    rowOffset: 1 },
+    { name: "iPhone Fold · A20",          platform: "A20",           status: "rumored",   start: "2026-09", end: "2027-06", rowOffset: 2 },
+    { name: "iPhone 18 · A20",           platform: "A20",           status: "rumored",   start: "2027-03", end: "now",    rowOffset: 0 },
+    { name: "iPhone 18e · A20",          platform: "A20",           status: "rumored",   start: "2027-03", end: "now",    rowOffset: 1 },
+  ],
+  "Samsung": [
+    { name: "Galaxy S24 · SD 8 Gen 3",      platform: "SD 8 Gen 3",           status: "released",  start: "2024-01", end: "2025-01", rowOffset: 0 },
+    { name: "Galaxy S24+ · SD 8 Gen 3",     platform: "SD 8 Gen 3",           status: "released",  start: "2024-01", end: "2025-01", rowOffset: 1 },
+    { name: "Galaxy S24 Ultra · SD 8 Gen 3", platform: "SD 8 Gen 3",           status: "released",  start: "2024-01", end: "2025-01", rowOffset: 2 },
+    { name: "Galaxy Z Flip 6 · SD 8 Gen 3", platform: "SD 8 Gen 3",           status: "released",  start: "2024-07", end: "2025-07", rowOffset: 3 },
+    { name: "Galaxy Z Fold 6 · SD 8 Gen 3", platform: "SD 8 Gen 3",           status: "released",  start: "2024-07", end: "2025-07", rowOffset: 4 },
+    { name: "Galaxy S25 · SD 8 Elite",      platform: "SD 8 Elite",           status: "released",  start: "2025-01", end: "now",    rowOffset: 0 },
+    { name: "Galaxy S25+ · SD 8 Elite",     platform: "SD 8 Elite",           status: "released",  start: "2025-01", end: "now",    rowOffset: 1 },
+    { name: "Galaxy S25 Ultra · SD 8 Elite",platform: "SD 8 Elite",           status: "released",  start: "2025-01", end: "now",    rowOffset: 2 },
+    { name: "Galaxy Z Fold 7 · SD 8 Elite", platform: "SD 8 Elite",           status: "released",  start: "2025-07", end: "now",    rowOffset: 3 },
+    { name: "Galaxy Z Flip 7 · Exynos 2500",platform: "Exynos 2500",         status: "released",  start: "2025-07", end: "now",    rowOffset: 4 },
+    { name: "Galaxy Z TriFold · SD 8 Elite",platform: "SD 8 Elite",           status: "released",  start: "2025-12", end: "now",    rowOffset: 5 },
+    { name: "Galaxy S26 · SD 8 Elite Gen 5",   platform: "SD 8 Elite Gen 5",status: "released",  start: "2026-01", end: "now",    rowOffset: 0 },
+    { name: "Galaxy S26+ · SD 8 Elite Gen 5",  platform: "SD 8 Elite Gen 5",status: "released",  start: "2026-01", end: "now",    rowOffset: 1 },
+    { name: "Galaxy S26 Ultra · SD 8 Elite Gen 5",platform:"SD 8 Elite Gen 5", status: "released",  start: "2026-01", end: "now",    rowOffset: 2 },
+    { name: "Galaxy Z Fold 8",                platform: "—",                  status: "rumored",   start: "2026-07", end: "now",    rowOffset: 3 },
+    { name: "Galaxy Z Flip 8",                platform: "—",                  status: "rumored",   start: "2026-07", end: "now",    rowOffset: 4 },
+  ],
+  "Google": [
+    { name: "Pixel 9 · Tensor G4",        platform: "Tensor G4",   status: "released",  start: "2024-08", end: "now",    rowOffset: 0 },
+    { name: "Pixel 9 Pro · Tensor G4",    platform: "Tensor G4",   status: "released",  start: "2024-08", end: "now",    rowOffset: 1 },
+    { name: "Pixel 10 · Tensor G5",       platform: "Tensor G5",   status: "released",  start: "2025-08", end: "now",    rowOffset: 0 },
+    { name: "Pixel 10 Pro · Tensor G5",   platform: "Tensor G5",   status: "released",  start: "2025-08", end: "now",    rowOffset: 1 },
+    { name: "Pixel 10 Pro XL · Tensor G5",platform: "Tensor G5",   status: "released",  start: "2025-08", end: "now",    rowOffset: 2 },
+    { name: "Pixel 11 · Tensor G6",       platform: "Tensor G6",   status: "rumored",   start: "2026-08", end: "now",    rowOffset: 0 },
+  ],
+  "Xiaomi": [
+    { name: "Xiaomi 14 · SD 8 Gen 3",     platform: "SD 8 Gen 3",        status: "released",  start: "2024-01", end: "now",    rowOffset: 0 },
+    { name: "Xiaomi 15 · SD 8 Elite",     platform: "SD 8 Elite",        status: "released",  start: "2024-10", end: "now",    rowOffset: 1 },
+    { name: "Xiaomi 15 Ultra · SD 8 Elite",platform: "SD 8 Elite",     status: "released",  start: "2025-02", end: "now",    rowOffset: 2 },
+    { name: "Xiaomi 16 · SD 8 Elite Gen 5", platform: "SD 8 Elite Gen 5", status: "confirmed", start: "2026-01", end: "now",  rowOffset: 0 },
+    { name: "Xiaomi 16 Ultra",            platform: "SD 8 Elite 2",     status: "rumored",   start: "2026-07", end: "now",    rowOffset: 1 },
+  ],
+  "OPPO": [
+    { name: "Find X8 Ultra · SD 8 Elite",        platform: "SD 8 Elite",        status: "released",  start: "2025-04", end: "now", rowOffset: 0 },
+    { name: "Find X9 Ultra · SD 8 Elite Gen 5",   platform: "SD 8 Elite Gen 5", status: "released",  start: "2026-04", end: "now", rowOffset: 0 },
+  ],
+  "OnePlus": [
+    { name: "OnePlus 13 · SD 8 Elite",         platform: "SD 8 Elite",          status: "released", start: "2024-10", end: "now",  rowOffset: 0 },
+    { name: "OnePlus 15 · SD 8 Elite Gen 5",   platform: "SD 8 Elite Gen 5",   status: "released", start: "2025-10", end: "now",  rowOffset: 0 },
+    { name: "OnePlus 15R · SD 8 Gen 5",        platform: "SD 8 Gen 5",          status: "released", start: "2025-10", end: "now",  rowOffset: 1 },
+    { name: "OnePlus 15T · SD 8 Elite Gen 5",   platform: "SD 8 Elite Gen 5",   status: "released", start: "2026-03", end: "now",  rowOffset: 0 },
+    { name: "OnePlus Nord 6",                    platform: "—",                   status: "confirmed",start: "2026-01", end: "now",  rowOffset: 2 },
+  ],
+  "vivo": [
+    { name: "X200/X200 Pro · D9400",          platform: "Dimensity 9400",   status: "released",  start: "2024-10", end: "now", rowOffset: 0 },
+    { name: "iQOO 13 · SD 8 Elite",            platform: "SD 8 Elite",        status: "released",  start: "2024-10", end: "now", rowOffset: 1 },
+    { name: "X200 Ultra · SD 8 Elite",         platform: "SD 8 Elite",        status: "released",  start: "2025-04", end: "now", rowOffset: 0 },
+    { name: "X300 Ultra · SD 8 Elite",         platform: "SD 8 Elite",        status: "released",  start: "2026-03", end: "now", rowOffset: 0 },
+    { name: "iQOO 14 Pro",                      platform: "SD 8 Elite Gen 5",  status: "rumored",   start: "2026-12", end: "now", rowOffset: 1 },
+  ],
+  "Huawei": [
+    { name: "Mate 60 Pro · Kirin 9000S",       platform: "Kirin 9000S",      status: "released",  start: "2024-01", end: "now",    rowOffset: 0 },
+    { name: "Pura 80 · Kirin 9020",             platform: "Kirin 9020",       status: "released",  start: "2025-06", end: "now",    rowOffset: 1 },
+    { name: "Pura 80 Ultra · Kirin 9020",       platform: "Kirin 9020",       status: "released",  start: "2025-06", end: "now",    rowOffset: 2 },
+    { name: "Mate 80 · Kirin 9030",             platform: "Kirin 9030",       status: "released",  start: "2025-11", end: "now",    rowOffset: 0 },
+    { name: "Mate 80 Pro · Kirin 9030 Pro",     platform: "Kirin 9030 Pro",   status: "released",  start: "2025-11", end: "now",    rowOffset: 1 },
+    { name: "Mate 80 Pro Max · Kirin 9030 Pro", platform: "Kirin 9030 Pro",   status: "released",  start: "2025-11", end: "now",    rowOffset: 2 },
+    { name: "Mate 80 Pro (全球) · Kirin 9030 Pro",platform:"Kirin 9030 Pro",  status: "released",  start: "2026-02", end: "now",    rowOffset: 3 },
+    { name: "Pura 90 系列",                     platform: "新一代 Kirin",       status: "rumored",   start: "2026-07", end: "now",    rowOffset: 4 },
+  ],
+  "Honor": [
+    { name: "Magic 7 · SD 8 Elite",             platform: "SD 8 Elite",       status: "released",  start: "2024-10", end: "now",    rowOffset: 0 },
+    { name: "Magic 8 · SD 8 Elite Gen 5",       platform: "SD 8 Elite Gen 5", status: "released",  start: "2025-10", end: "now",    rowOffset: 0 },
+    { name: "Magic 8 Pro · SD 8 Elite Gen 5",   platform: "SD 8 Elite Gen 5", status: "released",  start: "2025-10", end: "now",    rowOffset: 1 },
+    { name: "Magic 8 Pro Air · SD 8 Elite Gen 5",platform:"SD 8 Elite Gen 5",  status: "released",  start: "2026-01", end: "now",    rowOffset: 0 },
+    { name: "Magic 9 系列",                      platform: "SD 8 Gen 6",        status: "rumored",   start: "2026-10", end: "now",    rowOffset: 1 },
+  ],
+  "Realme": [
+    { name: "GT 6 · SD 8 Gen 3",               platform: "SD 8 Gen 3",       status: "released",  start: "2024-08", end: "now",    rowOffset: 0 },
+    { name: "GT 8 Pro · SD 8 Elite Gen 5",      platform: "SD 8 Elite Gen 5", status: "released",  start: "2025-10", end: "now",    rowOffset: 0 },
+    { name: "GT 9 Pro",                         platform: "—",                 status: "rumored",   start: "2026-09", end: "now",    rowOffset: 1 },
+  ],
+  "Nothing": [
+    { name: "Phone (2a) · Dimensity 7200 Pro",  platform: "D7200 Pro",        status: "released",  start: "2024-03", end: "now",    rowOffset: 0 },
+    { name: "Phone (3a) · SD 7s Gen 3",         platform: "SD 7s Gen 3",      status: "released",  start: "2025-03", end: "now",    rowOffset: 0 },
+    { name: "Phone (3a) Pro · SD 7s Gen 3",     platform: "SD 7s Gen 3",      status: "released",  start: "2025-03", end: "now",    rowOffset: 1 },
+    { name: "Phone (3)",                         platform: "旗舰 SoC",          status: "rumored",   start: "2026-07", end: "now",    rowOffset: 0 },
+  ],
+  "Sony": [
+    { name: "Xperia 1 VI · SD 8 Gen 3",        platform: "SD 8 Gen 3",       status: "released",  start: "2024-05", end: "now",    rowOffset: 0 },
+    { name: "Xperia 1 VII · SD 8 Elite",        platform: "SD 8 Elite",       status: "released",  start: "2025-05", end: "now",    rowOffset: 0 },
+    { name: "Xperia 1 VIII",                    platform: "—",                 status: "rumored",   start: "2026-06", end: "now",    rowOffset: 0 },
+  ],
+  "Motorola": [
+    { name: "Edge 50 Ultra · SD 8 Gen 3",      platform: "SD 8 Gen 3",       status: "released",  start: "2024-06", end: "now",    rowOffset: 0 },
+    { name: "Edge 60 Ultra · SD 8 Elite",       platform: "SD 8 Elite",       status: "released",  start: "2025-08", end: "now",    rowOffset: 0 },
+    { name: "Edge 70 Ultra",                    platform: "—",                 status: "rumored",   start: "2026-08", end: "now",    rowOffset: 0 },
+  ],
+  "Nubia/ZTE": [
+    { name: "RedMagic 10 Pro · SD 8 Elite",    platform: "SD 8 Elite",       status: "released",  start: "2024-11", end: "now",    rowOffset: 0 },
+    { name: "RedMagic 11 Pro · SD 8 Elite Gen 5",platform:"SD 8 Elite Gen 5", status: "released", start: "2025-11", end: "now",   rowOffset: 0 },
+    { name: "RedMagic 12 Pro",                  platform: "—",                 status: "rumored",   start: "2026-10", end: "now",    rowOffset: 0 },
+  ],
+  "Lenovo": [
+    { name: "Legion Y70 (2026)",                platform: "旗舰 SD",          status: "confirmed", start: "2026-05", end: "now",    rowOffset: 0 },
+  ],
+};
+
+// ===== SOC TIMELINE DATA =====
+const SOC_PLATFORMS = [
+  // Apple
+  { name: "A18 Pro",       vendor: "Apple",   color: "#A2AAAD", status: "released",  start: "2024-09", end: "2025-09" },
+  { name: "A18",            vendor: "Apple",   color: "#A2AAAD", status: "released",  start: "2024-09", end: "now" },
+  { name: "A19 Pro",        vendor: "Apple",   color: "#888",   status: "released",  start: "2025-09", end: "now" },
+  { name: "A19",           vendor: "Apple",   color: "#999",   status: "released",  start: "2025-09", end: "now" },
+  { name: "A20 Pro",       vendor: "Apple",   color: "#666",   status: "confirmed", start: "2026-09", end: "now" },
+  { name: "A20",           vendor: "Apple",   color: "#777",   status: "rumored",   start: "2027-03", end: "now" },
+  // Qualcomm
+  { name: "SD 8 Gen 3",    vendor: "Qualcomm", color: "#1a4fc7", status: "released",  start: "2024-01", end: "now" },
+  { name: "SD 8 Elite",     vendor: "Qualcomm", color: "#2060e0", status: "released",  start: "2025-01", end: "now" },
+  { name: "SD 8 Elite Gen 5", vendor: "Qualcomm", color: "#3070ff", status: "released", start: "2026-01", end: "now" },
+  // Google
+  { name: "Tensor G4",     vendor: "Google",  color: "#2e8b57", status: "released",  start: "2024-08", end: "now" },
+  { name: "Tensor G5",     vendor: "Google",  color: "#34A853", status: "released",  start: "2025-08", end: "now" },
+  { name: "Tensor G6",     vendor: "Google",  color: "#4cc76e", status: "rumored",   start: "2026-08", end: "now" },
+  // Huawei
+  { name: "Kirin 9000S",   vendor: "Huawei",  color: "#CF0A2C", status: "released",  start: "2024-01", end: "now" },
+  { name: "Kirin 9020",    vendor: "Huawei",  color: "#e03040", status: "released",  start: "2025-06", end: "now" },
+  { name: "Kirin 9030",    vendor: "Huawei",  color: "#e85060", status: "released",  start: "2025-11", end: "now" },
+  { name: "Kirin 9030 Pro",vendor: "Huawei",  color: "#f07080", status: "released",  start: "2025-11", end: "now" },
+  // MediaTek
+  { name: "Dimensity 9400",vendor: "MediaTek", color: "#FF8C00", status: "released",  start: "2024-10", end: "now" },
+];
+
+// ===== UTILITY =====
+function monthIndex(ym) {
+  const [y, m] = ym.split("-").map(Number);
+  return (y - START_YEAR) * 12 + (m - START_MONTH);
+}
+function totalMonths() {
+  return (END_YEAR - START_YEAR) * 12 + (END_MONTH - START_MONTH + 1);
+}
+
+// ===== BUILD MONTHS HEADER =====
+function buildMonthsHeader() {
+  const monthsRow = document.getElementById("monthsRow");
+  const yearCells = document.getElementById("yearCells");
+  const months = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
+  const tm = totalMonths();
+  
+  let yearsHTML = "";
+  for (let y = START_YEAR; y <= END_YEAR; y++) {
+    const monthCount = (y === START_YEAR) ? (13 - START_MONTH) : 12;
+    yearsHTML += `<div class="year-cell" style="width:${monthCount * MONTH_W}px; min-width:${monthCount * MONTH_W}px;">${y}</div>`;
+  }
+  yearCells.innerHTML = yearsHTML;
+  
+  let html = "";
+  for (let y = START_YEAR; y <= END_YEAR; y++) {
+    const mStart = (y === START_YEAR) ? START_MONTH : 1;
+    const mEnd = 12;
+    for (let m = mStart; m <= mEnd; m++) {
+      const qStart = (m === 1 || m === 4 || m === 7 || m === 10) ? "q-start" : "";
+      const showLabel = (m % 3 === 1) ? months[m-1] : "";
+      html += `<div class="month-cell ${qStart}" style="width:${MONTH_W}px; min-width:${MONTH_W}px;">${showLabel}</div>`;
+    }
+  }
+  monthsRow.innerHTML = html;
+}
+
+// ===== BUILD BRAND ROWS =====
+function buildBrandRows() {
+  const container = document.getElementById("brandRows");
+  let html = "";
+  
+  BRANDS.forEach(brand => {
+    const products = PRODUCTS[brand.name] || [];
+    // Calculate max row offset to set row height
+    let maxOffset = 0;
+    products.forEach(p => { if (p.rowOffset > maxOffset) maxOffset = p.rowOffset; });
+    
+    let heightClass = "";
+    if (maxOffset >= 5) heightClass = "tallest";
+    else if (maxOffset >= 3) heightClass = "taller";
+    else if (maxOffset >= 1) heightClass = "tall";
+    
+    html += `<div class="brand-row ${heightClass}">`;
+    html += `<div class="brand-label"><span class="brand-dot" style="background:${brand.color};"></span>${brand.name}</div>`;
+    html += `<div class="timeline-cells">`;
+    
+    products.forEach(p => {
+      const startIdx = monthIndex(p.start);
+      const endStr = p.end === "now" ? `${END_YEAR}-${END_MONTH}` : p.end;
+      const endIdx = monthIndex(endStr);
+      const left = startIdx * MONTH_W;
+      const width = Math.max((endIdx - startIdx + 1) * MONTH_W, MONTH_W * 3);
+      const top = p.rowOffset * 24;
+      const statusClass = p.status === "released" ? "" : p.status;
+      const textColor = (brand.name === "Realme" && p.status === "released") ? "#333" : brand.textColor;
+      
+      html += `<div class="product-bar ${statusClass}" 
+        style="left:${left}px; width:${width}px; top:${top}px; 
+               background:${brand.color}; color:${textColor};"
+        title="${p.name}\n平台: ${p.platform}\n状态: ${p.status === 'released' ? '已发布' : p.status === 'confirmed' ? '已确认' : '传闻'}\n周期: ${p.start} → ${p.end}">${p.name}</div>`;
+    });
+    
+    html += `</div></div>`;
+  });
+  
+  container.innerHTML = html;
+}
+
+// ===== BUILD SOC TIMELINE =====
+function buildSocTimeline() {
+  const container = document.getElementById("socTimeline");
+  const vendors = ["Apple", "Qualcomm", "Google", "Huawei", "MediaTek"];
+  const vendorColors = {
+    "Apple": "#A2AAAD", "Qualcomm": "#2060e0", "Google": "#34A853",
+    "Huawei": "#CF0A2C", "MediaTek": "#FF8C00"
+  };
+  
+  let html = "";
+  
+  // Year + month header (reuse)
+  html += `<div class="year-row"><div class="brand-label-header">SoC 平台</div><div class="year-cells" id="socYearCells"></div></div>`;
+  html += `<div class="timeline-header"><div class="brand-label-header">SoC 平台</div><div class="months-row" id="socMonthsRow"></div></div>`;
+  
+  // Vendor sections
+  vendors.forEach(vendor => {
+    const socs = SOC_PLATFORMS.filter(s => s.vendor === vendor);
+    if (socs.length === 0) return;
+    
+    // Vendor header row
+    html += `<div class="brand-row" style="background:#f0f1f3; height:22px;">`;
+    html += `<div class="brand-label" style="font-size:10px;"><span class="brand-dot" style="background:${vendorColors[vendor]};"></span><strong>${vendor}</strong></div>`;
+    html += `<div class="timeline-cells" style="background:#f0f1f3;"></div></div>`;
+    
+    // SOC rows
+    socs.forEach((soc, idx) => {
+      html += `<div class="brand-row">`;
+      html += `<div class="brand-label" style="font-size:9px; font-weight:600;">${soc.name}</div>`;
+      html += `<div class="timeline-cells">`;
+      
+      const startIdx = monthIndex(soc.start);
+      const endStr = soc.end === "now" ? `${END_YEAR}-${END_MONTH}` : soc.end;
+      const endIdx = monthIndex(endStr);
+      const left = startIdx * MONTH_W;
+      const width = Math.max((endIdx - startIdx + 1) * MONTH_W, MONTH_W * 3);
+      const statusClass = soc.status === "released" ? "" : soc.status;
+      const textColor = soc.status === "released" ? "#fff" : "#eee";
+      
+      html += `<div class="product-bar ${statusClass}" 
+        style="left:${left}px; width:${width}px; 
+               background:${soc.color}; color:${textColor};"
+        title="${soc.name} (${soc.vendor})\n状态: ${soc.status}\n${soc.start} → ${soc.end}">${soc.name} · ${soc.start}${soc.end !== "now" ? ' → ' + soc.end : ' → 至今'}</div>`;
+      
+      // Arrow connector
+      if (idx < socs.length - 1) {
+        const nextSoc = socs[idx + 1];
+        const nextStartIdx = monthIndex(nextSoc.start);
+        if (nextStartIdx > startIdx) {
+          html += `<div style="position:absolute; left:${nextStartIdx * MONTH_W - 8}px; top:50%; width:0; height:0; border-top:5px solid transparent; border-bottom:5px solid transparent; border-right:8px solid ${vendorColors[vendor]}; z-index:3; opacity:0.6;"></div>`;
+        }
+      }
+      
+      html += `</div></div>`;
+    });
+  });
+  
+  container.innerHTML = html;
+  
+  // Populate month headers for SoC timeline
+  const socMonthsRow = document.getElementById("socMonthsRow");
+  const socYearCells = document.getElementById("socYearCells");
+  const months = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
+  
+  let yearsHTML = "";
+  for (let y = START_YEAR; y <= END_YEAR; y++) {
+    const monthCount = (y === START_YEAR) ? (13 - START_MONTH) : 12;
+    yearsHTML += `<div class="year-cell" style="width:${monthCount * MONTH_W}px; min-width:${monthCount * MONTH_W}px;">${y}</div>`;
+  }
+  socYearCells.innerHTML = yearsHTML;
+  
+  let mhtml = "";
+  for (let y = START_YEAR; y <= END_YEAR; y++) {
+    const mStart = (y === START_YEAR) ? START_MONTH : 1;
+    for (let m = mStart; m <= 12; m++) {
+      const qStart = (m === 1 || m === 4 || m === 7 || m === 10) ? "q-start" : "";
+      const showLabel = (m % 3 === 1) ? months[m-1] : "";
+      mhtml += `<div class="month-cell ${qStart}" style="width:${MONTH_W}px; min-width:${MONTH_W}px;">${showLabel}</div>`;
+    }
+  }
+  socMonthsRow.innerHTML = mhtml;
+}
+
+// ===== INIT =====
+buildMonthsHeader();
+buildBrandRows();
+buildSocTimeline();
+</script>
+</body>
+</html>

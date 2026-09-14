@@ -1,8 +1,8 @@
 # Skills Index
 
 > 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
-> 生成时间: 2026-07-17 08:42:54 CST
-> Skill 总数: 99
+> 生成时间: 2026-09-14 09:00:52 CST
+> Skill 总数: 104
 
 ## SCM 采购体系
 
@@ -80,6 +80,12 @@ cognitive-engine/.claude/skills/target-analysis/SKILL.md|tar |
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | data-analyzer | data-analyzer/SKILL.md | Data analysis tool for Excel, CSV, Word, PDF, TXT, Markdown  |
+## 其他
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| diagram-design | diagram-design/SKILL.md | Create branded architecture, IT current-state, flowchart, se |
+| eli5 | eli5/SKILL.md | 用大白话+可视化 HTML 页面解释任何概念。触� |
 ## 语言工具
 
 | Skill | 路径 | 触发场景 |
@@ -136,6 +142,11 @@ founder-cabinet/SKILL.md|founder-cabinet|| |
 | infsh-cli | infsh-cli/SKILL.md | Run 150+ AI apps via inference.sh CLI - image generation, vi |
 | libtv-skill | libtv-skills/skills/libtv-skill/SKILL.md | agent-im 会话技能 - 通过 liblib.tv 的 AI 能力生成
 model-router/SKILL.md|model-router|Automatically routes AI t |
+## Skill 管理
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| nanobanana-ppt-skills | nanobanana-ppt-skills/SKILL.md |  |
 ## 效率工具
 
 | Skill | 路径 | 触发场景 |
@@ -149,12 +160,22 @@ model-router/SKILL.md|model-router|Automatically routes AI t |
 | content-extract | openclaw-search-skills/content-extract/SKILL.md | Robust URL-to-Markdown extraction for OpenClaw workflows. Us |
 | mineru-extract | openclaw-search-skills/mineru-extract/SKILL.md | Use the official MinerU (mineru.net) parsing API to convert  |
 | search-layer | openclaw-search-skills/search-layer/SKILL.md | > |
-## 媒体生成
+## 行业监控
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| patent-disclosure-skill | patent-disclosure-skill/SKILL.md | 中国专利技能：专利点挖掘与交底书（发明/� |
+## 项目管理
 
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | pdf-styles | pdf-styles/SKILL.md | Markdown/HTML 转 PDF 的专业排版引擎。根据文档�
-p-video/SKILL.md|p-video|Generate videos with Pruna P-Video  |
+ppt-master/skills/ppt-master/SKILL.md|ppt-master|> |
+## 媒体生成
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| p-video | p-video/SKILL.md | Generate videos with Pruna P-Video and WAN models via infere |
 | remotion-render | remotion-render/SKILL.md | Render videos from React/Remotion component code via inferen |
 ## 研究搜索
 

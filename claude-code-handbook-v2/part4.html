@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Claude Code 自学指南 - 第四卷</title>
+<style>
+@page {
+  @bottom-center {
+    content: "第 19-26 章 / 30 章";
+    font-size: 9pt;
+    color: #888;
+  }
+}
+/* 技术手册 - Tech Manual
+ * 深蓝色系、暗色代码块、红色强调
+ * 适用：技术文档、API文档、编程教程
+ */
+@page { size: A4; margin: 2cm 2.5cm; }
+
+body {
+  font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 11pt; line-height: 1.8; color: #1a1a1a;
+}
+h1 { font-size: 22pt; color: #1a1a2e; border-bottom: 3px solid #e94560; padding-bottom: 10px; }
+h2 { font-size: 16pt; color: #16213e; border-bottom: 2px solid #0f3460; padding-bottom: 6px; }
+h3 { font-size: 13pt; color: #0f3460; }
+blockquote { border-left: 4px solid #e94560; margin: 12px 0; padding: 8px 16px; background: #fff5f5; font-size: 10.5pt; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10pt; }
+th { background: #0f3460; color: white; padding: 8px 12px; text-align: left; }
+td { padding: 6px 12px; border: 1px solid #ddd; }
+tr:nth-child(even) { background: #f8f9fa; }
+code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-family: "JetBrains Mono", "Fira Code", monospace; font-size: 10pt; }
+pre { background: #1a1a2e; color: #e0e0e0; padding: 16px; border-radius: 6px; font-size: 9.5pt; line-height: 1.6; }
+pre code { background: none; color: inherit; padding: 0; }
+strong { color: #e94560; }
+hr { border: none; border-top: 2px solid #e94560; margin: 20px 0; }
+ul, ol { padding-left: 20px; }
+li { margin: 4px 0; }
+
+/* 封面页 */
+h1:first-of-type { text-align: center; font-size: 28pt; margin-top: 40%; border: none; }
+
+</style>
+</head>
+<body>
+<h1 id="_1">第四卷：高级工作流</h1>
+<blockquote>
+<p><strong>学习目标</strong>：掌握 Worktrees 并行开发、Chrome 扩展 UI 验证、Web 版使用、Headless CI/CD、Power-ups、Remote Control、语音输入、Slack 集成。读完本卷后，你掌握了 Claude Code 的全部核心功能。</p>
+</blockquote>
+<hr />
+<h2 id="19git-worktrees">第19章：Git Worktrees 并行开发</h2>
+<h3 id="191-git-worktree">19.1 什么是 Git Worktree？</h3>
+<p>Git Worktree 允许你在同一个仓库下，<strong>同时检出多个分支到不同目录</strong>。每个 worktree 是独立的工作目录，但共享同一个 <code>.git</code> 仓库。</p>
+<p><strong>比喻</strong>：一个仓库，多间办公室。每间办公室处理不同的事务，但共享同一份档案。</p>
+<h3 id="192-worktree">19.2 为什么需要 Worktree？</h3>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>没有 Worktree</th>
+<th>有 Worktree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>同时开发两个 feature</td>
+<td>需要频繁 stash/checkout</td>
+<td>各自独立工作</td>
+</tr>
+<tr>
+<td>一个紧急 bug 中断当前工作</td>
+<td>stash → 修复 → stash pop</td>
+<td>开新 worktree 直接修</td>
+</tr>
+<tr>
+<td>Claude 改一半想试另一个方向</td>
+<td>保存当前进度 → 回来恢复</td>
+<td>直接在新 worktree 试</td>
+</tr>
+</tbody>
+</table>
+<h3 id="193">19.3 基本操作</h3>
+<pre><code class="language-bash"># 创建 worktree
+git worktree add ../my-project-feature-search feature/search
+
+# 列出所有 worktree
+git worktree list
+
+# 删除 worktree
+git worktree remove ../my-project-feature-search
+</code></pre>
+<h3 id="194-claude-code-worktree">19.4 Claude Code 中的 Worktree 操作</h3>
+<p>Claude Code 可以通过内置工具直接操作 Worktree：</p>
+<pre><code>创建一个新的 worktree，分支名为 feature/user-search，路径为 ../my-project-search。
+在新的 worktree 中实现用户搜索功能。
+</code></pre>
+<p>Claude 会自动：
+1. <code>git worktree add</code> 创建目录
+2. 在新目录中开发
+3. 完成后告诉你结果</p>
+<h3 id="195-subagent-worktree">19.5 Subagent + Worktree 隔离</h3>
+<p><strong>最佳实践</strong>：让 Subagent 在独立 Worktree 中工作，避免互相干扰。</p>
+<pre><code>让 Subagent 在 worktree ../my-project-search（分支 feature/search）中实现搜索功能。
+同时让另一个 Subagent 在 worktree ../my-project-export（分支 feature/export）中实现导出功能。
+</code></pre>
+<p>两个 Subagent 在不同目录、不同分支上并行工作，互不影响。</p>
+<h3 id="196-worktree">19.6 Worktree 使用流程</h3>
+<pre><code>1. git worktree add ../project-branch-name branch-name
+2. claude（在 worktree 目录中启动）
+3. 正常开发...
+4. git push origin branch-name
+5. git worktree remove ../project-branch-name
+</code></pre>
+<p><strong>注意事项</strong>：
+- 同一个分支不能同时出现在多个 worktree 中
+- 用完记得删除 worktree，避免积累
+- Worktree 目录默认在仓库的上级目录，保持整洁</p>
+<h3 id="197">19.7 常见问题</h3>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"branch already checked out"</td>
+<td>该分支已在其他 worktree 中，换一个分支</td>
+</tr>
+<tr>
+<td>Worktree 目录残留</td>
+<td><code>git worktree prune</code> 清理</td>
+</tr>
+<tr>
+<td>Claude 在错误的 worktree</td>
+<td>明确指定路径 <code>cd ../project-branch-name</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="20chrome">第20章：Chrome 扩展</h2>
+<h3 id="201-claude-code-chrome">20.1 什么是 Claude Code Chrome 扩展？</h3>
+<p>Claude Code Chrome 扩展让 Claude Code 能<strong>看到你的浏览器页面</strong>——截图、分析 DOM、对比 UI 变更。</p>
+<p><strong>核心能力</strong>：
+- 截取当前页面截图
+- 分析页面结构和内容
+- 对比修改前后的 UI
+- 在 Claude Code 中直接引用浏览器中的信息</p>
+<h3 id="202">20.2 安装与配置</h3>
+<ol>
+<li>打开 Chrome → 访问 Chrome Web Store</li>
+<li>搜索 "Claude Code" 扩展 → 安装</li>
+<li>点击扩展图标 → 连接到你的 Claude Code 实例</li>
+<li>确认连接成功（图标状态变化）</li>
+</ol>
+<h3 id="203">20.3 使用方式</h3>
+<p><strong>截图分析</strong>：</p>
+<pre><code>[在 Chrome 中点击 Claude Code 扩展图标，截图当前页面]
+
+分析这个页面的布局。告诉我：
+1. 整体布局结构
+2. 导航栏是否响应式
+3. 有没有明显的 UX 问题
+</code></pre>
+<p><strong>UI 变更验证</strong>：</p>
+<pre><code>[修改前截图] 这是当前的登录页面。
+
+现在让我修改登录页面的样式。
+
+[修改后截图] 这是修改后的页面。
+
+对比两张截图，确认变更符合预期。
+特别关注：按钮位置、表单对齐、错误提示位置。
+</code></pre>
+<p><strong>截图对比</strong>：</p>
+<pre><code>[截图 A] 修改前
+[截图 B] 修改后
+
+列出所有差异。有没有意外的变更？
+</code></pre>
+<h3 id="204-ui">20.4 实战：实现并验证 UI 组件</h3>
+<pre><code>我需要给表格组件添加排序功能。
+
+步骤：
+1. 先用 Chrome 扩展截图当前表格
+2. 在 Claude Code 中实现排序逻辑
+3. 刷新页面，再次截图
+4. 对比两张截图，确认排序功能正常
+5. 测试升序、降序、不同列排序
+</code></pre>
+<h3 id="205-chrome">20.5 Chrome 扩展的局限</h3>
+<table>
+<thead>
+<tr>
+<th>局限</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无法交互</td>
+<td>只能截图和分析，不能点击按钮</td>
+</tr>
+<tr>
+<td>静态快照</td>
+<td>看到的是截图那一刻的状态</td>
+</tr>
+<tr>
+<td>需要手动触发</td>
+<td>每次截图需要点击扩展图标</td>
+</tr>
+</tbody>
+</table>
+<p>对于需要交互的场景，Claude Code 内置的浏览器控制能力（headless browser）更适合。</p>
+<hr />
+<h2 id="21claude-code-on-the-web">第21章：Claude Code on the Web</h2>
+<h3 id="211-claudeaicode">21.1 claude.ai/code 是什么？</h3>
+<p>Anthropic 提供了 Claude Code 的网页版本，可以直接在 claude.ai 上使用，不需要本地安装。</p>
+<p><strong>访问方式</strong>：https://claude.ai/code</p>
+<h3 id="212">21.2 与本地版的区别</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>本地版</th>
+<th>Web 版</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>安装</td>
+<td>需要 npm + Node.js</td>
+<td>无需安装</td>
+</tr>
+<tr>
+<td>系统权限</td>
+<td>完整权限（文件、Shell）</td>
+<td>受限（沙箱环境）</td>
+</tr>
+<tr>
+<td>模型选择</td>
+<td>任意 Anthropic 模型</td>
+<td>Anthropic 指定模型</td>
+</tr>
+<tr>
+<td>定制化</td>
+<td>CLAUDE.md、Hooks、Skills</td>
+<td>有限支持</td>
+</tr>
+<tr>
+<td>数据安全</td>
+<td>数据在你本地</td>
+<td>数据在 Anthropic 服务器</td>
+</tr>
+<tr>
+<td>网络要求</td>
+<td>首次登录需要</td>
+<td>始终需要</td>
+</tr>
+</tbody>
+</table>
+<h3 id="213">21.3 适用场景</h3>
+<p><strong>Web 版适合</strong>：
+- 快速体验 Claude Code
+- 没有本地开发环境
+- 临时使用（出差、借用电脑）
+- 简单的代码问题</p>
+<p><strong>本地版适合</strong>：
+- 日常开发工作
+- 需要系统权限（文件、Shell）
+- 需要定制化（CLAUDE.md、Hooks）
+- 数据安全要求高</p>
+<h3 id="214">21.4 建议</h3>
+<p>如果你认真学 Claude Code，<strong>本地版是必须的</strong>。Web 版可以作为补充——不方便带电脑时临时使用。</p>
+<hr />
+<h2 id="22headless-cicd">第22章：Headless 模式与 CI/CD</h2>
+<h3 id="221-headless">22.1 什么是 Headless 模式？</h3>
+<p>Headless 模式是 Claude Code 的<strong>非交互式执行模式</strong>——不需要人工参与，Claude Code 自动完成任务。</p>
+<p>这是将 Claude Code 集成到自动化流程（CI/CD）的基础。</p>
+<h3 id="222">22.2 基本用法</h3>
+<pre><code class="language-bash"># 单次执行
+claude -p &quot;审查最近的 commit，输出安全风险报告&quot;
+
+# 管道输入
+git diff | claude -p &quot;审查这个 diff&quot;
+
+# 指定输出格式
+claude -p &quot;生成 API 文档&quot; --output-format json
+</code></pre>
+<p><code>-p</code> 参数表示"print mode"：执行任务后输出结果并退出，不进入交互式会话。</p>
+<h3 id="223-github-actions">22.3 实战：GitHub Actions 集成</h3>
+<p>在 <code>.github/workflows/claude-review.yml</code> 中：</p>
+<pre><code class="language-yaml">name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run Claude Review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude -p &quot;审查这个 PR 的所有变更。关注：安全性、性能、代码风格。输出结构化审查报告。&quot; \
+            --output-format text &gt; review.md
+
+      - name: Post Review Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const review = fs.readFileSync('review.md', 'utf8');
+            github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: review
+            });
+</code></pre>
+<p>每次创建或更新 PR 时，Claude Code 自动审查并将结果作为 PR 评论发布。</p>
+<h3 id="224-gitlab-cicd">22.4 实战：GitLab CI/CD 集成</h3>
+<pre><code class="language-yaml"># .gitlab-ci.yml
+claude-review:
+  stage: review
+  image: node:22
+  before_script:
+    - npm install -g @anthropic-ai/claude-code
+  script:
+    - claude -p &quot;审查最近的 commit，输出安全审查报告&quot; --output-format text
+  variables:
+    ANTHROPIC_API_KEY: $CLAUDE_API_KEY
+  only:
+    - merge_requests
+</code></pre>
+<h3 id="225-headless">22.5 Headless 模式最佳实践</h3>
+<table>
+<thead>
+<tr>
+<th>实践</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>限制输出长度</td>
+<td>用 <code>--max-tokens</code> 避免超长输出</td>
+</tr>
+<tr>
+<td>指定输出格式</td>
+<td><code>--output-format json/text/markdown</code></td>
+</tr>
+<tr>
+<td>设置超时</td>
+<td><code>timeout</code> 命令包裹，避免无限运行</td>
+</tr>
+<tr>
+<td>缓存控制</td>
+<td>CI 环境中注意 Token 成本</td>
+</tr>
+<tr>
+<td>幂等性</td>
+<td>确保 Claude 的操作是幂等的（多次运行结果一致）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="23power-ups-fast-mode">第23章：Power-ups 与 Fast Mode</h2>
+<h3 id="231-power-ups">23.1 什么是 Power-ups？</h3>
+<p>Power-ups 是 Claude Code 的<strong>增强功能模块</strong>——可以为当前会话添加额外的能力和上下文。</p>
+<h3 id="232-powerup">23.2 /powerup 命令</h3>
+<pre><code>/powerup
+</code></pre>
+<p>Claude 会展示可用的 Power-ups 列表，你可以选择启用。</p>
+<p><strong>典型 Power-ups</strong>：
+- <strong>代码搜索增强</strong>：更智能的代码搜索
+- <strong>文档生成</strong>：自动为修改的代码生成文档
+- <strong>测试建议</strong>：基于代码变更建议测试用例</p>
+<h3 id="233-fast-mode">23.3 Fast Mode</h3>
+<p>Fast Mode 是 Claude Code 的<strong>快速响应模式</strong>——用更小的模型处理简单任务，降低延迟和成本。</p>
+<pre><code>/fast
+</code></pre>
+<p><strong>适用场景</strong>：
+- 简单的代码查询
+- 文件搜索
+- 格式化操作
+- 不需要深度推理的任务</p>
+<p><strong>不适用场景</strong>：
+- 复杂的架构设计
+- 难以定位的 bug
+- 需要深度推理的任务</p>
+<h3 id="234">23.4 模式切换策略</h3>
+<pre><code>日常简单任务 → Fast Mode（快速+便宜）
+复杂开发任务 → 正常模式（Claude Sonnet）
+特别复杂任务 → 高级模式（Claude Opus）
+</code></pre>
+<hr />
+<h2 id="24remote-control">第24章：Remote Control</h2>
+<h3 id="241-remote-control">24.1 什么是 Remote Control？</h3>
+<p>Remote Control 让你在<strong>一个 Claude Code 会话中控制另一个远程会话</strong>。</p>
+<p><strong>场景</strong>：你在本地电脑上运行 Claude Code，但需要在远程服务器上执行操作。</p>
+<h3 id="242">24.2 使用方式</h3>
+<pre><code class="language-bash"># 在远程服务器上启动 Claude Code（作为被控端）
+claude --remote
+
+# 在本地连接到远程会话
+claude --connect user@server:18789
+</code></pre>
+<h3 id="243">24.3 典型工作流</h3>
+<pre><code>本地 Claude Code → SSH 连接 → 远程服务器上的 Claude Code
+                                    ↓
+                              操作远程文件
+                              运行远程命令
+                              修改远程配置
+</code></pre>
+<h3 id="244">24.4 注意事项</h3>
+<ul>
+<li>需要网络连接稳定</li>
+<li>API 调用发生在本地（本地需要 API Key）</li>
+<li>敏感操作建议在 Plan Mode 中先审查</li>
+</ul>
+<hr />
+<h2 id="25voice-dictation">第25章：Voice Dictation</h2>
+<h3 id="251">25.1 语音输入</h3>
+<p>Claude Code 支持语音输入——用自然语言描述需求，而不需要打字。</p>
+<h3 id="252">25.2 使用方式</h3>
+<p>在支持的终端或 VS Code 中：</p>
+<ol>
+<li>点击麦克风图标（或按快捷键）</li>
+<li>说出你的需求</li>
+<li>Claude Code 将语音转文字，然后正常处理</li>
+</ol>
+<p><strong>适合场景</strong>：
+- 手不方便打字时
+- 边想边说的头脑风暴
+- 描述复杂需求时（说话比打字快）</p>
+<h3 id="253">25.3 语音输入的最佳实践</h3>
+<ul>
+<li><strong>语速适中</strong>：太快会识别错误</li>
+<li><strong>说完整句子</strong>：不要只说关键词</li>
+<li><strong>环境安静</strong>：噪音影响识别精度</li>
+<li><strong>说完检查</strong>：确认转写结果正确后再发送</li>
+</ul>
+<hr />
+<h2 id="26slack-claude">第26章：Slack 集成与 @Claude</h2>
+<h3 id="261-slack-claude-code">26.1 Slack 中的 Claude Code</h3>
+<p>Claude Code 可以集成到 Slack 工作空间，在 Slack 频道或 DM 中直接与 Claude 交互。</p>
+<h3 id="262">26.2 配置方式</h3>
+<ol>
+<li>在 Slack 创建一个 Bot 应用</li>
+<li>获取 Bot Token</li>
+<li>在 Claude Code 配置中添加 Slack 通道</li>
+</ol>
+<pre><code class="language-json">{
+  &quot;channels&quot;: {
+    &quot;slack&quot;: {
+      &quot;botToken&quot;: &quot;xoxb-xxxxx&quot;,
+      &quot;appToken&quot;: &quot;xapp-xxxxx&quot;
+    }
+  }
+}
+</code></pre>
+<h3 id="263">26.3 使用方式</h3>
+<p>在 Slack 中：
+- <strong>DM</strong>：直接给 Claude Bot 发消息
+- <strong>频道</strong>：@Claude 提及，Claude 会回复
+- <strong>线程</strong>：在特定线程中与 Claude 交互</p>
+<h3 id="264">26.4 团队使用场景</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>代码审查</td>
+<td>PR 链接发给 Claude，自动审查</td>
+</tr>
+<tr>
+<td>知识问答</td>
+<td>团队成员 @Claude 问技术问题</td>
+</tr>
+<tr>
+<td>任务分配</td>
+<td>"Claude，创建一个 issue 描述这个 bug"</td>
+</tr>
+<tr>
+<td>文档生成</td>
+<td>"Claude，根据这个讨论生成设计文档"</td>
+</tr>
+</tbody>
+</table>
+<h3 id="265-slack-vs">26.5 Slack vs 其他通道</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Slack</th>
+<th>飞书</th>
+<th>Telegram</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>团队协作</td>
+<td>⭐⭐⭐ 最佳</td>
+<td>⭐⭐ 好</td>
+<td>⭐ 个人用</td>
+</tr>
+<tr>
+<td>代码片段</td>
+<td>⭐⭐ 好</td>
+<td>⭐⭐ 好</td>
+<td>⭐ 一般</td>
+</tr>
+<tr>
+<td>文件传输</td>
+<td>⭐⭐ 好</td>
+<td>⭐⭐⭐ 最佳</td>
+<td>⭐ 一般</td>
+</tr>
+<tr>
+<td>配置复杂度</td>
+<td>中等</td>
+<td>中等</td>
+<td>简单</td>
+</tr>
+</tbody>
+</table>
+<p>选择适合你团队的通道即可，Claude Code 对所有通道的支持基本一致。</p>
+</body>
+</html>

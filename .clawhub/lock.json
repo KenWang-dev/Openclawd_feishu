@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": {
+    "stock-watcher": {
+      "version": "1.0.0",
+      "installedAt": 1777105824940
+    },
+    "stock-analysis": {
+      "version": "6.2.0",
+      "installedAt": 1777106853451
+    },
+    "ai-shifu-course-creator": {
+      "version": "1.0.2",
+      "installedAt": 1778422719396
+    },
+    "mermaid-diagrams": {
+      "version": "0.1.0",
+      "installedAt": 1778682884071
+    },
+    "anysearch": {
+      "version": "2.1.0",
+      "installedAt": 1781310828710
+    },
+    "follow-builders": {
+      "version": "0.1.0",
+      "installedAt": 1783552547369
+    },
+    "handoff": {
+      "version": "1.0.0",
+      "installedAt": 1783708698272
+    },
+    "nanobanana-ppt-skills": {
+      "version": "0.1.0",
+      "installedAt": 1785301039583
+    },
+    "patent-disclosure-skill": {
+      "version": "3.9.0",
+      "installedAt": 1788083591210
+    }
+  }
+}

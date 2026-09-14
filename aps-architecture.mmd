@@ -1,0 +1,60 @@
+graph TD
+    subgraph MODULE1["① 需求分析 Demand Analysis"]
+        A1[客户订单 Firm Order] --> A3[需求汇聚<br/>Consumption Logic]
+        A2[销售预测 Forecast] --> A3
+        A3 --> A4{需求合并<br/>同SKU×同期段}
+        A4 --> A5[时间栅栏分层<br/>冰冻区 / 半冰冻区 / 自由区]
+        A5 --> A6[异常需求预警]
+    end
+
+    subgraph MODULE2["② 供需匹配 Supply-Demand Matching"]
+        B1[Step 1: 成品库存] --> B2{满足?}
+        B2 -- 是 --> C1[✅ 给出交期]
+        B2 -- 否 --> B3[Step 2: 半成品 WIP]
+        B3 --> B4{满足?}
+        B4 -- 是 --> C2[✅ 排剩余工序]
+        B4 -- 否 --> B5[Step 3: 工单在制 MO]
+        B5 --> B6{满足?}
+        B6 -- 是 --> C3[✅ 锁定在制量]
+        B6 -- 否 --> B7[Step 4: 原材料库存<br/>主仓+边仓<br/>批次匹配]
+        B7 --> B8{满足?}
+        B8 -- 是 --> C4[✅ 发工单]
+        B8 -- 否 --> B9[Step 5: 在途 PO]
+        B9 --> B10{满足?}
+        B10 -- 是 --> C5[✅ CTP交期=<br/>PO到货+生产周期]
+        B10 -- 否 --> B11[Step 6: 触发PR<br/>采购申请]
+        B11 --> B12[PR → 审批 → PO]
+        B12 --> B13[供应商确认交期]
+        B13 -. 交期回填 .-> B9
+    end
+
+    subgraph MODULE3["③ 动态排产 Dynamic Scheduling"]
+        D1[约束建模] --> D2
+        D2[产能约束<br/>产线/设备/人员/OEE] --> D4[排产引擎]
+        D3[物料约束<br/>齐套时间/边仓/容量] --> D4
+        D7[工艺约束<br/>SMT→AOI→组装→测试] --> D4
+        D5[优先级排序<br/>EDD + 评分模型] --> D6[启发式粗排 30s]
+        D6 --> D8[遗传算法精排 10-30min]
+        D8 --> D9[What-If 模拟验证]
+        D9 --> D10[输出: 甘特图 + 备料指令 + 交期承诺]
+    end
+
+    A6 -->|需求量×交期×优先级| MODULE2
+    C1 & C2 & C3 & C4 & C5 -->|缺口 + 建议工单| MODULE2
+    C4 & C5 -->|物料齐套信息| MODULE3
+    D10 -->|备料指令| MODULE2
+    D10 -. 边仓不足阻塞工单 .-> MODULE2
+
+    classDef module fill:#f0f4ff,stroke:#1a1a2e,stroke-width:2px,color:#1a1a2e
+    classDef step fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px,color:#1a1a2e
+    classDef decision fill:#fff3e0,stroke:#e65100,stroke-width:1px,color:#1a1a2e
+    classDef output fill:#e3f2fd,stroke:#1565c0,stroke-width:1px,color:#1a1a2e
+    classDef trigger fill:#fce4ec,stroke:#c62828,stroke-width:1px,color:#1a1a2e
+    classDef engine fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px,color:#1a1a2e
+
+    class MODULE1,MODULE2,MODULE3 module
+    class B1,B3,B5,B7,B9 step
+    class B2,B4,B6,B8,B10 decision
+    class C1,C2,C3,C4,C5,C5 output
+    class B11 trigger
+    class D4,D6,D8,D9,D10 engine

@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>OpenClaw 从入门到精通自学手册</title>
+<style>
+/* 技术手册 - Tech Manual
+ * 深蓝色系、暗色代码块、红色强调
+ * 适用：技术文档、API文档、编程教程
+ */
+@page { size: A4; margin: 2cm 2.5cm; }
+
+body {
+  font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 11pt; line-height: 1.8; color: #1a1a1a;
+}
+h1 { font-size: 22pt; color: #1a1a2e; border-bottom: 3px solid #e94560; padding-bottom: 10px; }
+h2 { font-size: 16pt; color: #16213e; border-bottom: 2px solid #0f3460; padding-bottom: 6px; }
+h3 { font-size: 13pt; color: #0f3460; }
+blockquote { border-left: 4px solid #e94560; margin: 12px 0; padding: 8px 16px; background: #fff5f5; font-size: 10.5pt; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10pt; }
+th { background: #0f3460; color: white; padding: 8px 12px; text-align: left; }
+td { padding: 6px 12px; border: 1px solid #ddd; }
+tr:nth-child(even) { background: #f8f9fa; }
+code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-family: "JetBrains Mono", "Fira Code", monospace; font-size: 10pt; }
+pre { background: #1a1a2e; color: #e0e0e0; padding: 16px; border-radius: 6px; font-size: 9.5pt; line-height: 1.6; }
+pre code { background: none; color: inherit; padding: 0; }
+strong { color: #e94560; }
+hr { border: none; border-top: 2px solid #e94560; margin: 20px 0; }
+ul, ol { padding-left: 20px; }
+li { margin: 4px 0; }
+
+/* 封面页 */
+h1:first-of-type { text-align: center; font-size: 28pt; margin-top: 40%; border: none; }
+
+</style>
+</head>
+<body>
+<h1 id="openclaw">OpenClaw 从入门到精通自学手册</h1>
+<blockquote>
+<p><strong>版本</strong>: 2026年5月 | <strong>基于</strong>: OpenClaw v2026.2.25 | <strong>原则</strong>: 第一性原理 x 帕累托法则 x MECE x 金字塔原理</p>
+</blockquote>
+<hr />
+<h2 id="openclaw_1">引言：为什么 OpenClaw 值得系统学习</h2>
+<p>OpenClaw 是一个<strong>开源、自托管的 AI Agent 网关</strong>——不是又一个聊天机器人，而是一个能让 AI 从被动回答者变成主动任务执行者的运行时平台。</p>
+<p><strong>核心定位</strong>：本地优先（Local-First）、多通道（Multi-Channel）、Agent 原生（Agent-Native）。</p>
+<p><strong>数据说话</strong>：
+- 2026年成为 GitHub 最火开源项目之一
+- BBC、知乎、腾讯云等主流媒体专题报道
+- 阿里云百炼平台官方集成支持
+- 26 个内置工具 + 53+ 官方 Skills
+- 支持 20+ 消息通道（Telegram、WhatsApp、Discord、飞书、Slack 等）</p>
+<p><strong>关键理解</strong>：
+- OpenClaw 不生产 AI 模型——它消费 AI 模型
+- OpenClaw 不是 ChatGPT 套壳——它是 Agent 运行时
+- OpenClaw 不是云服务——它跑在你自己的机器上</p>
+<hr />
+<h2 id="day-1">第一部分：快速上手（Day 1）</h2>
+<h3 id="11-openclaw">1.1 什么是 OpenClaw？</h3>
+<p>OpenClaw 是一个<strong>自托管的 Gateway</strong>，连接你的消息应用和 AI Agent。架构极其简洁：</p>
+<pre><code>消息应用（飞书/Telegram/Discord...）→ Gateway → AI Agent（Claude/GPT/Gemini...）
+</code></pre>
+<p>Gateway 是唯一的控制平面，负责会话管理、路由分发、工具调度。</p>
+<p><strong>与其他方案的本质区别</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>ChatGPT/Claude.ai</th>
+<th>Cursor/Copilot</th>
+<th>OpenClaw</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>托管方式</td>
+<td>云端</td>
+<td>本地IDE</td>
+<td>自托管</td>
+</tr>
+<tr>
+<td>消息通道</td>
+<td>仅网页/APP</td>
+<td>仅IDE</td>
+<td>20+ 通道</td>
+</tr>
+<tr>
+<td>模型选择</td>
+<td>锁定自家</td>
+<td>有限选择</td>
+<td>任意模型</td>
+</tr>
+<tr>
+<td>工具能力</td>
+<td>有限</td>
+<td>代码为主</td>
+<td>全系统权限</td>
+</tr>
+<tr>
+<td>数据控制</td>
+<td>不在你手里</td>
+<td>本地</td>
+<td>完全自主</td>
+</tr>
+<tr>
+<td>自动化</td>
+<td>无</td>
+<td>无</td>
+<td>Cron + 心跳</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12">1.2 安装与首次启动</h3>
+<p><strong>前置条件</strong>：
+- Node.js &gt;= 22（推荐 24）
+- 一个 AI 模型的 API Key（Claude / GPT / GLM 等）
+- 5 分钟</p>
+<pre><code class="language-bash"># 安装
+npm install -g openclaw@latest
+
+# 引导式初始化（含 Gateway 安装）
+openclaw onboard --install-daemon
+
+# 打开浏览器控制面板
+openclaw dashboard
+</code></pre>
+<p>控制面板默认地址：http://127.0.0.1:18789/</p>
+<p><strong>飞书接入（最快通道）</strong>：
+1. 在飞书开放平台创建机器人应用
+2. 获取 App ID 和 App Secret
+3. 在配置文件中填入凭证
+4. 发布应用，开始对话</p>
+<h3 id="13">1.3 核心概念速览</h3>
+<p>在深入之前，先建立对 OpenClaw 架构的全局认知：</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>一句话解释</th>
+<th>类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gateway</td>
+<td>中枢服务，连接消息和 AI</td>
+<td>总机</td>
+</tr>
+<tr>
+<td>Session</td>
+<td>一次对话的上下文</td>
+<td>一通电话</td>
+</tr>
+<tr>
+<td>Workspace</td>
+<td>Agent 的工作目录</td>
+<td>办公桌</td>
+</tr>
+<tr>
+<td>Skills</td>
+<td>可插拔的能力模块</td>
+<td>技能包</td>
+</tr>
+<tr>
+<td>Cron</td>
+<td>定时任务</td>
+<td>闹钟</td>
+</tr>
+<tr>
+<td>Heartbeat</td>
+<td>周期性巡检</td>
+<td>定时巡逻</td>
+</tr>
+<tr>
+<td>Nodes</td>
+<td>手机/远程设备</td>
+<td>遥控器</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>文件化的记忆系统</td>
+<td>笔记本</td>
+</tr>
+<tr>
+<td>Subagent</td>
+<td>独立子代理</td>
+<td>助手</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14">1.4 第一次对话</h3>
+<p>安装完成后，通过任意消息通道发送一条消息即可。Agent 会：
+1. 接收你的消息
+2. 调用 AI 模型生成回复
+3. 根据需要使用工具（搜索、读写文件、执行命令等）
+4. 返回结果</p>
+<p><strong>心智转变</strong>：
+- ❌ 旧方式："打开网页和 AI 聊天"
+- ✅ 新方式："从手机飞书/Telegram 发消息，AI 在你的服务器上帮你干活"</p>
+<hr />
+<h2 id="day-1-3">第二部分：核心能力掌握（Day 1-3）</h2>
+<h3 id="21">2.1 工作空间与文件体系</h3>
+<p>工作空间是 Agent 的"家"，默认位于 <code>~/.openclaw/workspace/</code>。</p>
+<p><strong>核心文件</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>用途</th>
+<th>加载时机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SOUL.md</code></td>
+<td>Agent 的人格、性格、行为准则</td>
+<td>每次会话</td>
+</tr>
+<tr>
+<td><code>AGENTS.md</code></td>
+<td>工作规范、安全规则、操作手册</td>
+<td>每次会话</td>
+</tr>
+<tr>
+<td><code>USER.md</code></td>
+<td>用户信息、偏好、习惯</td>
+<td>每次会话</td>
+</tr>
+<tr>
+<td><code>IDENTITY.md</code></td>
+<td>Agent 的身份信息</td>
+<td>每次会话</td>
+</tr>
+<tr>
+<td><code>HEARTBEAT.md</code></td>
+<td>心跳巡检任务清单</td>
+<td>心跳时</td>
+</tr>
+<tr>
+<td><code>TOOLS.md</code></td>
+<td>工具使用本地笔记</td>
+<td>每次会话</td>
+</tr>
+<tr>
+<td><code>MEMORY.md</code></td>
+<td>长期记忆（精华）</td>
+<td>主会话</td>
+</tr>
+<tr>
+<td><code>memory/YYYY-MM-DD.md</code></td>
+<td>每日记录</td>
+<td>当天+昨天</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键洞察</strong>：这些文件就是 Agent 的"大脑"。Agent 每次醒来（新会话）都是白纸，但这些文件让它保持连续性。这是 OpenClaw 与无状态聊天机器人的根本区别。</p>
+<h3 id="22-soulmd-agent">2.2 SOUL.md：塑造你的 Agent 人格</h3>
+<p>SOUL.md 定义 Agent 是谁。这是一个持续进化的文件：</p>
+<pre><code class="language-markdown"># SOUL.md
+
+## 核心特质
+- 直言不讳，不拍马屁
+- 有自己的观点和偏好
+- 先动手解决问题，再问问题
+- 简洁精准，拒绝废话
+
+## 边界
+- 私密信息绝不泄露
+- 对外操作（发邮件、发推）先问
+- 群聊中不代用户发言
+
+## 风格
+- 专业但不冰冷
+- 中文为主，技术术语保留英文
+</code></pre>
+<p><strong>帕累托提示</strong>：SOUL.md 的 80% 价值来自 20% 的内容——重点定义"行为风格"和"安全边界"。</p>
+<h3 id="23-agentsmdagent">2.3 AGENTS.md：Agent 的操作手册</h3>
+<p>AGENTS.md 是 Agent 的"员工手册"，定义工作规范：</p>
+<pre><code class="language-markdown"># AGENTS.md
+
+## 安全
+- 不对外发送私有数据
+- 破坏性操作前必须确认
+- trash &gt; rm（可恢复优于不可恢复）
+
+## 工具使用
+- 读取文件、搜索、组织学习：自由执行
+- 发邮件、推文、公开发帖：先问
+
+## 群聊行为
+- 被提及或有价值时才回复
+- 不需要的场景回复 HEARTBEAT_OK
+
+## 心跳
+- 每 30 分钟一次，按 HEARTBEAT.md 执行
+- 深夜（23:00-08:00）除非紧急否则安静
+</code></pre>
+<h3 id="24-memory-agent">2.4 Memory 系统：让 Agent 越用越聪明</h3>
+<p>OpenClaw 的记忆系统是<strong>文件化、结构化、可持久化</strong>的：</p>
+<p><strong>三层记忆架构</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>文件</th>
+<th>内容</th>
+<th>类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>身份层</td>
+<td>SOUL.md</td>
+<td>人格、价值观</td>
+<td>性格</td>
+</tr>
+<tr>
+<td>规则层</td>
+<td>AGENTS.md</td>
+<td>操作规范</td>
+<td>员工手册</td>
+</tr>
+<tr>
+<td>知识层</td>
+<td>MEMORY.md</td>
+<td>长期记忆</td>
+<td>经验积累</td>
+</tr>
+</tbody>
+</table>
+<p><strong>记忆维护</strong>：
+- 每日记录写入 <code>memory/YYYY-MM-DD.md</code>
+- 定期（每隔几天）在心跳中回顾日志
+- 将重要信息蒸馏提炼到 <code>MEMORY.md</code>
+- 清理过时的日志文件</p>
+<p><strong>为什么这很重要</strong>：几周后，你的 Agent 会了解你的偏好、记住项目上下文、不重复犯错。与无状态聊天机器人的差距是指数级的。</p>
+<h3 id="25-skillsagent">2.5 Skills：Agent 的技能包系统</h3>
+<p>Skills 是 OpenClaw 的插件系统——模块化能力包。</p>
+<p><strong>发现和安装</strong>：</p>
+<pre><code class="language-bash"># 搜索可用 Skills
+openclaw skill search weather
+
+# 安装
+openclaw skill install weather
+
+# 查看已安装
+openclaw skill list
+</code></pre>
+<p><strong>2026 必装 Skills（帕累托 Top 10）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>功能</th>
+<th>核心价值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>weather</td>
+<td>天气预报</td>
+<td>日常必备</td>
+</tr>
+<tr>
+<td>github</td>
+<td>GitHub 操作</td>
+<td>开发者核心</td>
+</tr>
+<tr>
+<td>healthcheck</td>
+<td>服务器安全巡检</td>
+<td>运维自动化</td>
+</tr>
+<tr>
+<td>gh-issues</td>
+<td>Issue/PR 自动修复</td>
+<td>效率倍增器</td>
+</tr>
+<tr>
+<td>skill-creator</td>
+<td>创建新 Skill</td>
+<td>元能力</td>
+</tr>
+<tr>
+<td>qqbot-cron</td>
+<td>定时提醒</td>
+<td>任务管理</td>
+</tr>
+<tr>
+<td>tmux</td>
+<td>远程终端控制</td>
+<td>高级运维</td>
+</tr>
+<tr>
+<td>stock-analysis</td>
+<td>股票分析</td>
+<td>投资辅助</td>
+</tr>
+<tr>
+<td>khazix-writer</td>
+<td>公众号写作</td>
+<td>内容创作</td>
+</tr>
+<tr>
+<td>agent-reach</td>
+<td>多平台接入</td>
+<td>通道扩展</td>
+</tr>
+</tbody>
+</table>
+<p><strong>创建自定义 Skill</strong>：</p>
+<pre><code class="language-bash"># 用内置工具快速创建
+openclaw skill create my-skill
+</code></pre>
+<p>每个 Skill 就是一个文件夹，核心是 <code>SKILL.md</code> 文件，描述技能的能力、使用场景和具体指令。Agent 在需要时自动加载对应 Skill。</p>
+<hr />
+<h2 id="week-1-2">第三部分：自动化引擎（Week 1-2）</h2>
+<h3 id="31-cron">3.1 Cron：精准定时任务</h3>
+<p>Cron 让 Agent 在指定时间自动执行任务，运行在<strong>隔离会话</strong>中。</p>
+<p><strong>基本语法</strong>：</p>
+<pre><code class="language-bash">openclaw cron add \
+  --name &quot;每日早报&quot; \
+  --cron &quot;0 7 * * *&quot; \
+  --tz &quot;Asia/Shanghai&quot; \
+  --session isolated \
+  --wake now \
+  --announce \
+  --channel telegram \
+  --to &quot;YOUR_CHAT_ID&quot; \
+  --message &quot;搜索过去24小时的AI新闻，整理5条摘要&quot;
+</code></pre>
+<p><strong>Cron 表达式速查</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0 8 * * *</code></td>
+<td>每天 08:00</td>
+</tr>
+<tr>
+<td><code>0 9 * * 1</code></td>
+<td>每周一 09:00</td>
+</tr>
+<tr>
+<td><code>0 8 * * 1-5</code></td>
+<td>工作日 08:00</td>
+</tr>
+<tr>
+<td><code>*/30 * * * *</code></td>
+<td>每 30 分钟</td>
+</tr>
+<tr>
+<td><code>0 10 1 * *</code></td>
+<td>每月 1 日 10:00</td>
+</tr>
+<tr>
+<td><code>0 0 * * 0</code></td>
+<td>每周日 00:00</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键参数</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--session isolated</code></td>
+<td>隔离会话，不污染主对话</td>
+<td>始终开启</td>
+</tr>
+<tr>
+<td><code>--announce</code></td>
+<td>完成后通知你</td>
+<td>始终开启</td>
+</tr>
+<tr>
+<td><code>--best-effort-deliver</code></td>
+<td>投递失败不影响任务状态</td>
+<td>多通道时开启</td>
+</tr>
+<tr>
+<td><code>--timeout-seconds N</code></td>
+<td>超时保护</td>
+<td>日报 600，周报 900，月报 1200</td>
+</tr>
+<tr>
+<td><code>--model MODEL</code></td>
+<td>指定模型</td>
+<td>日常任务用便宜模型</td>
+</tr>
+<tr>
+<td><code>--tz</code></td>
+<td>时区</td>
+<td>始终明确指定</td>
+</tr>
+</tbody>
+</table>
+<p><strong>管理命令</strong>：</p>
+<pre><code class="language-bash">openclaw cron list          # 查看所有任务
+openclaw cron edit --id ID  # 编辑任务
+openclaw cron remove --id ID  # 删除任务
+</code></pre>
+<h3 id="32-heartbeat">3.2 Heartbeat：周期性巡检</h3>
+<p>Heartbeat 是 Gateway 每 30 分钟触发一次的巡检机制。Agent 读取 <code>HEARTBEAT.md</code> 中的任务清单，执行后回复 <code>HEARTBEAT_OK</code>（无事发生）或发送提醒。</p>
+<p><strong>配置</strong>：</p>
+<pre><code class="language-markdown"># HEARTBEAT.md
+# 邮件检查（每2-4小时一次）
+# 日历检查（每日1-2次）
+# 天气检查（出门前）
+</code></pre>
+<p><strong>优化心跳</strong>：</p>
+<pre><code class="language-bash"># 延长间隔到每小时
+openclaw config set agents.defaults.heartbeat.every 1h
+
+# 限制活跃时段
+openclaw config set agents.defaults.heartbeat.activeHours.start 9:00
+openclaw config set agents.defaults.heartbeat.activeHours.end 22:00
+
+# 重启生效
+openclaw gateway restart
+</code></pre>
+<h3 id="33-heartbeat-vs-cron">3.3 Heartbeat vs Cron：何时用哪个？</h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Heartbeat</th>
+<th>Cron</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>精确时间</td>
+<td>不需要</td>
+<td>必须精确</td>
+</tr>
+<tr>
+<td>会话上下文</td>
+<td>共享主对话</td>
+<td>隔离独立</td>
+</tr>
+<tr>
+<td>适合任务</td>
+<td>批量检查</td>
+<td>定时报告</td>
+</tr>
+<tr>
+<td>模型选择</td>
+<td>当前模型</td>
+<td>可指定不同模型</td>
+</tr>
+<tr>
+<td>API 成本</td>
+<td>较高（加载完整历史）</td>
+<td>较低（独立上下文）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>最佳实践</strong>：将类似的周期性检查批量放入 HEARTBEAT.md，减少 Cron 数量。精确时间的报告和提醒用 Cron。</p>
+<hr />
+<h2 id="week-2-4">第四部分：高级能力（Week 2-4）</h2>
+<h3 id="41">4.1 多通道接入</h3>
+<p>OpenClaw 的杀手级特性——一个 Gateway 同时服务所有消息通道：</p>
+<p><strong>支持的主流通道</strong>：
+- 即时通讯：Telegram、WhatsApp、Signal、飞书、Slack、Discord、iMessage
+- 企业工具：Microsoft Teams、Google Chat、钉钉、企业微信
+- 开放协议：Matrix、IRC、Mattermost
+- 特殊：WebChat（内置）、Twitch、Nostr</p>
+<p><strong>飞书配置要点</strong>：</p>
+<pre><code class="language-json">{
+  &quot;channels&quot;: {
+    &quot;feishu&quot;: {
+      &quot;appId&quot;: &quot;your-app-id&quot;,
+      &quot;appSecret&quot;: &quot;your-app-secret&quot;,
+      &quot;verificationToken&quot;: &quot;your-token&quot;,
+      &quot;encryptKey&quot;: &quot;your-key&quot;
+    }
+  }
+}
+</code></pre>
+<p><strong>多通道同时使用</strong>：手机飞书发快捷消息，电脑 WebChat 做长会话，Agent 保持上下文一致。</p>
+<h3 id="42-agent">4.2 多 Agent 路由</h3>
+<p>OpenClaw 支持多 Agent 架构——不同通道/用户路由到不同的 Agent，每个 Agent 有独立的 Workspace 和 Session。</p>
+<pre><code class="language-bash"># 创建独立 Agent
+openclaw agents create my-agent --workspace /path/to/workspace
+
+# 配置路由
+openclaw agents route --channel feishu --agent my-agent
+</code></pre>
+<h3 id="43-subagents">4.3 Subagents：子代理并行</h3>
+<p>主 Agent 可以生成子代理处理复杂任务，结果自动回传：</p>
+<pre><code>&gt; /subagents spawn 研究Claude Code最新功能并写一份总结
+</code></pre>
+<p>子代理运行在隔离会话中，不影响主对话。适合：
+- 耗时研究任务
+- 并行处理多个独立任务
+- 需要不同模型的任务</p>
+<h3 id="44-nodes">4.4 Nodes：手机/设备节点</h3>
+<p>将手机或远程设备配对为 Node，Agent 可以：
+- 拍照（相机）
+- 获取位置
+- 发送通知
+- 控制远程设备</p>
+<p><strong>配对流程</strong>：在手机上安装 OpenClaw App，扫码配对。</p>
+<h3 id="45">4.5 浏览器控制</h3>
+<p>内置浏览器自动化，Agent 可以：
+- 导航网站
+- 填写表单
+- 截图对比
+- 提取数据</p>
+<p>适合与没有 API 的网站交互。</p>
+<h3 id="46">4.6 模型配置与多模型策略</h3>
+<p>OpenClaw 不锁定单一模型，支持灵活的多模型配置：</p>
+<pre><code class="language-bash"># 查看当前模型
+openclaw config get agents.defaults.model
+
+# 切换模型
+openclaw config set agents.defaults.model claude-sonnet-4-20250514
+
+# 会话内临时切换
+/model gpt-4o
+</code></pre>
+<p><strong>多模型策略（帕累托最优）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐模型</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>复杂推理/编程</td>
+<td>Claude Opus</td>
+<td>最强推理能力</td>
+</tr>
+<tr>
+<td>日常对话/搜索</td>
+<td>GLM-4 / GPT-4o</td>
+<td>性价比最高</td>
+</tr>
+<tr>
+<td>定时报告/摘要</td>
+<td>Haiku / 便宜模型</td>
+<td>成本敏感</td>
+</tr>
+<tr>
+<td>创意写作</td>
+<td>GPT-5</td>
+<td>创意能力突出</td>
+</tr>
+<tr>
+<td>数据分析</td>
+<td>Gemini Pro</td>
+<td>多模态优势</td>
+</tr>
+</tbody>
+</table>
+<p><strong>成本控制</strong>：</p>
+<pre><code class="language-bash"># 设置每会话额度
+openclaw config set agents.defaults.maxTokensPerSession 100000
+
+# 查看用量
+/status
+</code></pre>
+<hr />
+<h2 id="_1">第五部分：实战案例（边学边练）</h2>
+<h3 id="1day-1">案例 1：每日早报系统（Day 1）</h3>
+<pre><code class="language-bash">openclaw cron add \
+  --name &quot;每日早报&quot; \
+  --cron &quot;30 7 * * *&quot; \
+  --tz &quot;Asia/Shanghai&quot; \
+  --session isolated --wake now --announce \
+  --channel feishu \
+  --to &quot;your-open-id&quot; \
+  --message &quot;生成今日早报：1.天气 2.日历 3.未读邮件摘要 4.AI新闻3条&quot;
+</code></pre>
+<p><strong>学习重点</strong>：Cron 基本用法、多 Skill 组合。</p>
+<h3 id="2github-day-3">案例 2：GitHub 自动巡检（Day 3）</h3>
+<pre><code class="language-bash">openclaw cron add \
+  --name &quot;GitHub巡检&quot; \
+  --cron &quot;0 9 * * 1-5&quot; \
+  --tz &quot;Asia/Shanghai&quot; \
+  --session isolated --announce \
+  --channel telegram \
+  --message &quot;检查我的GitHub仓库：新Issue、未读PR、CI失败，输出摘要&quot;
+</code></pre>
+<p><strong>学习重点</strong>：工作日调度、Skill 调用、结果摘要。</p>
+<h3 id="327-week-1">案例 3：27 任务监控系统（Week 1）</h3>
+<p>这正是我们今天搭建的"天网系统"的架构——27 个 Cron 任务覆盖 AI 动态、供应链、政策法规，通过飞书投递，三步存档。</p>
+<p><strong>架构</strong>：</p>
+<pre><code>27个Cron → 隔离Session → Skill（搜索+分析）→ 飞书消息 → 本地Archive → 知识库
+</code></pre>
+<p><strong>学习重点</strong>：大规模 Cron 管理、错峰调度、best-effort-deliver、超时保护。</p>
+<h3 id="4-agent-week-2">案例 4：多 Agent 协作（Week 2）</h3>
+<pre><code>主Agent（飞书对话）
+  ├── 研究Agent（子代理）：搜索并整理资料
+  ├── 写作Agent（子代理）：基于资料写文章
+  └── 审核Agent（子代理）：审查质量
+</code></pre>
+<p><strong>学习重点</strong>：Subagents 并行、结果合成。</p>
+<hr />
+<h2 id="_2">第六部分：常见陷阱与避坑指南</h2>
+<h3 id="61-top-10">6.1 新手 Top 10 错误</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>错误</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>用默认密码/API Key</td>
+<td>立即更换，设置支出上限</td>
+</tr>
+<tr>
+<td>2</td>
+<td>安装在主力设备</td>
+<td>用独立 VPS/虚拟机</td>
+</tr>
+<tr>
+<td>3</td>
+<td>不配安全策略</td>
+<td>设置 allowFrom 白名单</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cron 全部扎堆同一时间</td>
+<td>错峰调度（15分钟间隔）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>不设超时保护</td>
+<td>日报 600s，周报 900s，月报 1200s</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HEARTBEAT.md 太满</td>
+<td>只放必要检查，避免 token 浪费</td>
+</tr>
+<tr>
+<td>7</td>
+<td>不写 MEMORY.md</td>
+<td>Agent 无法跨会话记忆</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Cron 投递失败报 error</td>
+<td>开启 best-effort-deliver</td>
+</tr>
+<tr>
+<td>9</td>
+<td>从不更新</td>
+<td>定期 <code>npm update -g openclaw</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>不监控成本</td>
+<td>用 /status 检查，设 API 额度</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62">6.2 成本优化</h3>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>节省幅度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定时任务用便宜模型</td>
+<td>节省 60-80%</td>
+</tr>
+<tr>
+<td>心跳间隔从 30 分钟改 1 小时</td>
+<td>节省 50%</td>
+</tr>
+<tr>
+<td>限制心跳活跃时段</td>
+<td>节省 30-50%</td>
+</tr>
+<tr>
+<td>隔离会话避免加载完整历史</td>
+<td>节省 20-40%</td>
+</tr>
+<tr>
+<td>/compact 及时压缩上下文</td>
+<td>节省 10-30%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8">第七部分：学习路线图（8 周计划）</h2>
+<table>
+<thead>
+<tr>
+<th>周次</th>
+<th>主题</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Week 1</strong></td>
+<td>安装配置 + 首次对话 + 飞书接入</td>
+<td>能通过飞书和 Agent 正常对话</td>
+</tr>
+<tr>
+<td><strong>Week 2</strong></td>
+<td>SOUL.md + AGENTS.md + Memory</td>
+<td>建立规范的工作空间，Agent 有"人味"</td>
+</tr>
+<tr>
+<td><strong>Week 3</strong></td>
+<td>Skills 安装与使用</td>
+<td>安装 5+ 个实用 Skill，掌握 Skill 生态</td>
+</tr>
+<tr>
+<td><strong>Week 4</strong></td>
+<td>Cron 定时任务</td>
+<td>搭建 3-5 个自动化任务</td>
+</tr>
+<tr>
+<td><strong>Week 5</strong></td>
+<td>Heartbeat + 成本优化</td>
+<td>配置心跳巡检，控制月度成本</td>
+</tr>
+<tr>
+<td><strong>Week 6</strong></td>
+<td>多模型策略</td>
+<td>配置模型路由，不同任务用不同模型</td>
+</tr>
+<tr>
+<td><strong>Week 7</strong></td>
+<td>Subagents + 多通道</td>
+<td>子代理并行，多通道同时使用</td>
+</tr>
+<tr>
+<td><strong>Week 8</strong></td>
+<td>综合实战</td>
+<td>端到端搭建完整的自动化工作流</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">附录</h2>
+<h3 id="a">A. 常用命令速查</h3>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>openclaw onboard</code></td>
+<td>引导式初始化</td>
+</tr>
+<tr>
+<td><code>openclaw dashboard</code></td>
+<td>打开控制面板</td>
+</tr>
+<tr>
+<td><code>openclaw status</code></td>
+<td>系统状态诊断</td>
+</tr>
+<tr>
+<td><code>openclaw gateway start/stop/restart</code></td>
+<td>Gateway 控制</td>
+</tr>
+<tr>
+<td><code>openclaw cron add/list/edit/remove</code></td>
+<td>定时任务管理</td>
+</tr>
+<tr>
+<td><code>openclaw config get/set</code></td>
+<td>配置管理</td>
+</tr>
+<tr>
+<td><code>openclaw skill search/install/list</code></td>
+<td>Skill 管理</td>
+</tr>
+<tr>
+<td><code>/status</code></td>
+<td>会话状态</td>
+</tr>
+<tr>
+<td><code>/model MODEL</code></td>
+<td>切换模型</td>
+</tr>
+<tr>
+<td><code>/compact</code></td>
+<td>压缩上下文</td>
+</tr>
+<tr>
+<td><code>/reasoning</code></td>
+<td>切换推理模式</td>
+</tr>
+<tr>
+<td><code>/subagents spawn</code></td>
+<td>启动子代理</td>
+</tr>
+</tbody>
+</table>
+<h3 id="b">B. 配置文件层级</h3>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>位置</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>openclaw.json</code></td>
+<td><code>~/.openclaw/</code></td>
+<td>主配置（模型、通道、插件）</td>
+</tr>
+<tr>
+<td><code>SOUL.md</code></td>
+<td><code>workspace/</code></td>
+<td>Agent 人格</td>
+</tr>
+<tr>
+<td><code>AGENTS.md</code></td>
+<td><code>workspace/</code></td>
+<td>工作规范</td>
+</tr>
+<tr>
+<td><code>USER.md</code></td>
+<td><code>workspace/</code></td>
+<td>用户信息</td>
+</tr>
+<tr>
+<td><code>MEMORY.md</code></td>
+<td><code>workspace/</code></td>
+<td>长期记忆</td>
+</tr>
+<tr>
+<td><code>HEARTBEAT.md</code></td>
+<td><code>workspace/</code></td>
+<td>心跳任务清单</td>
+</tr>
+<tr>
+<td><code>TOOLS.md</code></td>
+<td><code>workspace/</code></td>
+<td>工具本地笔记</td>
+</tr>
+</tbody>
+</table>
+<h3 id="c">C. 推荐学习资源</h3>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>类型</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>官方文档</td>
+<td>权威</td>
+<td>docs.openclaw.ai</td>
+</tr>
+<tr>
+<td>GitHub 仓库</td>
+<td>源码 + Issue</td>
+<td>github.com/openclaw/openclaw</td>
+</tr>
+<tr>
+<td>知乎 3.2W 字完全指南</td>
+<td>中文深度</td>
+<td>zhuanlan.zhihu.com（搜索 OpenClaw）</td>
+</tr>
+<tr>
+<td>SeeAI 教程</td>
+<td>实用教程</td>
+<td>seeai.net/openclaw/how-to-use-openclaw</td>
+</tr>
+<tr>
+<td>阿里云百炼文档</td>
+<td>集成指南</td>
+<td>help.aliyun.com（搜索 OpenClaw）</td>
+</tr>
+<tr>
+<td>BBC 中文报道</td>
+<td>背景了解</td>
+<td>bbc.com（搜索 OpenClaw）</td>
+</tr>
+<tr>
+<td>OpenClaw 技能中心</td>
+<td>Skill 生态</td>
+<td>openclawnote.com</td>
+</tr>
+<tr>
+<td>ClawHub</td>
+<td>Skill 市场</td>
+<td>clawhub.com</td>
+</tr>
+</tbody>
+</table>
+<h3 id="d">D. 安全清单</h3>
+<ul>
+<li>[ ] 设置 API Key 支出上限</li>
+<li>[ ] 配置消息白名单（allowFrom）</li>
+<li>[ ] 不在主力设备安装</li>
+<li>[ ] 定期检查 cron 任务状态</li>
+<li>[ ] 定期更新 OpenClaw 版本</li>
+<li>[ ] 备份 workspace 目录</li>
+<li>[ ] 审查已安装的 Skills 权限</li>
+<li>[ ] 使用 VPS 而非本地机器</li>
+</ul>
+<hr />
+<blockquote>
+<p><strong>本手册基于 2026 年 5 月公开资料及实际部署经验整理。OpenClaw 更新频繁，建议关注官方文档获取最新特性。</strong></p>
+<p>整理方法：第一性原理（理解 Agent Runtime 本质）→ 帕累托法则（20% 功能覆盖 80% 价值）→ MECE（不重不漏分类）→ 金字塔原理（结论先行、逐层展开）</p>
+</blockquote>
+</body>
+</html>

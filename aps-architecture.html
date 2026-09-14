@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif; background: white; padding: 40px; }
+  .title { text-align: center; margin-bottom: 10px; font-size: 24px; font-weight: bold; color: #1A1A2E; }
+  .subtitle { text-align: center; margin-bottom: 30px; font-size: 14px; color: #666; font-style: italic; }
+  
+  .main-flow { display: flex; align-items: flex-start; justify-content: center; gap: 0; margin-bottom: 30px; }
+  
+  .module {
+    border-radius: 12px; padding: 20px; position: relative; border: 2px solid;
+  }
+  .module-header {
+    position: absolute; top: -18px; left: 20px; padding: 4px 16px; border-radius: 20px;
+    color: white; font-size: 14px; font-weight: bold;
+  }
+  
+  .mod1 { background: #EBF0FA; border-color: #1A1A2E; width: 280px; min-height: 260px; }
+  .mod1 .module-header { background: #1A1A2E; }
+  
+  .mod2 { background: #E8F5E9; border-color: #2E7D32; width: 680px; min-height: 260px; margin-left: -2px; }
+  .mod2 .module-header { background: #2E7D32; }
+  
+  .mod3 { background: #FFF3E0; border-color: #E65100; width: 280px; min-height: 260px; margin-left: -2px; }
+  .mod3 .module-header { background: #E65100; }
+  
+  .flow-arrow { display: flex; align-items: center; padding: 0 12px; }
+  .flow-arrow .label { font-size: 10px; color: #555; writing-mode: vertical-lr; letter-spacing: 2px; }
+  
+  /* Module 1 internals */
+  .m1-boxes { padding-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+  .row { display: flex; gap: 10px; justify-content: center; }
+  .box {
+    padding: 10px 14px; border-radius: 8px; font-size: 12px; text-align: center;
+    border: 1.5px solid; line-height: 1.5; min-width: 100px;
+  }
+  .box-step { background: #E8F5E9; border-color: #2E7D32; }
+  .box-output { background: #E3F2FD; border-color: #1565C0; }
+  .box-engine { background: #F3E5F5; border-color: #6A1B9A; font-weight: bold; }
+  .box-trigger { background: #FCE4EC; border-color: #C62828; }
+  .box-decision { background: #FFF3E0; border-color: #E65100; font-weight: bold; font-size: 11px; }
+  
+  .mini-arrow { text-align: center; color: #666; font-size: 14px; line-height: 1; }
+  
+  /* Module 2 - 6 steps */
+  .m2-content { padding-top: 15px; }
+  .steps-row { display: flex; gap: 6px; justify-content: center; margin-bottom: 6px; }
+  .steps-row .box { min-width: 90px; padding: 8px 8px; font-size: 11px; }
+  .decisions-row { display: flex; gap: 6px; justify-content: center; margin-bottom: 6px; }
+  .decisions-row .box { min-width: 90px; padding: 4px 8px; font-size: 10px; }
+  .yes-labels { display: flex; gap: 6px; justify-content: center; font-size: 11px; color: #1565C0; margin-bottom: 8px; }
+  .pr-row { display: flex; gap: 10px; justify-content: center; }
+  .pr-row .box { min-width: 120px; font-size: 11px; }
+  
+  /* Module 3 internals */
+  .m3-boxes { padding-top: 15px; display: flex; flex-direction: column; gap: 8px; }
+  .m3-boxes .box { min-width: 200px; padding: 8px 12px; font-size: 11px; }
+  
+  /* Bottom connections */
+  .connections {
+    display: flex; justify-content: center; gap: 30px; margin-top: 15px; padding: 20px;
+    background: #f8f9fa; border-radius: 12px; border: 1px dashed #ccc;
+  }
+  .conn-group { text-align: center; font-size: 12px; color: #555; }
+  .conn-group .arrow-big { font-size: 20px; margin: 5px 0; }
+  .conn-label { font-size: 11px; color: #888; margin-top: 4px; }
+  
+  /* Feedback arrows */
+  .feedback-section {
+    margin-top: 20px; padding: 15px 25px; border-radius: 12px;
+    background: #FFF8E1; border: 1px solid #FFD54F;
+  }
+  .feedback-title { font-size: 13px; font-weight: bold; color: #F57F17; margin-bottom: 8px; }
+  .feedback-items { display: flex; gap: 20px; justify-content: center; font-size: 12px; color: #666; }
+  .feedback-item { display: flex; align-items: center; gap: 6px; }
+</style>
+</head>
+<body>
+
+<div class="title">电子产品制造业 APS 排产系统架构图</div>
+<div class="subtitle">需求驱动 · 分层解耦 · 约束闭环</div>
+
+<div class="main-flow">
+  <!-- Module 1: 需求分析 -->
+  <div class="module mod1">
+    <div class="module-header">① 需求分析</div>
+    <div class="m1-boxes">
+      <div class="row">
+        <div class="box box-step">客户订单<br/><small>Firm Order</small></div>
+        <div class="box box-step">销售预测<br/><small>Forecast</small></div>
+      </div>
+      <div class="mini-arrow">▼</div>
+      <div class="row">
+        <div class="box box-engine">需求汇聚<br/><small>Consumption Logic</small></div>
+      </div>
+      <div class="mini-arrow">▼</div>
+      <div class="row">
+        <div class="box box-output">时间栅栏分层<br/><small>冰冻区 / 半冰冻区 / 自由区</small></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Arrow 1→2 -->
+  <div class="flow-arrow">
+    <div class="label">需求量×交期<br/>×优先级</div>
+    <div style="font-size:24px; color:#1A1A2E;">→</div>
+  </div>
+  
+  <!-- Module 2: 供需匹配 -->
+  <div class="module mod2">
+    <div class="module-header">② 供需匹配（ATP逐级检查）</div>
+    <div class="m2-content">
+      <div class="steps-row">
+        <div class="box box-step">①成品库存</div>
+        <div class="box box-step">②半成品WIP</div>
+        <div class="box box-step">③工单在制MO</div>
+        <div class="box box-step">④原材料库存<br/><small>主仓+边仓+批次</small></div>
+        <div class="box box-step">⑤在途PO</div>
+        <div class="box box-trigger">⑥触发PR</div>
+      </div>
+      <div class="decisions-row">
+        <div class="box box-decision">满足? → ✅</div>
+        <div class="box box-decision">满足? → ✅</div>
+        <div class="box box-decision">满足? → ✅</div>
+        <div class="box box-decision">满足? → ✅</div>
+        <div class="box box-decision">满足? → ✅</div>
+        <div class="box box-decision">不足 ↓</div>
+      </div>
+      <div class="mini-arrow">缺口逐层向下传递</div>
+      <div class="pr-row">
+        <div class="box box-trigger">PR → 审批 → PO</div>
+        <div style="font-size:16px; align-self:center; color:#C62828;">→</div>
+        <div class="box box-output">供应商确认交期</div>
+      </div>
+      <div style="text-align:center; font-size:11px; color:#999; margin-top:6px;">↺ 交期回填更新可承诺量</div>
+    </div>
+  </div>
+  
+  <!-- Arrow 2→3 -->
+  <div class="flow-arrow">
+    <div style="font-size:24px; color:#2E7D32;">→</div>
+    <div class="label">缺口+建议<br/>可承诺交期</div>
+  </div>
+  
+  <!-- Module 3: 动态排产 -->
+  <div class="module mod3">
+    <div class="module-header">③ 动态排产</div>
+    <div class="m3-boxes">
+      <div class="box box-step">产能约束<br/><small>产线/设备/人员/OEE</small></div>
+      <div class="box box-step">物料约束<br/><small>齐套时间/边仓/容量</small></div>
+      <div class="box box-step">工艺约束<br/><small>SMT→AOI→组装→测试</small></div>
+      <div class="mini-arrow">▼</div>
+      <div class="box box-engine">排产引擎</div>
+      <div style="display:flex; gap:6px;">
+        <div class="box box-engine" style="flex:1; font-size:10px;">启发式粗排<br/><small>30s出案</small></div>
+        <div class="box box-engine" style="flex:1; font-size:10px;">遗传算法精排<br/><small>10-30min</small></div>
+      </div>
+      <div class="mini-arrow">▼</div>
+      <div class="box box-engine" style="font-size:10px;">What-If 模拟验证</div>
+      <div class="mini-arrow">▼</div>
+      <div class="box box-output" style="font-weight:bold;">输出：甘特图 + 备料指令<br/>+ 交付承诺</div>
+    </div>
+  </div>
+</div>
+
+<!-- Connections / Flow Description -->
+<div class="connections">
+  <div class="conn-group">
+    <div><strong>① 需求分析</strong></div>
+    <div style="font-size:11px; color:#888;">要什么？</div>
+  </div>
+  <div class="conn-group">
+    <div class="arrow-big">→</div>
+    <div class="conn-label">需求量×交期×优先级</div>
+  </div>
+  <div class="conn-group">
+    <div><strong>② 供需匹配</strong></div>
+    <div style="font-size:11px; color:#888;">有什么？</div>
+  </div>
+  <div class="conn-group">
+    <div class="arrow-big">→</div>
+    <div class="conn-label">缺口+CTP+备料计划</div>
+  </div>
+  <div class="conn-group">
+    <div><strong>③ 动态排产</strong></div>
+    <div style="font-size:11px; color:#888;">怎么排？</div>
+  </div>
+  <div class="conn-group">
+    <div class="arrow-big">→</div>
+    <div class="conn-label">甘特图+交付承诺</div>
+  </div>
+</div>
+
+<!-- Feedback Loops -->
+<div class="feedback-section">
+  <div class="feedback-title">🔄 闭环反馈机制</div>
+  <div class="feedback-items">
+    <div class="feedback-item">
+      <span>②→③</span>
+      <span>物料齐套信息约束排产</span>
+    </div>
+    <div class="feedback-item">
+      <span>③→②</span>
+      <span>备料指令反馈 + 边仓不足阻塞工单</span>
+    </div>
+    <div class="feedback-item">
+      <span>PR↔PO</span>
+      <span>交期确认回填更新可承诺量</span>
+    </div>
+    <div class="feedback-item">
+      <span>异常事件</span>
+      <span>触发 ②+③ 联动重算</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

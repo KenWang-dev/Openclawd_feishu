@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "processon-diagram-generator": {
+      "source": "processonai/processon-skills",
+      "sourceType": "github",
+      "computedHash": "f91372c3a69a02a547efef65aee836d3e31bbccf1c81b0b5b125d6bfdc84557e"
+    }
+  }
+}
