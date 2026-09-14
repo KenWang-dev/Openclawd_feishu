@@ -36,6 +36,10 @@
     "patent-disclosure-skill": {
       "version": "3.9.0",
       "installedAt": 1788083591210
+    },
+    "humanize-zh": {
+      "version": "1.0.0",
+      "installedAt": 1789385822132
     }
   }
 }
