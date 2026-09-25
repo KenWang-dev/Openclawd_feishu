@@ -1,8 +1,8 @@
 # Skills Index
 
 > 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
-> 生成时间: 2026-09-14 20:01:20 CST
-> Skill 总数: 105
+> 生成时间: 2026-09-25 17:45:27 CST
+> Skill 总数: 106
 
 ## SCM 采购体系
 
@@ -177,7 +177,8 @@ ppt-master/skills/ppt-master/SKILL.md|ppt-master|> |
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | p-video | p-video/SKILL.md | Generate videos with Pruna P-Video and WAN models via infere |
-| remotion-render | remotion-render/SKILL.md | Render videos from React/Remotion component code via inferen |
+| quote-bank | quote-bank/SKILL.md | 金句银行——Ken 个人验证过的决策原则库（�
+remotion-render/SKILL.md|remotion-render|Render videos from  |
 ## 研究搜索
 
 | Skill | 路径 | 触发场景 |
