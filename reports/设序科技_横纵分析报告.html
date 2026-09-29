@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <style>
+@page {
+    size: A4;
+    margin: 25mm 20mm 20mm 20mm;
+
+    @top-center {
+        content: "设序科技：AI硬件工程的中国答案？  |  横纵分析法深度研究报告";
+        font-family: "Droid Sans Fallback", Helvetica, Arial, sans-serif;
+        font-size: 8pt;
+        color: #95a5a6;
+        border-bottom: 0.5pt solid #ecf0f1;
+        padding-bottom: 3mm;
+    }
+
+    @bottom-center {
+        content: "第 " counter(page) " 页";
+        font-family: "Droid Sans Fallback", Helvetica, Arial, sans-serif;
+        font-size: 8pt;
+        color: #95a5a6;
+        border-top: 0.8pt solid #1a5276;
+        padding-top: 2mm;
+    }
+}
+
+@page :first {
+    @top-center { content: none; }
+    @bottom-center { content: none; }
+}
+
+body {
+    font-family: "Droid Sans Fallback", Helvetica, Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.75;
+    color: #2c3e50;
+    text-align: justify;
+}
+
+/* 封面 */
+.cover {
+    page-break-after: always;
+    text-align: center;
+    padding-top: 45%;
+}
+.cover h1 {
+    font-size: 28pt;
+    color: #1a5276;
+    margin-bottom: 8mm;
+    font-weight: bold;
+    letter-spacing: 2pt;
+}
+.cover .subtitle {
+    font-size: 14pt;
+    color: #95a5a6;
+    margin-bottom: 6mm;
+}
+.cover .meta {
+    font-size: 11pt;
+    color: #95a5a6;
+    margin-bottom: 4mm;
+}
+.cover .divider {
+    width: 60%;
+    margin: 8mm auto;
+    border: none;
+    border-top: 1.5pt solid #1a5276;
+}
+
+/* 一级标题 */
+h1 {
+    font-size: 20pt;
+    color: #1a5276;
+    margin-top: 16mm;
+    margin-bottom: 6mm;
+    padding-bottom: 3mm;
+    border-bottom: 2pt solid #1a5276;
+    page-break-before: always;
+    font-weight: bold;
+}
+
+/* 二级标题 */
+h2 {
+    font-size: 14pt;
+    color: #1e8449;
+    margin-top: 10mm;
+    margin-bottom: 5mm;
+    font-weight: bold;
+}
+
+/* 三级标题 */
+h3 {
+    font-size: 12pt;
+    color: #2e86c1;
+    margin-top: 6mm;
+    margin-bottom: 3mm;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 11pt;
+    color: #5b2c6f;
+    margin-top: 5mm;
+    margin-bottom: 2mm;
+    font-weight: bold;
+}
+
+/* 段落 */
+p {
+    margin-top: 1.5mm;
+    margin-bottom: 1.5mm;
+    orphans: 3;
+    widows: 3;
+}
+
+/* 引用块 */
+blockquote {
+    margin: 4mm 0;
+    padding: 4mm 4mm 4mm 10mm;
+    background: #f8f9fa;
+    border-left: 3pt solid #1a5276;
+    color: #5d6d7e;
+    font-size: 10pt;
+}
+blockquote p {
+    margin: 1mm 0;
+}
+
+/* 粗体 */
+strong, b {
+    font-weight: bold;
+    color: #1a252f;
+}
+
+/* 行内代码 */
+code {
+    font-family: "Courier New", Courier, monospace;
+    background: #fdf2e9;
+    color: #c0392b;
+    padding: 0.5mm 1.5mm;
+    border-radius: 2pt;
+    font-size: 9.5pt;
+}
+
+/* 表格 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4mm 0;
+    font-size: 9.5pt;
+}
+thead th {
+    background: #1a5276;
+    color: white;
+    padding: 3mm;
+    text-align: left;
+    font-weight: bold;
+}
+tbody td {
+    padding: 2.5mm 3mm;
+    border-bottom: 0.5pt solid #bdc3c7;
+}
+tbody tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+/* 分隔线 */
+hr {
+    border: none;
+    border-top: 0.5pt solid #bdc3c7;
+    margin: 4mm 0;
+}
+
+/* 列表 */
+ul, ol {
+    margin: 2mm 0;
+    padding-left: 8mm;
+}
+li {
+    margin-bottom: 1mm;
+}
+
+/* 链接 */
+a {
+    color: #2e86c1;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+    <div class="cover">
+        <h1 style="page-break-before: avoid; border: none;">设序科技：AI硬件工程的中国答案？</h1>
+        <div class="subtitle">横纵分析法深度研究报告</div>
+        <div class='meta'>研究时间：2026-09-17 | 所属领域：AI 工业软件 / 硬件工程智能体 | 研究对象类型：公司</div>
+        <hr class="divider">
+        <div class="meta">作者: 数字生命卡兹克</div>
+    </div>
+    
+
+<blockquote>
+<p>研究时间：2026-09-17 | 所属领域：AI 工业软件 / 硬件工程智能体 | 研究对象类型：公司</p>
+</blockquote>
+<h2>一、一句话定义</h2>
+<p>设序科技（上海）是一家 2020 年成立的工业 AI 智能体公司，从汽车焊装夹具的 AI 自动出图切入，演进为基于自研"工业世界模型"的硬件工程多智能体平台「则形AI」，累计融资超 3 亿元，2025 年营收破亿，是国内"AI 原生工业设计软件"赛道公开信息下最强的候选者之一。</p>
+<h2>二、纵向分析：从诞生到当下</h2>
+<h3>起点：一个在工厂里想明白了的博士</h3>
+<p>设序科技的故事，得从工厂车间讲起。</p>
+<p>创始人吴泳荣，同济大学先进制造方向博士，创业前有两段关键经历：通用汽车先进制造实验室研究员，蔚来汽车智能制造专家，加起来约十年汽车制造业经验。在蔚来做智能制造时，他观察到一个后来决定设序全部技术路线的事实：工厂现场的质量问题，追到源头大多是设计端埋下的雷。如果 AI 只在制造环节"赋能"，永远是在下游打补丁；真正的杠杆在上游——设计研发。</p>
+<p>这就是"Design for Manufacturing"的执念来源。区别在于，多数人把它当作设计原则，吴泳荣想把它做成一门生意：让 AI 在设计阶段就吃进制造约束，从源头消灭下游的坑。</p>
+<p>还有一个容易被忽略的细节：吴本人写代码、建模型、训数据。一个既懂工厂又懂 AI 边界的创始人，这决定了设序后来几乎所有关键决策的成色。</p>
+<p>2019 年核心团队组建，2020 年公司在上海成立。注意，这家公司从名字到叙事都不在"国产 CAD 替代"的赛道里——高榕资本 2025 年底的专访里吴泳荣说得非常直白：设序从第一天起就不是做 CAD 国产替代，而是走 AI Native 路线，从零定义工业原生的交互范式。2020 年说这话，属于典型的"提前五年布道"，但这个定位锁定了它后来的一切。</p>
+<h3>第一阶段（2020-2021）：单点楔入汽车焊装</h3>
+<p>初期的切口小得近乎苛刻：汽车焊装装备设计，具体说是焊装夹具。为什么是它？三个原因：</p>
+<ol>
+<li><strong>数据结构化程度高</strong>——夹具设计规则明确、重复度高，最适合 AI 学习；</li>
+<li><strong>人力成本痛点极重</strong>——一套夹具图纸耗掉工程师数百小时；</li>
+<li><strong>客户集中</strong>——搞定几家头部装备商就能立住脚。</li>
+</ol>
+<p>2021 年 1 月数千万元天使轮，险峰长青领投、高榕跟投、联想创投战投。当时公司 50 余人，研发过半，目标朴实：先占汽车焊接设备市场 10%。同年 Pre-A 轮由 SIG 领投。</p>
+<h3>第二阶段（2022-2024）：闪设的三级跳</h3>
+<p>2022 年是第一个转折年：<strong>字节跳动领投 A 轮</strong>，一年内累计融资过亿。字节的入局在当年是个信号——大模型公司看上了工业数据场景。同年闪设 1.0 发布，开始商业化。</p>
+<p>产品节奏非常清晰，一年一大步：</p>
+<ul>
+<li><strong>闪设 1.0（2022）</strong>：焊装夹具自动设计，验证 PMF</li>
+<li><strong>闪设 2.0（2023）</strong>：底层通用架构完善，场景泛化；客户覆盖 KUKA、ABB 等主流厂商，并衍生出与西门子 NX 深度集成的闪设 2D——3D 数模自动转 2D 工程图纸，这条线后来成为与西门子生态合作的根基</li>
+<li><strong>闪设 3.0（2024）</strong>：多场景泛化完成，同期发布自研 <strong>AIGE（AI Generated Engineering）数据结构</strong>——用工程语言而非通用语言描述设计，这是设序所有"工业世界模型"叙事的技术底座</li>
+</ul>
+<p>资本端同样密集：2024 年 5 月 A+ 轮近亿元（阿米巴、涌铧、联想创投联合领投）。到这一阶段，设序的标签还是"云原生智能工业 CAD"。</p>
+<h3>第三阶段（2025-2026）：从工具到"答案"的叙事跃迁</h3>
+<p>2025 年 10 月 Pre-B 轮数千万元（涌铧、广发信德），一年三连发。这一轮融资的核心变化是话语体系：公司开始自称"<strong>工业 AI 智能体公司</strong>"，产品逻辑变成"自研工业世界模型 + 自然语言大模型封装的多智能体协作"。</p>
+<p>2025 年底，高榕专访披露了几个硬数据，把叙事落了地：</p>
+<ul>
+<li>大客户超 <strong>100 家</strong>：本田、宇通、东风、中国商飞，甚至<strong>特斯拉美国内华达工厂</strong>在用其生成图纸制造的设备</li>
+<li><strong>2025 年营收破亿元</strong></li>
+<li>发布新一代多智能体平台<strong>则形AI</strong>：几何 AI（3D 生成）→ 物理 AI（物理场求解）→ 制造 AI（2D 工程图纸）的三段闭环</li>
+</ul>
+<p>2026 年两件事把故事推到高点。其一，<strong>西门子 Xcelerator 生态深度合作</strong>——闪设 2D 内嵌 NX 全链路，WAIC 2026 上被西门子作为生态案例展示。全球工业软件老大为你背书，这比任何 PR 都值钱。其二，2026 年 7 月 <strong>B 轮超亿元</strong>（深产投、合鼎共、涌铧），累计融资超 3 亿元；上半年合同额同比 +70%，全年预计近 2 亿元；RAAS（Result as a Service，按结果交付而非卖工具）成为新增长引擎；宣布出海，首站德国。</p>
+<p>从"AI 工业 SaaS"到"云原生 CAD"再到"AI 硬件工程智能体平台"，五年三次改名换叙事——但底层其实是同一条线的自然延伸：从自动出图，到吃进物理约束，到按结果交付。变的是表述，不变的是"AI 原生、结果驱动"这条主线。</p>
+<h2>三、横向分析：竞争图谱</h2>
+<p>以 2026 年 9 月为切面，"AI 硬件工程"赛道玩家可分三圈。</p>
+<h3>AI + MCAD / 工业设计（设序的正面对照组）</h3>
+<ul>
+<li><strong>PhysicsX（英国）</strong>：物理 AI 驱动工业仿真与设计，2026 年 6 月 3 亿美元 C 轮、估值约 24 亿美元，淡马锡领投。体量是设序的数十倍，但侧重仿真替代，不做工程出图。</li>
+<li><strong>Leo AI（美国）</strong>：面向机械工程师的生成式 CAD Copilot，累计融资约 970 万美元，还停在种子期。定位"CAD-aware 副驾"，是单点工具，与设序的全链路平台不在一个量级。</li>
+<li><strong>nTopology</strong>：拓扑优化/增材制造生成式设计的老牌代表（2021 年融资 6500 万美元），计算驱动而非大模型驱动——上一代技术的活化石。</li>
+<li><strong>巨头</strong>：达索、西门子、PTC 都在加 AI。最微妙的是西门子：2026 年发布工业工程智能体 Eigen，与设序<strong>既合作又潜在竞争</strong>——既是你渠道，又是你的天花板。</li>
+</ul>
+<h3>AI + EDA / 电子设计（"AI 硬件工程"大叙事的另一半）</h3>
+<ul>
+<li><strong>Cadence Cerebrus AI Studio / ChipStack</strong>：2026 Computex 宣称 Level 5 自主芯片设计智能体，Forbes 称"全球首个自动化芯片设计的 AI 超级智能体"。</li>
+<li><strong>Synopsys AgentEngineer</strong>：多智能体 RTL 生成与验证，2026 DAC 与 AMD、微软展示全自主流程。</li>
+<li><strong>Quilter</strong>：物理驱动 AI 全自动 PCB 布局布线，2025 年 10 月 2500 万美元 B 轮。</li>
+<li><strong>Flux</strong>：浏览器端 AI PCB 设计，融资累计 4900 万美元，宣传语直接就是"<strong>世界第一个 AI 硬件工程师</strong>"。</li>
+<li><strong>国产 EDA</strong>：芯华章 2026 年 7 月发布 Agentic EDA 底座，概伦、华大九天跟进。聚焦芯片验证仿真，与设序的机械侧不直接竞争。</li>
+</ul>
+<h3>国内同赛道</h3>
+<ul>
+<li><strong>卡伦特科技（厦门）</strong>：2026 年 4 月发布"创模AI"，自称国内首款 AI 生成式 CAD 建模工具，云原生 + 生成式 AI——定位与设序最接近的国产对手，但融资和商业化公开信息明显弱于设序。</li>
+<li><strong>中望、数码大方</strong>等传统国产 CAD：走"老底座 + AI"路线，与设序的"AI 原生"形成代际差。</li>
+</ul>
+<h3>格局判断</h3>
+<p>全球"AI 硬件工程"正处于 Agent 化爆发早期：EDA 侧 Cadence/Synopsys 已喊出 L5 自主，MCAD 侧生成能力仍受"算得准"（物理一致性）约束；中国工业软件国产化率不足 20%，AI 被视为换道超车窗口。设序在中国机械侧 AI 原生赛道处于第一梯队——唯一累计融资超 3 亿、合同额近 2 亿的公开玩家；但对比全球，Flux 已抢先喊出"第一个 AI 硬件工程师"，Cadence/Synopsys 的 Agentic EDA 远比设序的物理 AI（尚在 POC）成熟，PhysicsX 体量碾压。</p>
+<p>一个不能回避的软肋：约七成收入仍是传统项目制交付，RAAS 只占约三分之一，离真正的 SaaS 化、平台化还有距离。吴泳荣自己承认，工业世界模型的"GPT 时刻"还要 3-5 年。</p>
+<h2>四、横纵交汇洞察</h2>
+<p><strong>"中国答案"这句话，半成立。</strong></p>
+<p>先回答来源问题：调研中<strong>未能找到</strong>"如果说Claude是AI软件工程的经典范式，设序科技想要交出的，就是AI硬件工程的中国答案"这句话的公开原文出处。它与 2026 年 7 月 B 轮融资后一波媒体叙事高度同构——吴泳荣的原话是"我们想打造一个面向硬件工程的通用 AI 入口"。判断：这是传播链中的媒体化改写，属于修辞性定位，不是行业公认标签。</p>
+<p>然后是这个修辞本身值不值。我认为要拆成两层：</p>
+<p><strong>在"对标 Claude Code 的范式"意义上，成立。</strong> Claude 的范式是什么？不是更强的模型，而是"Agent 吃掉工作流"——工具调用、多智能体、结果驱动。设序的中国式复刻恰好踩在同样的结构上：几何-物理-制造三段闭环对应软件工程的写码-测试-部署；RAAS 按"交付一套能用的图纸/方案"收费，对应按任务而非按 token 收费；西门子生态绑定对应 IDE 生态绑定。在国内，你确实找不到第二家同时满足"AI 原生 + 全链路 + 商业化过亿"的机械侧玩家。纵向看，这个位置是 2020 年选焊装夹具这个"窄门"一步步换来的——单点验证 → 数据壁垒 → 生态背书 → 平台叙事，每一步都以前一步为前提，路径依赖极强但路径正确。</p>
+<p><strong>在"全球定义者"意义上，不成立。</strong> 历史地看，设序没有一次是"第一个"：Flux 先喊了 AI 硬件工程师，Cadence 先做到了 L5 自主，PhysicsX 先证明了物理 AI 的资本天花板。设序的护城河是"中国制造的数据密度 + 本土客户关系 + RAAS 交付的工程脏活"，这是地域性壁垒而非范式性壁垒。它更像工业软件版的"中国答案"——用中国市场的独特约束（项目制付费意愿、国产化窗口、制造业密度）长出来的物种，出了国门（首站德国）能否成立，2026 年正好是检验元年。</p>
+<p><strong>三个剧本：</strong></p>
+<ul>
+<li><strong>最可能（60%）</strong>：成为"中国机械侧 AI 工业软件头部"，合同额 3-5 年做到 5-10 亿，RAAS 占比过半，但始终被西门子生态"招安式"共存——做巨头不愿做的脏活层，拿不到平台定价权。</li>
+<li><strong>最危险（20%）</strong>：西门子 Eigen 这类巨头原生智能体成熟后向下兼容出图场景，同时物理 AI 的 POC 三年内兑现不了，项目制收入增长见顶，公司卡在"有营收没平台"的中间态，估值逻辑从 AI 公司退化为工业软件集成商。</li>
+<li><strong>最乐观（20%）</strong>：工业世界模型在 2027-2028 年迎来自己的"GPT 时刻"（吴的自我预言），几何-物理-制造闭环先于全球对手跑通，RAAS 在德国复制成功，成为第一个由中国公司定义的工业 AI 品类。</li>
+</ul>
+<p>我的判断：设序是一家<strong>被低估的"执行型"公司</strong>和<strong>被高估的"叙事型"公司</strong>的合体。它的工程落地能力（五年从夹具到特斯拉供应链）在国产工业 AI 里几乎无出其右，但"AI 硬件工程的中国答案"这个帽子，现在戴还早了两年——答案写没写完，要看物理 AI 那 3-5 年。</p>
+<h2>五、信息来源</h2>
+<ul>
+<li>设序科技官网：https://www.designorder.cn（About / 发展历程 / 高榕专访转载）</li>
+<li>联想创投：https://capital.lenovo.com/news/detail/id/455/s/1.html</li>
+<li>36氪·硬氪（B轮，2026-07）：https://m.36kr.com/p/3907532622648453</li>
+<li>36氪（Pre-B，2025-10）：https://m.36kr.com/p/3506932610587778</li>
+<li>投资界/搜狐（B轮）：https://news.pedaily.cn/202607/566752.shtml</li>
+<li>创业邦（A轮）：https://m.cyzone.cn/article/671716.html</li>
+<li>阿米巴资本专访（2024-07）：https://media.qimingpian.cn</li>
+<li>西门子合作：https://xingongye.cn/cms/Industrial_software/1795.html</li>
+<li>量子位（WAIC 2026）：https://www.qbitai.com/2026/08/480005.html</li>
+<li>PhysicsX C 轮：https://www.physicsx.ai/newsroom/physicsx-announces-300m-series-c-to-accelerate-physics-ai-for-industrial-engineering</li>
+<li>Cadence Cerebrus（Forbes）：https://www.forbes.com/sites/karlfreund/2026/02/10/this-cadence-ai-super-agent-is-worlds-first-to-automate-chip-design/</li>
+<li>Synopsys AgentEngineer：https://news.synopsys.com/2026-07-27-Synopsys-Advances-Agentic-AI-Chip-Design-with-AMD-and-Microsoft</li>
+<li>Quilter B 轮：https://www.quilter.ai/blog/series-b</li>
+<li>Flux 融资：https://www.flux.ai/p/blog/we-raised-37m-to-take-the-hard-out-of-hardware</li>
+<li>卡伦特科技：https://www.investxiamen.org.cn/detail/12820.html</li>
+<li>访问时间：2026-09-17</li>
+</ul>
+<p><strong>方法论说明</strong>：本报告采用横纵分析法——纵轴还原对象从诞生到当下的完整历程，横轴在当前时点与同类竞品系统对比，交汇产出判断。该方法论由数字生命卡兹克提出。</p>
+</body>
+</html>
