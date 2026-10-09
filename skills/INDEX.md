@@ -1,8 +1,8 @@
 # Skills Index
 
 > 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
-> 生成时间: 2026-09-25 17:57:16 CST
-> Skill 总数: 106
+> 生成时间: 2026-10-09 15:00:51 CST
+> Skill 总数: 122
 
 ## SCM 采购体系
 
@@ -39,6 +39,11 @@
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | auto-updater | auto-updater/SKILL.md | Automatically update Clawdbot and all installed skills once  |
+## Skill 管理
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| baojie | baojie/skills/baojie/SKILL.md | > |
 ## 供应链
 
 | Skill | 路径 | 触发场景 |
@@ -129,6 +134,24 @@ founder-cabinet/SKILL.md|founder-cabinet|| |
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | handoff | handoff/SKILL.md | Create temporary handoff docs and propose/apply permanent kn |
+## 研究搜索
+
+| Skill | 路径 | 触发场景 |
+|-------|------|----------|
+| hehe-business-model | hehe-industry-research-skill-pack/skills/hehe-business-model/SKILL.md |  |
+| hehe-company-profile | hehe-industry-research-skill-pack/skills/hehe-company-profile/SKILL.md |  |
+| hehe-competitive-landscape | hehe-industry-research-skill-pack/skills/hehe-competitive-landscape/SKILL.md |  |
+| hehe-financial-analysis | hehe-industry-research-skill-pack/skills/hehe-financial-analysis/SKILL.md |  |
+| hehe-governance-capital-allocation | hehe-industry-research-skill-pack/skills/hehe-governance-capital-allocation/SKILL.md |  |
+| hehe-industry-chain-map | hehe-industry-research-skill-pack/skills/hehe-industry-chain-map/SKILL.md |  |
+| hehe-industry-drivers | hehe-industry-research-skill-pack/skills/hehe-industry-drivers/SKILL.md |  |
+| hehe-industry-pain-points | hehe-industry-research-skill-pack/skills/hehe-industry-pain-points/SKILL.md |  |
+| hehe-industry-researcher | hehe-industry-research-skill-pack/skills/hehe-industry-researcher/SKILL.md |  |
+| hehe-investment-logic | hehe-industry-research-skill-pack/skills/hehe-investment-logic/SKILL.md |  |
+| hehe-market-sizing | hehe-industry-research-skill-pack/skills/hehe-market-sizing/SKILL.md |  |
+| hehe-pest-analysis | hehe-industry-research-skill-pack/skills/hehe-pest-analysis/SKILL.md |  |
+| hehe-trend-analysis | hehe-industry-research-skill-pack/skills/hehe-trend-analysis/SKILL.md | > |
+| hehe-valuation-analysis | hehe-industry-research-skill-pack/skills/hehe-valuation-analysis/SKILL.md |  |
 ## 其他
 
 | Skill | 路径 | 触发场景 |
@@ -274,7 +297,8 @@ stock-watcher/SKILL.md|stock-watcher|Manage and monitor a pe |
 
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
-| target-analysis | target-research/SKILL.md | 系统性研究分析框架，适用于任何研究标的（
+| tanzi | tanzi/skills/tanzi/SKILL.md | 跨平台公开信息采集与语料整理。用于用户明
+target-research/SKILL.md|target-analysis|系统性研究分
 target-research/target-analysis/SKILL.md|target-analysis|系
 word-docx/SKILL.md|Word / DOCX|Create, inspect, and edit Mic |
 ## 其他

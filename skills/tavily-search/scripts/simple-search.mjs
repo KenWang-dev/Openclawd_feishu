@@ -13,8 +13,8 @@ if (!query) {
 
 console.log("Query:", query);
 
-// Try to get key directly from env
-const apiKey = process.env.TAVILY_API_KEY_1 || getApiKey();
+// Prefer key pool; ignore stale TAVILY_API_KEY_* env vars (rotated)
+const apiKey = getApiKey() || process.env.TAVILY_KEY_1;
 
 if (!apiKey) {
   console.error("No Tavily API Key available");
@@ -24,7 +24,6 @@ if (!apiKey) {
 console.log("Using API key...");
 
 const body = {
-  api_key: apiKey,
   query: query,
   max_results: 10,
   include_answer: true
@@ -32,7 +31,10 @@ const body = {
 
 fetch("https://api.tavily.com/search", {
   method: "POST",
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${apiKey}`
+  },
   body: JSON.stringify(body)
 })
 .then(async (resp) => {

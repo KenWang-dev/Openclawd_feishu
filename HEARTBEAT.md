@@ -1,5 +1,10 @@
 # HEARTBEAT.md
 
+## 2026-10-02 搜索基础设施修复
+- [ ] **Brave Search API key 续费/重申请**（403 订阅停用，需 Ken 操作）
+- [x] Tavily — ✅ 10/2 修复：simple-search.mjs 改用 key-pool + Bearer 头，忽略旧 TAVILY_API_KEY_* 环境变量（旧 env key 已轮换是 401 根因）；7 把 pool key 实测全部 200
+  - ⚠️ 10/7：α1/B1 cron 报「Tavily 脚本缺失」——脚本实际存在且可用（本机实测 200），cron agent 请用**绝对路径**调用：`node /root/.openclaw/workspace/skills/tavily-search/scripts/simple-search.mjs "query"`
+
 ## 2026-09-10 Claude Code GLM 1210 修复跟踪
 - [x] ✅ **已解决（9/30 确认）**：官方在 [v2.1.268](https://github.com/anthropics/claude-code/releases/tag/v2.1.268) 修复 —— "Fixed every turn failing with HTTP 400 on third-party Anthropic-compatible endpoints since 2.1.265: a regex in the Artifact tool's input schema that those endpoints reject"
 - 行动：Windows 机器 `npm install -g @anthropic-ai/claude-code@latest`（最新 v2.1.285），2.1.263 可退役；restore-claude.bat 清理旧环境变量
