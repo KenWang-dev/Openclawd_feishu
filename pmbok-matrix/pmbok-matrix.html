@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>项目管理全景矩阵（PMBOK 第六版）</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f5f5f5; --paper2:#ffffff; --ink:#2d3142; --muted:#4f5d75;
+    --soft:#7a8399; --rule:rgba(45,49,66,.12); --accent:#eb6c36; --accent-tint:#fdeee6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans SC','Geist',sans-serif;padding:48px 56px;}
+  .eyebrow{font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--soft);text-transform:uppercase;margin-bottom:10px;}
+  h1{font-family:'Noto Serif SC','Instrument Serif',serif;font-size:34px;font-weight:600;letter-spacing:.02em;}
+  .subtitle{font-size:14px;color:var(--muted);margin-top:8px;}
+  .subtitle em{font-family:'Noto Serif SC',serif;font-style:italic;}
+
+  /* legend strip */
+  .legend{display:flex;gap:28px;align-items:center;margin:26px 0 18px;font-size:12px;color:var(--muted);flex-wrap:wrap;}
+  .legend .it{display:flex;align-items:center;gap:7px;}
+  .dot{width:10px;height:10px;border-radius:2px;display:inline-block;}
+  .d-start{background:#2e5aa8;} .d-plan{background:#e9e2d6;border:1px solid #cfc4ae;}
+  .d-exec{background:#eef1e6;border:1px solid #ccd4bc;} .d-mon{background:#fdeee6;border:1px solid #f0b995;}
+  .d-close{background:#2d3142;}
+
+  table{border-collapse:collapse;width:100%;table-layout:fixed;background:var(--paper2);border:1px solid var(--rule);}
+  col.c-axis{width:64px;} col.c-start{width:10.5%;} col.c-plan{width:17%;} col.c-exec{width:16.5%;} col.c-mon{width:17.5%;} col.c-close{width:10.5%;}
+  thead th{font-size:15px;font-weight:700;padding:12px 8px;border:1px solid var(--rule);background:var(--ink);color:#fff;}
+  thead th small{display:block;font-family:'Geist Mono',monospace;font-weight:400;font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.65);margin-top:3px;}
+  tbody th{font-size:14px;font-weight:700;text-align:left;padding:12px 14px;border:1px solid var(--rule);vertical-align:middle;background:#faf9f7;}
+  tbody th small{display:none;}
+  tbody th.group-core{box-shadow:inset 4px 0 0 #2e5aa8;}
+  tbody th.group-con{box-shadow:inset 4px 0 0 #8a9a5b;}
+  tbody th.group-collab{box-shadow:inset 4px 0 0 #b58e5c;}
+  tbody th.group-int{box-shadow:inset 4px 0 0 var(--accent);}
+  td{border:1px solid var(--rule);padding:7px 6px;vertical-align:top;min-height:34px;}
+  .p{display:block;font-size:12px;line-height:1.45;padding:5px 8px;margin-bottom:5px;border-radius:4px;border:1px solid transparent;background:var(--paper);color:var(--ink);}
+  .p:last-child{margin-bottom:0;}
+  .p.start{background:#eaf0f8;border-color:#b9cbe4;}
+  .p.plan{background:#f4f0e8;border-color:#ddd2bd;}
+  .p.exec{background:#f2f4ea;border-color:#d4dcc0;}
+  .p.mon{background:var(--accent-tint);border-color:#f0c4a4;}
+  .p.close{background:var(--ink);color:#fff;border-color:var(--ink);}
+  tr.int-row td{background:#fdf8f4;}
+  .tierbar{display:flex;gap:0;margin-top:22px;}
+  .tier{font-size:11px;color:#fff;padding:6px 0;text-align:center;letter-spacing:.08em;}
+  .t1{width:19%;background:var(--accent);} .t2{width:25%;background:#2e5aa8;} .t3{width:28%;background:#8a9a5b;} .t4{width:28%;background:#b58e5c;}
+
+  footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--rule);font-family:'Geist Mono',monospace;font-size:10.5px;color:var(--soft);letter-spacing:.04em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+</style>
+</head>
+<body>
+  <p class="eyebrow">PROJECT MANAGEMENT · PMBOK 6TH EDITION · 49 PROCESSES</p>
+  <h1>项目管理全景矩阵</h1>
+  <p class="subtitle">横轴 = 五大过程组（何时管） · 纵轴 = 十大知识领域（管什么） · 共 49 个过程，一页纵览<br><em>注：本矩阵对应 PMBOK 第六版过程导向体系；PMBOK 第七版已转向 12 原则 + 8 绩效域。</em></p>
+
+  <div class="legend">
+    <span class="it"><span class="dot d-start"></span>启动（2）</span>
+    <span class="it"><span class="dot d-plan"></span>规划（24）</span>
+    <span class="it"><span class="dot d-exec"></span>执行（10）</span>
+    <span class="it"><span class="dot d-mon"></span>监控（12）</span>
+    <span class="it"><span class="dot d-close"></span>收尾（1）</span>
+    <span style="margin-left:auto;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--soft);">左侧色条 = 战略层级分组</span>
+  </div>
+
+  <table>
+    <colgroup><col class="c-axis"><col class="c-start"><col class="c-plan"><col class="c-exec"><col class="c-mon"><col class="c-close"></colgroup>
+    <thead>
+      <tr>
+        <th style="text-align:left;">知识领域<small style="color:rgba(255,255,255,.6);">管什么 ↓ / 何时管 →</small></th>
+        <th>启动<small>INITIATING</small></th>
+        <th>规划<small>PLANNING</small></th>
+        <th>执行<small>EXECUTING</small></th>
+        <th>监控<small>MONITORING</small></th>
+        <th>收尾<small>CLOSING</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="int-row">
+        <th class="group-int">整合管理</th>
+        <td><span class="p start">制定项目章程</span></td>
+        <td><span class="p plan">制订项目管理计划</span></td>
+        <td><span class="p exec">指导与管理项目工作</span><span class="p exec">管理项目知识</span></td>
+        <td><span class="p mon">监控项目工作</span><span class="p mon">实施整体变更控制</span></td>
+        <td><span class="p close">结束项目或阶段</span></td>
+      </tr>
+      <tr>
+        <th class="group-core">范围管理</th>
+        <td></td>
+        <td><span class="p plan">规划范围管理</span><span class="p plan">收集需求</span><span class="p plan">定义范围</span><span class="p plan">创建 WBS</span></td>
+        <td></td>
+        <td><span class="p mon">确认范围</span><span class="p mon">控制范围</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th class="group-core">进度管理</th>
+        <td></td>
+        <td><span class="p plan">规划进度管理</span><span class="p plan">定义活动</span><span class="p plan">排列活动顺序</span><span class="p plan">估算活动持续时间</span><span class="p plan">制定进度计划</span></td>
+        <td></td>
+        <td><span class="p mon">控制进度</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th class="group-core">成本管理</th>
+        <td></td>
+        <td><span class="p plan">规划成本管理</span><span class="p plan">估算成本</span><span class="p plan">制定预算</span></td>
+        <td></td>
+        <td><span class="p mon">控制成本</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th class="group-con">质量管理</th>
+        <td></td>
+        <td><span class="p plan">规划质量管理</span></td>
+        <td><span class="p exec">管理质量</span></td>
+        <td><span class="p mon">控制质量</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th class="group-con">资源管理</th>
+        <td></td>
+        <td><span class="p plan">规划资源管理</span><span class="p plan">估算活动资源</span></td>
+        <td><span class="p exec">获取资源</span><span class="p exec">建设团队</span><span class="p exec">管理团队</span></td>
+        <td><span class="p mon">控制资源</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th class="group-con">风险管理</th>
+        <td></td>
+        <td><span class="p plan">规划风险管理</span><span class="p plan">识别风险</span><span class="p plan">实施定性风险分析</span><span class="p plan">实施定量风险分析</span><span class="p plan">规划风险应对</span></td>
+        <td><span class="p exec">实施风险应对</span></td>
+        <td><span class="p mon">监督风险</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th class="group-collab">沟通管理</th>
+        <td></td>
+        <td><span class="p plan">规划沟通管理</span></td>
+        <td><span class="p exec">管理沟通</span></td>
+        <td><span class="p mon">监督沟通</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th class="group-collab">采购管理</th>
+        <td></td>
+        <td><span class="p plan">规划采购管理</span></td>
+        <td><span class="p exec">实施采购</span></td>
+        <td><span class="p mon">控制采购</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <th class="group-collab">干系人管理</th>
+        <td><span class="p start">识别干系人</span></td>
+        <td><span class="p plan">规划干系人参与</span></td>
+        <td><span class="p exec">管理干系人参与</span></td>
+        <td><span class="p mon">监督干系人参与</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tierbar">
+    <div class="tier t1">顶层整合</div>
+    <div class="tier t2">核心三角：范围 · 进度 · 成本</div>
+    <div class="tier t3">约束与保障：质量 · 资源 · 风险</div>
+    <div class="tier t4">外部协作：沟通 · 采购 · 干系人</div>
+  </div>
+
+  <footer>
+    <span>PROJECT MANAGEMENT PANORAMA MATRIX · 5 PROCESS GROUPS × 10 KNOWLEDGE AREAS</span>
+    <span>2026-10 · FOR KEN</span>
+  </footer>
+</body>
+</html>

@@ -1,7 +1,9 @@
 # HEARTBEAT.md
 
-## 2026-10-02 搜索基础设施修复
-- [ ] **Brave Search API key 续费/重申请**（403 订阅停用，需 Ken 操作）
+## 2026-10-16 运维
+- [x] 磁盘清理 ✅ 68%→60%（日志+npm缓存），10/16 完成
+- [ ] Brave Search API key 续费/重申请（403 订阅停用，需 Ken 操作）
+
 - [x] Tavily — ✅ 10/2 修复：simple-search.mjs 改用 key-pool + Bearer 头，忽略旧 TAVILY_API_KEY_* 环境变量（旧 env key 已轮换是 401 根因）；7 把 pool key 实测全部 200
   - ⚠️ 10/7：α1/B1 cron 报「Tavily 脚本缺失」——脚本实际存在且可用（本机实测 200），cron agent 请用**绝对路径**调用：`node /root/.openclaw/workspace/skills/tavily-search/scripts/simple-search.mjs "query"`
 
