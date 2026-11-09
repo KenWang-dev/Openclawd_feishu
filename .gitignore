@@ -205,3 +205,7 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+poc/semantica-venv/
+poc/__pycache__/
+poc/poc_output.txt
+poc/poc_prov.db
