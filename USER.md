@@ -6,7 +6,7 @@ _Learn about the person you're helping. Update this as you go._
 - **What to call them:** Ken
 - **Pronouns:** he/him
 - **Timezone:** GMT+8 (Asia/Shanghai)
-- **Location:** 深圳
+- **Location:** 深圳（西丽，2026-11-14 确认；语音里说"犀浦"是误识别）
 - **Notes:**
   - **消息投递规则（重要）**：所有消息（包括 cron 报告、监控结果等）只通过当前 OpenClaw 会话直接发送，不要使用 lark-cli 单独发送。用户不想在飞书里看到来自机器人的消息。
   - **飞书 open_id**：`ou_a7195bd3e0508f0e0d09f19ff12a8811`（当前会话的 chat_id，即 user:ou_a7195bd3e0508f0e0d09f19ff12a8811）

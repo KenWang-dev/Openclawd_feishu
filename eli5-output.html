@@ -1,295 +1,132 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELI5: Docker</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  background: #0f0f1a;
-  color: #e0e0e0;
-  font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  padding: 2rem 1rem;
-  line-height: 1.6;
-}
-.container { max-width: 680px; margin: 0 auto; }
-h1 {
-  font-size: 3rem;
-  text-align: center;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #0db7ed, #00c9ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.subtitle {
-  text-align: center;
-  font-size: 1.1rem;
-  color: #888;
-  margin-bottom: 3rem;
-}
-.slide {
-  background: #1a1a2e;
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  margin-bottom: 2rem;
-  border: 1px solid #2a2a4a;
-}
-.slide-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  color: #00c9ff;
-}
-.visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin: 1.5rem 0;
-}
-.emoji-big { font-size: 4rem; }
-.emoji-med { font-size: 2.8rem; }
-.arrow { font-size: 2.5rem; color: #00c9ff; }
-.box {
-  background: #16213e;
-  border-radius: 16px;
-  padding: 1.5rem 2rem;
-  text-align: center;
-  border: 2px solid #0db7ed44;
-  min-width: 140px;
-}
-.box-label {
-  font-size: 1.1rem;
-  color: #00c9ff;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-}
-.box-desc {
-  font-size: 0.9rem;
-  color: #aaa;
-}
-.explain {
-  font-size: 1.15rem;
-  color: #ccc;
-  text-align: center;
-  max-width: 500px;
-  margin: 0 auto;
-}
-/* Analogy: moving house */
-.house-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 1rem 0;
-}
-.container-box {
-  width: 100px;
-  height: 80px;
-  border: 3px dashed #00c9ff;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #16213e;
-}
-.container-box .emoji-big { font-size: 2.2rem; }
-.container-box span {
-  font-size: 0.8rem;
-  color: #00c9ff;
-  margin-top: 0.2rem;
-}
-/* Problem vs solution */
-.compare {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 1.5rem 0;
-}
-.compare-card {
-  flex: 1;
-  min-width: 200px;
-  padding: 1.5rem;
-  border-radius: 16px;
-  text-align: center;
-}
-.compare-card.bad {
-  background: #2a1525;
-  border: 2px solid #ff446655;
-}
-.compare-card.good {
-  background: #152a25;
-  border: 2px solid #00c9ff55;
-}
-.compare-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-}
-.compare-card.bad h3 { color: #ff6688; }
-.compare-card.good h3 { color: #00c9ff; }
-/* Layer diagram */
-.layers {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin: 1.5rem auto;
-  max-width: 360px;
-}
-.layer {
-  padding: 1rem 1.5rem;
-  text-align: center;
-  font-weight: 600;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-}
-.layer:first-child { border-radius: 16px 16px 0 0; }
-.layer:last-child { border-radius: 0 0 16px 16px; }
-.layer-app { background: #e94560; color: white; }
-.layer-deps { background: #0f3460; color: #a0d2ff; }
-.layer-os { background: #16213e; color: #00c9ff; border: 2px solid #0db7ed44; }
-.tldr {
-  background: linear-gradient(135deg, #16213e, #0f3460);
-  border: 2px solid #00c9ff44;
-  border-radius: 16px;
-  padding: 2rem;
-  text-align: center;
-  margin-top: 2rem;
-}
-.tldr-label {
-  font-size: 1rem;
-  color: #00c9ff;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 0.5rem;
-}
-.tldr-text {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #fff;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ELI5: 什么是串口</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#1a1a2e; color:#eee; font-family:"PingFang SC","Microsoft YaHei",sans-serif; padding:2rem 1rem; }
+    .wrap { max-width:760px; margin:0 auto; }
+    h1 { font-size:2.6em; text-align:center; margin-bottom:.5rem; color:#7dd3fc; }
+    .sub { text-align:center; color:#999; margin-bottom:3rem; }
+    section { margin-bottom:4rem; }
+    h2 { font-size:2em; color:#fbbf24; margin-bottom:1.2rem; }
+    p { font-size:1.2em; line-height:1.8; color:#ccc; margin-bottom:1rem; }
+    .visual { background:#16213e; border-radius:16px; padding:2rem 1.2rem; }
+    /* 独木桥 analogy */
+    .bridge { display:flex; align-items:center; justify-content:center; gap:8px; margin:1.5rem 0; }
+    .person { font-size:3rem; }
+    .lane { display:flex; flex-direction:column; align-items:center; margin:0 10px; }
+    .road { width:120px; height:34px; background:#334155; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:#7dd3fc; }
+    .label { margin-top:.6rem; font-size:1rem; color:#aaa; text-align:center; }
+    /* 8-lane vs 1-lane */
+    .lanes-wrap { display:flex; justify-content:space-around; flex-wrap:wrap; gap:2rem; }
+    .bus { display:flex; flex-direction:column; gap:8px; }
+    .bit { width:60px; height:24px; background:#475569; border-radius:5px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:.85rem; }
+    .bit.on { background:#38bdf8; }
+    .serial-line { display:flex; gap:6px; align-items:center; }
+    .serial-line .bit { width:34px; }
+    .vs { font-size:2.5rem; align-self:center; color:#f472b6; }
+    /* 波特率 */
+    .speed { display:flex; flex-direction:column; gap:10px; align-items:center; }
+    .wave { font-size:2.4rem; letter-spacing:6px; color:#34d399; }
+    /* 交易握手 */
+    .deal { display:flex; align-items:center; justify-content:center; gap:14px; font-size:2.6rem; }
+    .arrowflow { color:#fbbf24; font-size:1.8rem; }
+    /* 引脚 */
+    .pins { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .pin { width:110px; text-align:center; background:#0f172a; border:2px solid #38bdf8; border-radius:12px; padding:12px 6px; }
+    .pin .em { font-size:2.2rem; }
+    .pin .nm { margin-top:.4rem; font-size:1rem; color:#7dd3fc; }
+    .pin .fn { font-size:.85rem; color:#999; margin-top:.2rem; }
+    .pin.tx { border-color:#38bdf8; } .pin.rx { border-color:#34d399; } .pin.gnd { border-color:#f87171; }
+    .cross { display:flex; justify-content:center; align-items:center; gap:12px; margin-top:1.4rem; font-size:2.2rem; flex-wrap:wrap; }
+    .devbox { background:#0f172a; border:2px solid #64748b; border-radius:12px; padding:10px 16px; font-size:1.1rem; }
+    .tldr { text-align:center; font-size:1.5em; background:#16213e; border-left:6px solid #fbbf24; padding:1.4rem; border-radius:10px; margin-top:3rem; }
+    @media (max-width:560px){ .road{width:70px} h1{font-size:2em} }
+  </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
 
-  <h1>🐳 Docker</h1>
-  <p class="subtitle">像运集装箱一样运软件</p>
+  <h1>🔌 什么是串口？</h1>
+  <div class="sub">Serial Port — 设备之间最古老、最简单的"传话方式"</div>
 
-  <!-- Slide 1: Analogy -->
-  <div class="slide">
-    <div class="slide-title">📦 想象一下搬家具</div>
-    <div class="house-row">
-      <div class="container-box">
-        <span class="emoji-big">🛋️</span>
-        <span>沙发</span>
-      </div>
-      <div class="container-box">
-        <span class="emoji-big">🪑</span>
-        <span>桌子</span>
-      </div>
-      <div class="container-box">
-        <span class="emoji-big">🛏️</span>
-        <span>床</span>
-      </div>
-    </div>
+  <section>
+    <h2>1️⃣ 一句话比喻：独木桥传话</h2>
     <div class="visual">
-      <span class="emoji-big">🏠</span>
-      <span class="arrow">→</span>
-      <span class="emoji-big">📦</span>
-      <span class="arrow">🚢</span>
-      <span class="arrow">→</span>
-      <span class="emoji-big">🏢</span>
+      <div class="bridge">
+        <div class="person">💻</div>
+        <div class="lane">
+          <div class="road">0→1→0→1→1</div>
+          <div class="label">数据一个接一个，排成一队过桥</div>
+        </div>
+        <div class="person">📟</div>
+      </div>
+      <p style="text-align:center">串口 = 两个设备之间的一条"独木桥"：<b style="color:#7dd3fc">一次只走一个人（一位数据）</b>，但队可以排得很长。</p>
     </div>
-    <p class="explain">
-      不管里面装什么，箱子都一样大、一样标准。<br>
-      船、车、吊车不用关心箱子里面是什么。<br>
-      <strong>Docker 就是软件世界的「标准集装箱」。</strong>
-    </p>
-  </div>
+  </section>
 
-  <!-- Slide 2: The Problem -->
-  <div class="slide">
-    <div class="slide-title">😵 没有 Docker 之前</div>
-    <div class="compare">
-      <div class="compare-card bad">
-        <h3>❌ 你的电脑</h3>
-        <div class="emoji-big">✅</div>
-        <p style="color:#ccc">跑得好好的！</p>
+  <section>
+    <h2>2️⃣ "串"字的意思：排队走，不是并排走</h2>
+    <div class="visual">
+      <div class="lanes-wrap">
+        <div class="bus">
+          <div class="label">并行（8条路并排）</div>
+          <div class="bit on">1</div><div class="bit">0</div><div class="bit on">1</div><div class="bit on">1</div><div class="bit">0</div><div class="bit">0</div><div class="bit on">1</div><div class="bit">0</div>
+        </div>
+        <div class="vs">VS</div>
+        <div class="bus">
+          <div class="label">串行（1条路排队）</div>
+          <div class="serial-line">
+            <div class="bit on">1</div>→<div class="bit">0</div>→<div class="bit on">1</div>→<div class="bit on">1</div>→<div class="bit">0</div>→<div class="bit">0</div>→<div class="bit on">1</div>→<div class="bit">0</div>
+          </div>
+        </div>
       </div>
-      <div class="compare-card bad">
-        <h3>❌ 同事的电脑</h3>
-        <div class="emoji-big">💥</div>
-        <p style="color:#ccc">跑不起来！</p>
-      </div>
+      <p style="text-align:center;margin-top:1rem">并行 = 8 个人并排过马路（线多、贵、远距离易出错）<br>串行 = 1 个人排队过独木桥（线少、便宜、传得远）</p>
     </div>
-    <p class="explain">
-      「在我电脑上明明可以的啊！」<br>
-      不同电脑的系统、版本、配置都不一样。<br>
-      <strong>Docker 把软件和它需要的一切打包在一起。</strong>
-    </p>
-  </div>
+  </section>
 
-  <!-- Slide 3: What's inside -->
-  <div class="slide">
-    <div class="slide-title">📦 箱子里有什么？</div>
-    <div class="layers">
-      <div class="layer layer-app">
-        <span>🚀</span> 你的程序
+  <section>
+    <h2>3️⃣ 怎么知道传多快？——波特率</h2>
+    <div class="visual">
+      <div class="speed">
+        <div class="wave">▯▮▯▮▯▮▯▮</div>
+        <div class="label" style="font-size:1.2rem">每秒 9600 位 → 就是说好"每秒传 9600 个 0/1"</div>
       </div>
-      <div class="layer layer-deps">
-        <span>📚</span> 依赖 + 配置 + 工具
-      </div>
-      <div class="layer layer-os">
-        <span>🐧</span> 小型操作系统（只含必要部分）
-      </div>
+      <p style="text-align:center">就像两人事先约好说话速度。<b style="color:#34d399">两边速度必须一致</b>，不然就会听岔 —— 这叫"波特率不匹配"，是串口调试最常见的翻车原因 😅</p>
     </div>
-    <p class="explain" style="margin-top:1.5rem">
-      一切都锁在箱子里，外面怎么变都不影响里面。<br>
-      到哪都能原封不动地运行。
-    </p>
-  </div>
+  </section>
 
-  <!-- Slide 4: Why it matters -->
-  <div class="slide">
-    <div class="slide-title">✨ 为什么大家都爱用</div>
-    <div class="visual" style="flex-direction:column; gap:1.5rem">
-      <div style="display:flex;align-items:center;gap:1rem">
-        <span class="emoji-med">🔄</span>
-        <span style="font-size:1.1rem;color:#ccc"><strong style="color:#fff">一致</strong> — 你的电脑 = 测试环境 = 服务器</span>
+  <section>
+    <h2>4️⃣ 最少几根线？——3 根就够</h2>
+    <div class="visual">
+      <div class="pins">
+        <div class="pin tx"><div class="em">📤</div><div class="nm">TX</div><div class="fn">发话</div></div>
+        <div class="pin rx"><div class="em">📥</div><div class="nm">RX</div><div class="fn">听话</div></div>
+        <div class="pin gnd"><div class="em">⏚</div><div class="nm">GND</div><div class="fn">共用地线</div></div>
       </div>
-      <div style="display:flex;align-items:center;gap:1rem">
-        <span class="emoji-med">⚡</span>
-        <span style="font-size:1.1rem;color:#ccc"><strong style="color:#fff">快</strong> — 几秒钟启动，几秒钟销毁</span>
+      <div class="cross">
+        <div class="devbox">💻 TX→RX 📟</div>
+        <span style="color:#aaa">+</span>
+        <div class="devbox">📟 TX→RX 💻</div>
       </div>
-      <div style="display:flex;align-items:center;gap:1rem">
-        <span class="emoji-med">🧩</span>
-        <span style="font-size:1.1rem;color:#ccc"><strong style="color:#fff">隔离</strong> — 每个程序住自己的小房间，互不打扰</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:1rem">
-        <span class="emoji-med">🏗️</span>
-        <span style="font-size:1.1rem;color:#ccc"><strong style="color:#fff">可复现</strong> — 写好清单，一键搭建</span>
-      </div>
+      <p style="text-align:center;margin-top:1rem">注意要<b style="color:#fbbf24">交叉接</b>：我的嘴接你的耳朵，你的嘴接我的耳朵。</p>
     </div>
-  </div>
+  </section>
 
-  <!-- TL;DR -->
-  <div class="tldr">
-    <div class="tldr-label">TL;DR</div>
-    <div class="tldr-text">
-      Docker = 软件的集装箱 📦<br>
-      <span style="font-size:1rem;color:#aaa;font-weight:400">
-        把程序和它需要的一切打包，到哪都能跑，永远不报「在我电脑上可以的」。
-      </span>
+  <section>
+    <h2>5️⃣ 它有什么用？</h2>
+    <div class="visual">
+      <div class="deal">
+        🖥️ <span class="arrowflow">↔</span> 路由器 &nbsp;|&nbsp; 🔧 <span class="arrowflow">↔</span> 工业设备 &nbsp;|&nbsp; 🛰️ <span class="arrowflow">↔</span> 单片机 &nbsp;|&nbsp; 🩺 <span class="arrowflow">↔</span> 医疗仪器
+      </div>
+      <p style="text-align:center">简单、可靠、便宜，50 年了还没被淘汰 —— 调试硬件、刷固件、连传感器，几乎都靠它。</p>
     </div>
-  </div>
+  </section>
+
+  <div class="tldr">💡 <b>TL;DR</b>：串口就是设备之间的"独木桥传话"——一根线，数据排成队一位一位地传，只要两边约好速度（波特率），3 根线就能让任何两台设备聊起来。</div>
 
 </div>
 </body>
