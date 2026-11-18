@@ -1,8 +1,8 @@
 # Skills Index
 
 > 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
-> 生成时间: 2026-11-14 22:00:45 CST
-> Skill 总数: 122
+> 生成时间: 2026-11-18 17:01:29 CST
+> Skill 总数: 123
 
 ## SCM 采购体系
 
@@ -163,7 +163,8 @@ founder-cabinet/SKILL.md|founder-cabinet|| |
 | Skill | 路径 | 触发场景 |
 |-------|------|----------|
 | image-to-video | image-to-video/SKILL.md | Still-to-video conversion guide: model selection, motion pro |
-| infsh-cli | infsh-cli/SKILL.md | Run 150+ AI apps via inference.sh CLI - image generation, vi |
+| info-hub | info-hub/SKILL.md | 信息汇聚与周报自动维护。打通企微群消息、
+infsh-cli/SKILL.md|infsh-cli|Run 150+ AI apps via inference. |
 | libtv-skill | libtv-skills/skills/libtv-skill/SKILL.md | agent-im 会话技能 - 通过 liblib.tv 的 AI 能力生成
 model-router/SKILL.md|model-router|Automatically routes AI t |
 ## Skill 管理
