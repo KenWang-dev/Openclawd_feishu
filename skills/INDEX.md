@@ -1,7 +1,7 @@
 # Skills Index
 
 > 自动生成，勿手动编辑。运行 `bash skills/skill-catalog/register.sh` 更新。
-> 生成时间: 2026-11-18 17:01:29 CST
+> 生成时间: 2026-11-24 21:30:44 CST
 > Skill 总数: 123
 
 ## SCM 采购体系
