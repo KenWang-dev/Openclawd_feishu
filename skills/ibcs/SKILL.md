@@ -15,7 +15,8 @@ description: >
 
 **IBCS 金律**: 相同含义的内容必须看起来相同，不同含义的内容必须看起来不同。
 
-所有图表、表格、报告、Dashboard 的设计必须遵循 SUCCESS 七法则。详细规则见 `references/ibcs-rules.md`。
+所有图表、表格、报告、Dashboard 的设计必须遵循 SUCCESS 七法则。详细规则见 `references/ibcs-rules.md`，
+改造案例（Before/After 14 个典型场景，每个附【官方原始依据】：IBCS v1.1 规则编号 + 官方原文 + ibcs.com 官方案例图）见 `references/ibcs-examples.md`。
 
 ## 工作流程
 
