@@ -3,7 +3,7 @@
 
 ISSUE_NUM="46840"
 REPO="openclaw/openclaw"
-TOKEN="REDACTED_TOKENRnpkcandt1M0eZcGyaXy6lc4x1HL6D0dxnTL"
+TOKEN="${GITHUB_TOKEN:-$(gh auth token)}"
 LOG_FILE="/root/.openclaw/workspace/issue-comment-check.log"
 
 # 获取最新评论数

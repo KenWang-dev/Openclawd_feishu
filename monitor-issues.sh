@@ -2,7 +2,7 @@
 # 监控 OpenClaw Issue #46840 和 #46832 直到关闭
 
 REPO="openclaw/openclaw"
-TOKEN="REDACTED_TOKENRnpkcandt1M0eZcGyaXy6lc4x1HL6D0dxnTL"
+TOKEN="${GITHUB_TOKEN:-$(gh auth token)}"
 ISSUES=("46840" "46832")
 LOG_FILE="/root/.openclaw/workspace/issue-monitor.log"
 
